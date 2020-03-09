@@ -1,12 +1,11 @@
 package ntnu.gruppe22.game.states.menus;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import ntnu.gruppe22.game.AnimalWar;
+import ntnu.gruppe22.game.states.GameStateManager;
 import ntnu.gruppe22.game.states.State;
 
 /**
@@ -17,8 +16,9 @@ public abstract class Menu extends State {
 
     final AnimalWar game;
 
-    public Menu(GameStateManager gameStateManager) {
+    public Menu(final AnimalWar game, GameStateManager gameStateManager) {
         super(gameStateManager);
+        this.game = game;
 
         this.camera.setToOrtho(false, 800, 400);
     }
@@ -32,17 +32,15 @@ public abstract class Menu extends State {
         this.camera.update();
         sb.setProjectionMatrix(camera.combined);
 
-        sb.begin();
+        this.game.sb.begin();
         // Should be some font to user.
         // font.draw(sb, "Welcome to AnimalWar", pos.x, pos.y);
-        sb.end();
+        this.game.sb.end();
 
-     /*   // if (Button.clicked()) {
+        /*if (Button.clicked()) {
         this.gameStateManager.set(new MainGame());
         this.dispose();
-    }*/
-
-
+        }*/
     }
 
 
