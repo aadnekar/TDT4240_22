@@ -1,4 +1,5 @@
-package ntnu.gruppe22.game.states;
+/*
+package ntnu.gruppe22.game.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -43,3 +44,4 @@ public class Settings extends AbstractMenu {
     }
 
 }
+*/
