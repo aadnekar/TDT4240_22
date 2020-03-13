@@ -19,6 +19,7 @@ import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
 import ntnu.gruppe22.game.scenes.MainMenu;
+import ntnu.gruppe22.game.scenes.Settings;
 //import ntnu.gruppe22.game.scenes.Settings;
 
 /**
@@ -115,8 +116,19 @@ public class MainMenuButtons {
         settingsBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                // TODO: Change Settings Screen to take AnimalWar game instead of gsm
-                /*game.setScreen(new Settings(game));*/
+                RunnableAction run = new RunnableAction();
+                run.setRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        game.setScreen(new Settings(game));
+                        System.out.println("GOING TO THE SETTINGS SCREEN!!");
+                    }
+                });
+
+                SequenceAction sa = new SequenceAction();
+                sa.addAction(Actions.fadeOut(1f));
+                sa.addAction(run);
+                stage.addAction(sa);
             }
         });
 

@@ -52,15 +52,12 @@ public class GameManager {
 
     public void playMusic() {
         if(music == null) {
-            // TODO: Get some music playin'
-            //music = Gdx.audio.newMusic(Gdx.files.internal("sounds/Background.mp3"));
+            music = Gdx.audio.newMusic(Gdx.files.internal("sounds/blues.ogg"));
             System.out.println("Music is playing...");
         }
-
-        // TODO: when we get music we can check this.
-        /*if(!music.isPlaying()) {
+        if(!music.isPlaying()) {
             music.play();
-        }*/
+        }
     }
 
     public void stopMusic() {
