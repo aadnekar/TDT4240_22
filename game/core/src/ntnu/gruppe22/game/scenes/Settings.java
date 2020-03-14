@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.huds.SettingsButtons;
@@ -73,6 +74,7 @@ public class Settings implements Screen {
     public void resume() {
 
     }
+
 
     @Override
     public void hide() {
