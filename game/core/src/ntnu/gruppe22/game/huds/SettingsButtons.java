@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -18,42 +19,55 @@ import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
 import ntnu.gruppe22.game.scenes.MainMenu;
 
+import ntnu.gruppe22.game.helpers.GameMusic;
+
+
 /**
- * @author aadne on 13.03.2020 11:41
+ * @author aase and hildegun 17.03.20
  */
+
 
 public class SettingsButtons {
 
     private AnimalWar game;
-
     private Stage stage;
-    private Viewport viewport;
+    private Viewport gameViewport;
 
+    private ImageButton musicOnBtn;
+    private ImageButton musicOffBtn;
+    private ImageButton volumeUp;
+    private ImageButton volumeDown;
     private ImageButton mainMenuBtn;
     private ImageButton musicBtn;
 
     private ImageButton.ImageButtonStyle buttonStyle;
 
-    public SettingsButtons(AnimalWar game) {
+    private GameMusic music;
+
+
+    public SettingsButtons(AnimalWar game, GameMusic music) {
         this.game = game;
+        this.music = music;
+        gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
 
-        this.viewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
-
-        this.stage = new Stage(viewport, game.getSb());
+        stage = new Stage(gameViewport, game.getSb());
 
         Gdx.input.setInputProcessor(stage);
-
-        buttonStyle = new ImageButton.ImageButtonStyle();
-
 
         createAndPositionButtons();
         addAllListeners();
 
+        stage.addActor(musicOnBtn);
+        stage.addActor(musicOffBtn);
+        stage.addActor(volumeUp);
+        stage.addActor(volumeDown);
         stage.addActor(mainMenuBtn);
         stage.addActor(musicBtn);
     }
 
-    private void createAndPositionButtons() {
+
+
+    private void createAndPositionButtons(){
 
         mainMenuBtn = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/play-btn.png"))
@@ -65,6 +79,28 @@ public class SettingsButtons {
 
         mainMenuBtn.setPosition(GameInfo.WIDTH / 2 - 95, GameInfo.HEIGHT / 2 + 45);
         musicBtn.setPosition(GameInfo.WIDTH / 2 - 95, GameInfo.HEIGHT / 2 - 45);
+
+        musicOnBtn = new ImageButton(new SpriteDrawable(
+                new Sprite(new Texture("buttons/volumeOn.png"))
+        ));
+
+        musicOffBtn = new ImageButton(new SpriteDrawable(
+                new Sprite(new Texture("buttons/volumeOff.png"))
+        ));
+
+        volumeUp = new ImageButton(new SpriteDrawable(
+                new Sprite(new Texture("buttons/volumeUp.png"))
+        ));
+
+        volumeDown = new ImageButton(new SpriteDrawable(
+                new Sprite(new Texture("buttons/volumeDown.png"))
+        ));
+
+        musicOnBtn.setPosition(GameInfo.WIDTH / 2 - (musicOnBtn.getWidth()/2), GameInfo.HEIGHT / 2 + 70);
+        musicOffBtn.setPosition(GameInfo.WIDTH / 2 - (musicOnBtn.getWidth()/2), GameInfo.HEIGHT / 2 - 120);
+        volumeUp.setPosition(GameInfo.WIDTH / 2 + 60, GameInfo.HEIGHT / 2 );
+        volumeDown.setPosition(GameInfo.WIDTH / 2 - 170, GameInfo.HEIGHT / 2 );
+
     }
 
     private void addAllListeners() {
@@ -84,7 +120,7 @@ public class SettingsButtons {
         musicBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(GameManager.getInstance().gameData.isMusicOn()) {
+                if (GameManager.getInstance().gameData.isMusicOn()) {
                     GameManager.getInstance().gameData.setMusicOn(false);
                     GameManager.getInstance().stopMusic();
                 } else {
@@ -92,6 +128,45 @@ public class SettingsButtons {
                     GameManager.getInstance().playMusic();
                 }
                 GameManager.getInstance().saveData();
+            }
+        });
+
+
+        musicOnBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // TODO: show of music is on
+                System.out.println("music on");
+                music.setMusic(true);
+
+            }
+        });
+
+        musicOffBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // TODO: show if music is off
+                System.out.println("music off");
+                music.setMusic(false);
+            }
+        });
+
+        volumeUp.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // TODO: volume up button
+                System.out.println("volume up");
+                music.changeVolume((float)0.1);
+            }
+        });
+
+        volumeDown.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // TODO volume down button
+                System.out.println("volume down");
+                music.changeVolume((float)-0.1);
+
             }
         });
 
