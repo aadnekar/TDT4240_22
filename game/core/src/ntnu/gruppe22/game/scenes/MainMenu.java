@@ -5,18 +5,24 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.huds.MainMenuButtons;
 
+
 /**
  * @author aadne on 12.03.2020 09:53
  */
 
-public class MainMenu implements Screen {
+public class MainMenu extends Object implements Screen {
 
     private AnimalWar game;
 
@@ -26,8 +32,11 @@ public class MainMenu implements Screen {
     private Texture bg;
 
     private MainMenuButtons btns;
+    //private Settings settings;
 
-    public MainMenu(AnimalWar game) {
+
+
+    public MainMenu(AnimalWar game){
         this.game = game;
 
         this.camera = new OrthographicCamera();
@@ -38,7 +47,12 @@ public class MainMenu implements Screen {
 
         bg = new Texture("Backgrounds/menu-bg.png");
         btns = new MainMenuButtons(game);
+        //settings = new Settings();
+        //settings.setMusic(true);
+
+
     }
+
 
     @Override
     public void show() {
@@ -61,7 +75,11 @@ public class MainMenu implements Screen {
         btns.getStage().draw();
         btns.getStage().act();
 
+
+
     }
+
+
 
     @Override
     public void resize(int width, int height) {

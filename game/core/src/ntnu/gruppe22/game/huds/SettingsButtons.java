@@ -104,6 +104,4 @@ public class SettingsButtons {
     public void disposeStage() {
         this.stage.dispose();
     }
-
-
 }
