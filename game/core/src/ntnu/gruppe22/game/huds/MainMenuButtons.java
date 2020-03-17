@@ -18,7 +18,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
+import ntnu.gruppe22.game.helpers.GameMusic;
 import ntnu.gruppe22.game.scenes.MainMenu;
+import ntnu.gruppe22.game.scenes.Settings;
 //import ntnu.gruppe22.game.scenes.Settings;
 
 /**
@@ -35,8 +37,11 @@ public class MainMenuButtons {
     private ImageButton settingsBtn;
     private ImageButton mapsBtn;
 
-    public MainMenuButtons(AnimalWar game) {
+    private GameMusic gameMusic;
+
+    public MainMenuButtons(AnimalWar game, GameMusic gameMusic) {
         this.game = game;
+        this.gameMusic = gameMusic;
 
         gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
 
@@ -116,7 +121,7 @@ public class MainMenuButtons {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 // TODO: Change Settings Screen to take AnimalWar game instead of gsm
-                /*game.setScreen(new Settings(game));*/
+                game.setScreen(new Settings(game, gameMusic));
             }
         });
 

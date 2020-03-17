@@ -1,13 +1,10 @@
 package ntnu.gruppe22.game.scenes;
 //import Map from project
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -17,7 +14,7 @@ import java.util.TimerTask;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
-import ntnu.gruppe22.game.huds.MainMenuButtons;
+import ntnu.gruppe22.game.helpers.GameMusic;
 import ntnu.gruppe22.game.states.Animal;
 
 public class MainGame implements Screen {
@@ -28,7 +25,7 @@ public class MainGame implements Screen {
     private Viewport gameViewport;
 
     private Texture bg;
-    private Settings settings;
+    private GameMusic settings;
 
     private ArrayList<Animal> charactersPlayer1;
     private ArrayList<Animal> charactersPlayer2;
@@ -55,7 +52,7 @@ public class MainGame implements Screen {
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
         bg = new Texture("Backgrounds/menu-bg.png");
-        settings = new Settings();
+        settings = new GameMusic();
         settings.setMusic(true);
 
         //legger ved to animals i første omgang. Videre vil vi gi mulighet til fler.

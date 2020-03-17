@@ -1,17 +1,23 @@
 
-package ntnu.gruppe22.game.scenes;
+package ntnu.gruppe22.game.helpers;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 
-public class Settings implements Screen {
+/**
+ * @author aase and hildegun on 17.03.20
+ */
 
-    private int SoundLevel;
+
+public class GameMusic {
+
+    private float volume;
     private Music music;
 
-    public Settings() {
+    public GameMusic() {
         music = Gdx.audio.newMusic(Gdx.files.internal("Glorious Morning.mp3"));
+        volume = 0;
+        music.setVolume(volume);
     }
 
     public void setMusic(boolean play) {
@@ -27,56 +33,26 @@ public class Settings implements Screen {
         }
     }
 
-    public void changeVolume(int volume) {
+    public void changeVolume(float volume) {
         // change volume
-        music.setVolume(volume);
+        setNewVolume(volume);
+        System.out.println(this.volume);
+        music.setVolume(this.volume);
     }
 
     public boolean isMusic() {
         return music.isPlaying();
     }
 
-    public int getSoundLevel() {
-        return SoundLevel;
-    }
-
-    public void setSoundLevel(int soundLevel) {
-        SoundLevel = soundLevel;
-    }
-
-    @Override
-    public void show() {
+    public void setNewVolume(float volume) {
+        if(this.volume + volume < 0 || this.volume + volume > 1){
+            System.out.println("volume not changed");
+        } else {
+            this.volume += volume;
+        }
 
     }
 
-    @Override
-    public void render(float delta) {
 
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
 }
 

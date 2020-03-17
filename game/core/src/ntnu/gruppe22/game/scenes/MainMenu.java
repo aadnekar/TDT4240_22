@@ -5,16 +5,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
+import ntnu.gruppe22.game.helpers.GameMusic;
 import ntnu.gruppe22.game.huds.MainMenuButtons;
 
 
@@ -32,7 +28,7 @@ public class MainMenu extends Object implements Screen {
     private Texture bg;
 
     private MainMenuButtons btns;
-    //private Settings settings;
+    private GameMusic gameMusic;
 
 
 
@@ -46,9 +42,11 @@ public class MainMenu extends Object implements Screen {
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
         bg = new Texture("Backgrounds/menu-bg.png");
-        btns = new MainMenuButtons(game);
-        //settings = new Settings();
-        //settings.setMusic(true);
+
+        gameMusic = new GameMusic();
+        gameMusic.setMusic(true);
+        gameMusic.changeVolume((float) 0.5);
+        btns = new MainMenuButtons(game, gameMusic);
 
 
     }
