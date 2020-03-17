@@ -5,24 +5,25 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
-import java.util.Timer;
-import java.util.TimerTask;
-
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.huds.MainMenuButtons;
 
-
 /**
- * @author aadne on 12.03.2020 09:53
+ * Antar at denne filen inneholder en screen som gir eg mulighet til å velge characters
+ * Importerer metoder som render(), update(), dispose(), handleInput()
  */
 
-public class MainMenu extends Object implements Screen {
+
+//extend abstract class in some way?
+public class SelectScreen implements Screen {
+
+    private Array<Character> characters;
+    private Character selectedCharacter;
+    private boolean ready;
 
     private AnimalWar game;
 
@@ -31,12 +32,12 @@ public class MainMenu extends Object implements Screen {
 
     private Texture bg;
 
-    private MainMenuButtons btns;
-    //private Settings settings;
 
 
+    public SelectScreen(AnimalWar game){
+        ready = false;
+        //selectedCharacter = characters.get(0); //henter ut første i lista?
 
-    public MainMenu(AnimalWar game){
         this.game = game;
 
         this.camera = new OrthographicCamera();
@@ -46,13 +47,31 @@ public class MainMenu extends Object implements Screen {
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
         bg = new Texture("Backgrounds/menu-bg.png");
-        btns = new MainMenuButtons(game);
-        //settings = new Settings();
-        //settings.setMusic(true);
+
+
 
 
     }
 
+    public Character getSelectedCharacter() {
+        return selectedCharacter;
+    }
+
+    public Array<Character> getCharacters() {
+        return characters;
+    }
+
+    public void setSelectedCharacter(Character character){
+        this.selectedCharacter = character;
+    }
+
+    public boolean isReady(){
+        return this.ready;
+    }
+
+    public void setReady(boolean ready){
+        this.ready = ready;
+    }
 
     @Override
     public void show() {
@@ -61,6 +80,7 @@ public class MainMenu extends Object implements Screen {
 
     @Override
     public void render(float delta) {
+
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -71,15 +91,7 @@ public class MainMenu extends Object implements Screen {
 
         game.getSb().end();
 
-        game.getSb().setProjectionMatrix(btns.getStage().getCamera().combined);
-        btns.getStage().draw();
-        btns.getStage().act();
-
-
-
     }
-
-
 
     @Override
     public void resize(int width, int height) {
@@ -104,6 +116,5 @@ public class MainMenu extends Object implements Screen {
     @Override
     public void dispose() {
         bg.dispose();
-        btns.disposeStage();
     }
 }

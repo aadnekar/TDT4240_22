@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import ntnu.gruppe22.game.helpers.GameManager;
 import ntnu.gruppe22.game.scenes.MainMenu;
+import ntnu.gruppe22.game.scenes.SelectScreen;
 
 public class AnimalWar extends Game {
 
@@ -21,7 +22,7 @@ public class AnimalWar extends Game {
 	public void create () {
 		sb = new SpriteBatch();
 		GameManager.getInstance().initializeGameData();
-		setScreen(new MainMenu(this));
+		setScreen(new SelectScreen(this));
 	}
 
 	@Override
