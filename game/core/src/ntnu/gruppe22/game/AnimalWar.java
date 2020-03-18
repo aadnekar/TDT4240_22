@@ -3,7 +3,6 @@ package ntnu.gruppe22.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-
 import ntnu.gruppe22.game.helpers.GameManager;
 import ntnu.gruppe22.game.scenes.MainGame;
 import ntnu.gruppe22.game.scenes.MainMenu;
