@@ -13,10 +13,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 
-import ntnu.gruppe22.game.AnimalWar;
-import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameMusic;
-import ntnu.gruppe22.game.huds.MainMenuButtons;
 
 import ntnu.gruppe22.game.huds.SettingsButtons;
 
@@ -25,28 +22,21 @@ public class Settings implements Screen {
     private AnimalWar game;
 
     private OrthographicCamera camera;
-
     private Viewport gameViewport;
 
     private Texture bg;
 
     private SettingsButtons btns;
-
-
     private GameMusic gameMusic;
 
 
     public Settings(AnimalWar game, GameMusic gameMusic){
-
 
         this.game = game;
 
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, GameInfo.WIDTH, GameInfo.HEIGHT);
         this.camera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
-
-        bg = new Texture("Backgrounds/menu-bg.png");
-
 
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
@@ -82,7 +72,6 @@ public class Settings implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
         gameViewport.update(width, height);
     }
 

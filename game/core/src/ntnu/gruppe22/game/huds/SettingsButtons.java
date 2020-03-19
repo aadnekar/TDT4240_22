@@ -21,7 +21,6 @@ import ntnu.gruppe22.game.scenes.MainMenu;
 
 import ntnu.gruppe22.game.helpers.GameMusic;
 
-
 /**
  * @author aase and hildegun 17.03.20
  */
@@ -37,8 +36,8 @@ public class SettingsButtons {
     private ImageButton musicOffBtn;
     private ImageButton volumeUp;
     private ImageButton volumeDown;
-    private ImageButton mainMenuBtn;
-    private ImageButton musicBtn;
+    //private ImageButton mainMenuBtn;
+    //private ImageButton musicBtn;
 
     private ImageButton homeButton;
 
@@ -61,27 +60,14 @@ public class SettingsButtons {
         stage.addActor(musicOffBtn);
         stage.addActor(volumeUp);
         stage.addActor(volumeDown);
-        stage.addActor(mainMenuBtn);
-        stage.addActor(musicBtn);
+        //stage.addActor(mainMenuBtn);
         stage.addActor(homeButton);
     }
 
 
 
 
-
-    private void createAndPositionButtons(){
-
-        mainMenuBtn = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/play-btn.png"))
-        ));
-
-        musicBtn = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/play-btn.png"))
-        ));
-
-        mainMenuBtn.setPosition(GameInfo.WIDTH / 2 - 95, GameInfo.HEIGHT / 2 + 45);
-        musicBtn.setPosition(GameInfo.WIDTH / 2 - 95, GameInfo.HEIGHT / 2 - 45);
+    private void createAndPositionButtons() {
 
         musicOnBtn = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/volumeOn.png"))
@@ -113,6 +99,7 @@ public class SettingsButtons {
 
     private void addAllListeners() {
 
+/*
         mainMenuBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -138,6 +125,9 @@ public class SettingsButtons {
                 GameManager.getInstance().saveData();
             }
         });
+
+ */
+
 
 
         musicOnBtn.addListener(new ChangeListener() {
@@ -174,7 +164,6 @@ public class SettingsButtons {
                 // TODO volume down button
                 System.out.println("volume down");
                 music.changeVolume((float)-0.1);
-
             }
         });
 

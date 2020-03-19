@@ -125,7 +125,7 @@ public class MainMenuButtons {
                 run.setRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        game.setScreen(new Settings(game));
+                        game.setScreen(new Settings(game, gameMusic));
                         System.out.println("GOING TO THE SETTINGS SCREEN!!");
                     }
                 });
@@ -134,7 +134,6 @@ public class MainMenuButtons {
                 sa.addAction(Actions.fadeOut(1f));
                 sa.addAction(run);
                 stage.addAction(sa);
-
             }
         });
 
