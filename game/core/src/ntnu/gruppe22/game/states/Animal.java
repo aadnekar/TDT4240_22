@@ -11,8 +11,8 @@ public class Animal {
 
     private int health;
     private int endurance;
-    private ArrayList<Weapon> inventory = new ArrayList<Weapon>();
-    private Weapon equippedWeapon;
+    //private ArrayList<Weapon> inventory = new ArrayList<Weapon>();
+    //private Weapon equippedWeapon;
 
     private int startX, startY;
     private int endX, endY;
@@ -83,7 +83,7 @@ public class Animal {
     }
 
 
-
+/*
     public ArrayList<Weapon> getInventory() {
         return inventory;
     }
@@ -103,5 +103,7 @@ public class Animal {
     public void setEquippedWeapon(Weapon equippedWeapon) {
         this.equippedWeapon = equippedWeapon;
     }
+
+ */
 
 }
