@@ -40,7 +40,7 @@ public class SettingsButtons {
     private ImageButton mainMenuBtn;
     private ImageButton musicBtn;
 
-    private ImageButton.ImageButtonStyle buttonStyle;
+    private ImageButton homeButton;
 
     private GameMusic music;
 
@@ -63,7 +63,10 @@ public class SettingsButtons {
         stage.addActor(volumeDown);
         stage.addActor(mainMenuBtn);
         stage.addActor(musicBtn);
+        stage.addActor(homeButton);
     }
+
+
 
 
 
@@ -96,10 +99,15 @@ public class SettingsButtons {
                 new Sprite(new Texture("buttons/volumeDown.png"))
         ));
 
+        homeButton = new ImageButton(new SpriteDrawable(
+                new Sprite(new Texture("buttons/homeButton.png"))
+        ));
+
         musicOnBtn.setPosition(GameInfo.WIDTH / 2 - (musicOnBtn.getWidth()/2), GameInfo.HEIGHT / 2 + 70);
         musicOffBtn.setPosition(GameInfo.WIDTH / 2 - (musicOnBtn.getWidth()/2), GameInfo.HEIGHT / 2 - 120);
         volumeUp.setPosition(GameInfo.WIDTH / 2 + 60, GameInfo.HEIGHT / 2 );
         volumeDown.setPosition(GameInfo.WIDTH / 2 - 170, GameInfo.HEIGHT / 2 );
+        homeButton.setPosition(50, GameInfo.HEIGHT - 90);
 
     }
 
@@ -169,6 +177,18 @@ public class SettingsButtons {
 
             }
         });
+
+        homeButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // TODO volume down button
+                System.out.println("going back to main menu");
+                music.setMusic(false);
+                game.setScreen(new MainMenu(game));
+            }
+        });
+
+
 
     }
 
