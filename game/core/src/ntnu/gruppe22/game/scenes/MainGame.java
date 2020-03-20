@@ -52,7 +52,7 @@ public class MainGame implements Screen {
 
     private ArrayList<Animal> charactersPlayer1 = new ArrayList<>();
     private ArrayList<Animal> charactersPlayer2 = new ArrayList<>();
-    private Animal currentCaracter;
+    private Animal currentCharacter;
     private int currentTurn;
 
     BitmapFont font;
@@ -119,7 +119,7 @@ public class MainGame implements Screen {
 
     //forandring fra navn i innlevering
     public Animal getCurrentAnimal(){
-        return this.currentCaracter;
+        return this.currentCharacter;
     }
 
     //vil lagre hver Animal med en index hos hver spiller
@@ -127,18 +127,18 @@ public class MainGame implements Screen {
     //antar at vi må sette en ny currencharacter i denne metoden
     public void changeCharacter(){
         if(currentTurn == 0){
-            int prev = charactersPlayer1.indexOf(currentCaracter);
+            int prev = charactersPlayer1.indexOf(currentCharacter);
             if(prev > charactersPlayer1.size()+1 || charactersPlayer1.size() == 1){
-                setCurrentCaracter(charactersPlayer1.get(0));
+                setCurrentCharacter(charactersPlayer1.get(0));
             } else{
-                setCurrentCaracter(charactersPlayer1.get(prev + 1));
+                setCurrentCharacter(charactersPlayer1.get(prev + 1));
             }
         } else {
-            int prev = charactersPlayer2.indexOf(currentCaracter);
+            int prev = charactersPlayer2.indexOf(currentCharacter);
             if(prev > charactersPlayer2.size()+1 || charactersPlayer2.size() == 1){
-                setCurrentCaracter(charactersPlayer1.get(0));
+                setCurrentCharacter(charactersPlayer1.get(0));
             } else{
-                setCurrentCaracter(charactersPlayer2.get(prev + 1));
+                setCurrentCharacter(charactersPlayer2.get(prev + 1));
             }
         }
 
@@ -158,8 +158,8 @@ public class MainGame implements Screen {
         }
     }
 
-    public void setCurrentCaracter(Animal animal){
-        this.currentCaracter = animal;
+    public void setCurrentCharacter(Animal animal){
+        this.currentCharacter = animal;
     }
 
     public void timesUp(){
@@ -174,7 +174,7 @@ public class MainGame implements Screen {
         if(interval == 0){
             timesUp();
             System.out.println("current turn: " + currentTurn);
-            System.out.println("current character: " + currentCaracter);
+            System.out.println("current character: " + currentCharacter);
             startTimer(30);
         }
 
