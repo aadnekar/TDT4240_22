@@ -36,9 +36,6 @@ public class SettingsButtons {
     private ImageButton musicOffBtn;
     private ImageButton volumeUp;
     private ImageButton volumeDown;
-    //private ImageButton mainMenuBtn;
-    //private ImageButton musicBtn;
-
     private ImageButton homeButton;
 
     private GameMusic music;
@@ -47,8 +44,8 @@ public class SettingsButtons {
     public SettingsButtons(AnimalWar game, GameMusic music) {
         this.game = game;
         this.music = music;
-        gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
 
+        gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
         stage = new Stage(gameViewport, game.getSb());
 
         Gdx.input.setInputProcessor(stage);
@@ -60,7 +57,6 @@ public class SettingsButtons {
         stage.addActor(musicOffBtn);
         stage.addActor(volumeUp);
         stage.addActor(volumeDown);
-        //stage.addActor(mainMenuBtn);
         stage.addActor(homeButton);
     }
 
@@ -98,36 +94,6 @@ public class SettingsButtons {
     }
 
     private void addAllListeners() {
-
-/*
-        mainMenuBtn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if(event.equals(InputEvent.Type.touchDown)) {
-                    mainMenuBtn.setBackground(new SpriteDrawable(
-                            new Sprite(new Texture("buttons/play-btn-clicked"))
-                    ));
-                }
-                game.setScreen(new MainMenu(game));
-            }
-        });
-
-        musicBtn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if (GameManager.getInstance().gameData.isMusicOn()) {
-                    GameManager.getInstance().gameData.setMusicOn(false);
-                    GameManager.getInstance().stopMusic();
-                } else {
-                    GameManager.getInstance().gameData.setMusicOn(true);
-                    GameManager.getInstance().playMusic();
-                }
-                GameManager.getInstance().saveData();
-            }
-        });
-
- */
-
 
 
         musicOnBtn.addListener(new ChangeListener() {

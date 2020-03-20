@@ -21,7 +21,6 @@ import ntnu.gruppe22.game.helpers.GameManager;
 import ntnu.gruppe22.game.helpers.GameMusic;
 import ntnu.gruppe22.game.scenes.MainMenu;
 import ntnu.gruppe22.game.scenes.Settings;
-//import ntnu.gruppe22.game.scenes.Settings;
 
 /**
  * @author aadne on 12.03.2020 12:15
