@@ -10,7 +10,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
-import ntnu.gruppe22.game.helpers.GameMusic;
 import ntnu.gruppe22.game.huds.MainMenuButtons;
 
 
@@ -21,16 +20,10 @@ import ntnu.gruppe22.game.huds.MainMenuButtons;
 public class MainMenu extends Object implements Screen {
 
     private AnimalWar game;
-
     private OrthographicCamera camera;
     private Viewport gameViewport;
-
     private Texture bg;
-
     private MainMenuButtons btns;
-    private GameMusic gameMusic;
-
-
 
     public MainMenu(AnimalWar game){
         this.game = game;
@@ -42,11 +35,7 @@ public class MainMenu extends Object implements Screen {
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
         bg = new Texture("Backgrounds/menu-bg.png");
-
-        gameMusic = new GameMusic();
-        gameMusic.setMusic(true);
-        gameMusic.changeVolume((float) 0.5);
-        btns = new MainMenuButtons(game, gameMusic);
+        btns = new MainMenuButtons(game);
 
 
     }
@@ -68,12 +57,9 @@ public class MainMenu extends Object implements Screen {
         game.getSb().draw(bg, 0, 0);
 
         game.getSb().end();
-
         game.getSb().setProjectionMatrix(btns.getStage().getCamera().combined);
         btns.getStage().draw();
         btns.getStage().act();
-
-
 
     }
 
