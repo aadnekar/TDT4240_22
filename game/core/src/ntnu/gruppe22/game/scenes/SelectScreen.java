@@ -10,7 +10,9 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
+import ntnu.gruppe22.game.helpers.GameMusic;
 import ntnu.gruppe22.game.huds.MainMenuButtons;
+import ntnu.gruppe22.game.huds.SelectScreenButtons;
 
 /**
  * Antar at denne filen inneholder en screen som gir eg mulighet til å velge characters
@@ -19,7 +21,7 @@ import ntnu.gruppe22.game.huds.MainMenuButtons;
 
 
 //extend abstract class in some way?
-public class SelectScreen implements Screen {
+public class SelectScreen extends Object implements Screen {
 
     private Array<Character> characters;
     private Character selectedCharacter;
@@ -31,6 +33,9 @@ public class SelectScreen implements Screen {
     private Viewport gameViewport;
 
     private Texture bg;
+    private SelectScreenButtons btns;
+    private GameMusic gameMusic;
+
 
 
 
@@ -47,6 +52,7 @@ public class SelectScreen implements Screen {
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
         bg = new Texture("Backgrounds/menu-bg.png");
+        btns = new SelectScreenButtons(game,gameMusic);
 
 
 
@@ -91,6 +97,10 @@ public class SelectScreen implements Screen {
 
         game.getSb().end();
 
+        game.getSb().setProjectionMatrix(btns.getStage().getCamera().combined);
+        btns.getStage().draw();
+        btns.getStage().act();
+
     }
 
     @Override
@@ -115,6 +125,8 @@ public class SelectScreen implements Screen {
 
     @Override
     public void dispose() {
+
         bg.dispose();
+        btns.disposeStage();
     }
 }

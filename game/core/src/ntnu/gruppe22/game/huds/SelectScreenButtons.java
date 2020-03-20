@@ -18,29 +18,28 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
+import ntnu.gruppe22.game.helpers.GameMusic;
 import ntnu.gruppe22.game.scenes.MainMenu;
 import ntnu.gruppe22.game.scenes.SelectScreen;
-import ntnu.gruppe22.game.scenes.Settings;
 
-/**
- * @author aadne on 12.03.2020 12:15
- */
 
-public class MainMenuButtons {
+public class SelectScreenButtons {
     private AnimalWar game;
     private Stage stage;
     private Viewport gameViewport;
 
     private ImageButton playBtn;
-    private ImageButton controlsBtn;
-    private ImageButton settingsBtn;
-    private ImageButton mapsBtn;
+    private ImageButton nextBtn;
+    private ImageButton previousBtn;
+    private ImageButton homeBtn;
 
+    private GameMusic gameMusic;
 
-    public MainMenuButtons(AnimalWar game) {
-        this.game = game;
+    public SelectScreenButtons(AnimalWar game, GameMusic gameMusic){
+        this.game=game;
+        this.gameMusic = gameMusic;
 
-        gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
+        gameViewport = new FitViewport(GameInfo.WIDTH,GameInfo.HEIGHT,new OrthographicCamera());
 
         stage = new Stage(gameViewport, game.getSb());
 
@@ -50,9 +49,9 @@ public class MainMenuButtons {
         addAllListeners();
 
         stage.addActor(playBtn);
-        stage.addActor(controlsBtn);
-        stage.addActor(settingsBtn);
-        stage.addActor(mapsBtn);
+        stage.addActor(nextBtn);
+        stage.addActor(previousBtn);
+        stage.addActor(homeBtn);
 
         checkMusic();
     }
@@ -60,26 +59,25 @@ public class MainMenuButtons {
     private void createAndPositionButtons() {
 
         playBtn = new ImageButton(new SpriteDrawable(
-                        new Sprite(new Texture("buttons/play_btn.png"))
-                ));
-
-        controlsBtn = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/controls_btn.png"))
+                new Sprite(new Texture("buttons/play-btn.png"))
         ));
 
-        settingsBtn = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/settings_btn.png"))
+        nextBtn = new ImageButton(new SpriteDrawable(
+                new Sprite(new Texture("buttons/play-btn.png"))
         ));
 
-        mapsBtn = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/maps_btn.png"))
+        previousBtn = new ImageButton(new SpriteDrawable(
+                new Sprite(new Texture("buttons/play-btn.png"))
         ));
 
+        homeBtn = new ImageButton(new SpriteDrawable(
+                new Sprite(new Texture("buttons/homeButton.png"))
+        ));
 
-        playBtn.setPosition(GameInfo.WIDTH / 2 - playBtn.getWidth()/2, GameInfo.HEIGHT / 2 + 40);
-        controlsBtn.setPosition(GameInfo.WIDTH / 2 - playBtn.getWidth()/2, GameInfo.HEIGHT / 2 - 30);
-        settingsBtn.setPosition(GameInfo.WIDTH / 2 - playBtn.getWidth()/2, GameInfo.HEIGHT / 2 - 100);
-        mapsBtn.setPosition(GameInfo.WIDTH / 2 -playBtn.getWidth()/2, GameInfo.HEIGHT / 2 - 170);
+        playBtn.setPosition(GameInfo.WIDTH / 2 - 95, GameInfo.HEIGHT / 2 + 135);
+        nextBtn.setPosition(GameInfo.WIDTH / 2 + 45, GameInfo.HEIGHT / 2 - 135);
+        previousBtn.setPosition(GameInfo.WIDTH / 2 - 235, GameInfo.HEIGHT / 2 - 135);
+        homeBtn.setPosition(50, GameInfo.HEIGHT - 90);
 
     }
 
@@ -95,7 +93,7 @@ public class MainMenuButtons {
                     public void run() {
                         // TODO: Uncomment when MainGame is implemented
                         game.setScreen(new SelectScreen(game));
-                        System.out.println("welcome to Selectscreen");
+                        System.out.println("NOW GAME STARTED");
                     }
                 });
 
@@ -107,7 +105,7 @@ public class MainMenuButtons {
             }
         });
 
-        controlsBtn.addListener(new ChangeListener() {
+        nextBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 // TODO: Uncomment this when Controls screen is implemented.
@@ -115,31 +113,17 @@ public class MainMenuButtons {
             }
         });
 
-        settingsBtn.addListener(new ChangeListener() {
+        previousBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
-                RunnableAction run = new RunnableAction();
-                run.setRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        game.setScreen(new Settings(game/*, gameMusic*/));
-                        System.out.println("GOING TO THE SETTINGS SCREEN!!");
-                    }
-                });
-
-                SequenceAction sa = new SequenceAction();
-                sa.addAction(Actions.fadeOut(1f));
-                sa.addAction(run);
-                stage.addAction(sa);
+                //Changeed to the previous character
             }
         });
 
-        mapsBtn.addListener(new ChangeListener() {
+        homeBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                // TODO uncomment this when MapScreen screen is implemented
-                /*game.setScreen(new MapScreen(game));*/
+                game.setScreen(new MainMenu(game));
             }
         });
 
