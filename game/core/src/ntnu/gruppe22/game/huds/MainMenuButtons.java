@@ -18,7 +18,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
-import ntnu.gruppe22.game.helpers.GameMusic;
 import ntnu.gruppe22.game.scenes.MainMenu;
 import ntnu.gruppe22.game.scenes.Settings;
 
@@ -36,11 +35,9 @@ public class MainMenuButtons {
     private ImageButton settingsBtn;
     private ImageButton mapsBtn;
 
-    private GameMusic gameMusic;
 
-    public MainMenuButtons(AnimalWar game, GameMusic gameMusic) {
+    public MainMenuButtons(AnimalWar game) {
         this.game = game;
-        this.gameMusic = gameMusic;
 
         gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
 
@@ -124,7 +121,7 @@ public class MainMenuButtons {
                 run.setRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        game.setScreen(new Settings(game, gameMusic));
+                        game.setScreen(new Settings(game/*, gameMusic*/));
                         System.out.println("GOING TO THE SETTINGS SCREEN!!");
                     }
                 });

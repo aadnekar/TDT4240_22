@@ -9,24 +9,19 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
-import ntnu.gruppe22.game.helpers.GameMusic;
 import ntnu.gruppe22.game.huds.SettingsButtons;
 
 
 public class Settings implements Screen {
 
     private AnimalWar game;
-
     private OrthographicCamera camera;
     private Viewport gameViewport;
-
     private Texture bg;
-
     private SettingsButtons btns;
-    private GameMusic gameMusic;
 
 
-    public Settings(AnimalWar game, GameMusic gameMusic){
+    public Settings(AnimalWar game){
 
         this.game = game;
 
@@ -37,9 +32,7 @@ public class Settings implements Screen {
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
         bg = new Texture("Backgrounds/menu-bg.png");
-        btns = new SettingsButtons(game, gameMusic);
-        this.gameMusic = gameMusic;
-
+        btns = new SettingsButtons(game);
     }
 
 

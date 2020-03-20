@@ -14,7 +14,6 @@ import java.util.TimerTask;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
-import ntnu.gruppe22.game.helpers.GameMusic;
 import ntnu.gruppe22.game.states.Animal;
 
 public class MainGame implements Screen {
@@ -25,7 +24,6 @@ public class MainGame implements Screen {
     private Viewport gameViewport;
 
     private Texture bg;
-    private GameMusic settings;
 
     private ArrayList<Animal> charactersPlayer1;
     private ArrayList<Animal> charactersPlayer2;
@@ -52,8 +50,6 @@ public class MainGame implements Screen {
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
         bg = new Texture("Backgrounds/menu-bg.png");
-        settings = new GameMusic();
-        settings.setMusic(true);
 
         //legger ved to animals i første omgang. Videre vil vi gi mulighet til fler.
         //posisjon er random, dette må endres etter gitt map
