@@ -71,7 +71,7 @@ public class MainMenuButtons {
         ));
 
         settingsBtn = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/play-btn.png"))
+                new Sprite(new Texture("buttons/settings-btn.png"))
         ));
 
         mapsBtn = new ImageButton(new SpriteDrawable(
