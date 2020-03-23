@@ -58,6 +58,17 @@ public class Animal {
         }
     }
 
+    //lagt til metode
+    public Texture getTexture(){
+        return animal;
+    }
+    public int getX(){
+        return startX;
+    }
+    public int getY(){
+        return startY;
+    }
+
     private void updateEndurance() {
         //??
     }

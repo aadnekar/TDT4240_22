@@ -82,9 +82,13 @@ public class MainGame implements Screen {
 
         currentTurn = 0;
 
+        //setter currentcharacter for player 1
+        setCurrentCharacter(charactersPlayer1.get(0));
+
         font = new BitmapFont();
-        startTimer(30);
+        startTimer(35);
         //import map in some way?
+
 
 
     }
@@ -170,12 +174,14 @@ public class MainGame implements Screen {
 
     @Override
     public void render(float dt) {
+
+        currentCharacter.move();
         //sjekker om tiden har gått ut
         if(interval == 0){
             timesUp();
             System.out.println("current turn: " + currentTurn);
             System.out.println("current character: " + currentCharacter);
-            startTimer(30);
+            startTimer(35);
         }
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -183,9 +189,18 @@ public class MainGame implements Screen {
 
         game.getSb().begin();
         game.getSb().draw(bg, 0, 0);
-        font.draw(game.getSb(), String.valueOf(interval), 50, 50);
+        font.draw(game.getSb(), getDrawTime(), 50, 50);
+        game.getSb().draw(currentCharacter.getTexture(), currentCharacter.getX(), currentCharacter.getY());
         game.getSb().end();
 
+    }
+
+    private String getDrawTime(){
+        if(interval-5 > 0){
+            return String.valueOf(interval-5);
+        } else{
+            return "0    TIMES UP!";
+        }
     }
 
     @Override
