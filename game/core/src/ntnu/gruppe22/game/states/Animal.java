@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
+import javax.xml.soap.Text;
+
 
 public class Animal {
 
@@ -36,6 +38,7 @@ public class Animal {
         healthbar = new NinePatch(new Texture(Gdx.files.internal("Animals/Rectangle.png")), 0, 0, 0, 0);
     }
 
+
     //moves Animal to player touch (x-coordinate only)
     public void move() {
         if (Gdx.input.justTouched()) {
@@ -59,9 +62,10 @@ public class Animal {
     }
 
     //lagt til metode
-    public Texture getTexture(){
+    public Texture getAnimalTexture(){
         return animal;
     }
+    public Texture getBarTexture(){return healthbar.getTexture();}
     public int getX(){
         return startX;
     }

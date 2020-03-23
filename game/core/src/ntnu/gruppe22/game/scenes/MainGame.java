@@ -52,7 +52,7 @@ public class MainGame implements Screen {
 
     private ArrayList<Animal> charactersPlayer1 = new ArrayList<>();
     private ArrayList<Animal> charactersPlayer2 = new ArrayList<>();
-    private Animal currentCharacter;
+    private Animal currentPlayer1, currentPlayer2;
     private int currentTurn;
 
     BitmapFont font;
@@ -77,13 +77,17 @@ public class MainGame implements Screen {
         //posisjon er random, dette må endres etter gitt map
         Animal player1 = new Animal(GameInfo.WIDTH/2, GameInfo.HEIGHT/2);
         Animal player2 = new Animal(GameInfo.WIDTH/2-50, GameInfo.HEIGHT/2-50);
-        charactersPlayer1.add(player1);
-        charactersPlayer2.add(player2);
+        Animal player3 = new Animal(GameInfo.WIDTH/2-50, GameInfo.HEIGHT/2-50);
+
+        currentPlayer1 = player1;
+        currentPlayer2 = player2;
+
+        charactersPlayer1.add(currentPlayer1);
+        charactersPlayer1.add(currentPlayer2);
+        charactersPlayer2.add(player3);
+
 
         currentTurn = 0;
-
-        //setter currentcharacter for player 1
-        setCurrentCharacter(charactersPlayer1.get(0));
 
         font = new BitmapFont();
         startTimer(35);
@@ -123,7 +127,12 @@ public class MainGame implements Screen {
 
     //forandring fra navn i innlevering
     public Animal getCurrentAnimal(){
-        return this.currentCharacter;
+        if(currentTurn == 0){
+            return currentPlayer1;
+        } else{
+            return currentPlayer2;
+        }
+
     }
 
     //vil lagre hver Animal med en index hos hver spiller
@@ -131,15 +140,15 @@ public class MainGame implements Screen {
     //antar at vi må sette en ny currencharacter i denne metoden
     public void changeCharacter(){
         if(currentTurn == 0){
-            int prev = charactersPlayer1.indexOf(currentCharacter);
-            if(prev > charactersPlayer1.size()+1 || charactersPlayer1.size() == 1){
+            int prev = charactersPlayer1.indexOf(currentPlayer1);
+            if(prev+1 == charactersPlayer1.size()){
                 setCurrentCharacter(charactersPlayer1.get(0));
             } else{
                 setCurrentCharacter(charactersPlayer1.get(prev + 1));
             }
         } else {
-            int prev = charactersPlayer2.indexOf(currentCharacter);
-            if(prev > charactersPlayer2.size()+1 || charactersPlayer2.size() == 1){
+            int prev = charactersPlayer2.indexOf(currentPlayer2);
+            if(prev+1 == charactersPlayer2.size()){
                 setCurrentCharacter(charactersPlayer1.get(0));
             } else{
                 setCurrentCharacter(charactersPlayer2.get(prev + 1));
@@ -163,7 +172,11 @@ public class MainGame implements Screen {
     }
 
     public void setCurrentCharacter(Animal animal){
-        this.currentCharacter = animal;
+        if(currentTurn == 0){
+            currentPlayer1 = animal;
+        }else {
+            currentPlayer2 = animal;
+        }
     }
 
     public void timesUp(){
@@ -175,12 +188,12 @@ public class MainGame implements Screen {
     @Override
     public void render(float dt) {
 
-        currentCharacter.move();
+        getCurrentAnimal().move();
+
         //sjekker om tiden har gått ut
         if(interval == 0){
             timesUp();
             System.out.println("current turn: " + currentTurn);
-            System.out.println("current character: " + currentCharacter);
             startTimer(35);
         }
 
@@ -190,7 +203,15 @@ public class MainGame implements Screen {
         game.getSb().begin();
         game.getSb().draw(bg, 0, 0);
         font.draw(game.getSb(), getDrawTime(), 50, 50);
-        game.getSb().draw(currentCharacter.getTexture(), currentCharacter.getX(), currentCharacter.getY());
+        for(Animal i : charactersPlayer1){
+            game.getSb().draw(i.getAnimalTexture(), i.getX(), i.getY());
+            game.getSb().draw(i.getBarTexture(), i.getX()+5, i.getY()+110);
+        }
+        for(Animal i : charactersPlayer2){
+            game.getSb().draw(i.getAnimalTexture(), i.getX(), i.getY());
+            game.getSb().draw(i.getBarTexture(), i.getX()+5, i.getY()+110);
+        }
+
         game.getSb().end();
 
     }
