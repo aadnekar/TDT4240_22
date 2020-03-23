@@ -188,7 +188,10 @@ public class MainGame implements Screen {
     @Override
     public void render(float dt) {
 
-        getCurrentAnimal().move();
+        //dont move if time is less than 0
+        if(interval-5 >= 0){
+            getCurrentAnimal().move();
+        }
 
         //sjekker om tiden har gått ut
         if(interval == 0){
