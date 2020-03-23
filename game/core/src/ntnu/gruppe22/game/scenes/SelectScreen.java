@@ -5,6 +5,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -21,7 +23,7 @@ import ntnu.gruppe22.game.huds.SelectScreenButtons;
 
 
 //extend abstract class in some way?
-public class SelectScreen extends Object implements Screen {
+public class SelectScreen implements Screen {
 
     private Array<Character> characters;
     private Character selectedCharacter;
@@ -36,7 +38,7 @@ public class SelectScreen extends Object implements Screen {
     private SelectScreenButtons btns;
     private GameMusic gameMusic;
 
-
+    private Stage uiStage;
 
 
     public SelectScreen(AnimalWar game){
@@ -54,10 +56,18 @@ public class SelectScreen extends Object implements Screen {
         bg = new Texture("Backgrounds/menu-bg.png");
         btns = new SelectScreenButtons(game,gameMusic);
 
+        uiStage = new Stage(gameViewport);
+        Gdx.input.setInputProcessor(uiStage);
+
 
 
 
     }
+    /*public void prepareUI(){
+        Image characterSprite = new Image();
+        characterSprite.setPosition((uiStage.getWidth()-characterSprite.getWidth())/2, (uiStage.getHeight()-characterSprite.getHeight())/2);
+        uiStage.addActor(characterSprite);
+    }*/
 
     public Character getSelectedCharacter() {
         return selectedCharacter;
@@ -90,6 +100,8 @@ public class SelectScreen extends Object implements Screen {
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        uiStage.act(delta);
+        uiStage.draw();
 
         game.getSb().begin();
 
@@ -125,8 +137,9 @@ public class SelectScreen extends Object implements Screen {
 
     @Override
     public void dispose() {
-
+        Gdx.input.setInputProcessor(null);
         bg.dispose();
         btns.disposeStage();
+        uiStage.dispose();
     }
 }

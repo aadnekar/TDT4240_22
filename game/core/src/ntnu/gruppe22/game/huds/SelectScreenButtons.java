@@ -91,7 +91,6 @@ public class SelectScreenButtons {
                 run.setRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        // TODO: Uncomment when MainGame is implemented
                         game.setScreen(new SelectScreen(game));
                         System.out.println("NOW GAME STARTED");
                     }
@@ -108,15 +107,14 @@ public class SelectScreenButtons {
         nextBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                // TODO: Uncomment this when Controls screen is implemented.
-                /*game.setScreen(new Controls(game));*/
+
             }
         });
 
         previousBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //Changeed to the previous character
+                //Changed to the previous character
             }
         });
 
