@@ -1,10 +1,12 @@
 package ntnu.gruppe22.game.scenes;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -26,6 +28,7 @@ public class MainMenu extends Object implements Screen {
     private Viewport gameViewport;
 
     private Texture bg;
+    private Texture logo;
 
     private MainMenuButtons btns;
     private GameMusic gameMusic;
@@ -42,6 +45,9 @@ public class MainMenu extends Object implements Screen {
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
         bg = new Texture("Backgrounds/menu-bg.png");
+        logo = new Texture("ANIMAL WAR.png");
+        System.out.println(logo.getHeight());
+
 
         gameMusic = new GameMusic();
         gameMusic.setMusic(true);
@@ -64,8 +70,9 @@ public class MainMenu extends Object implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.getSb().begin();
-
         game.getSb().draw(bg, 0, 0);
+        game.getSb().draw(logo, GameInfo.WIDTH/2 - logo.getWidth()/2, GameInfo.HEIGHT - 100);
+
 
         game.getSb().end();
 
@@ -82,6 +89,7 @@ public class MainMenu extends Object implements Screen {
     @Override
     public void resize(int width, int height) {
         gameViewport.update(width, height);
+
     }
 
     @Override

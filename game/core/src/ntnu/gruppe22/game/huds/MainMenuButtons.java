@@ -63,25 +63,26 @@ public class MainMenuButtons {
     private void createAndPositionButtons() {
 
         playBtn = new ImageButton(new SpriteDrawable(
-                        new Sprite(new Texture("buttons/play-btn.png"))
+                        new Sprite(new Texture("buttons/play_btn.png"))
                 ));
 
         controlsBtn = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/play-btn.png"))
+                new Sprite(new Texture("buttons/controls_btn.png"))
         ));
 
         settingsBtn = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/settings-btn.png"))
+                new Sprite(new Texture("buttons/settings_btn.png"))
         ));
 
         mapsBtn = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/play-btn.png"))
+                new Sprite(new Texture("buttons/maps_btn.png"))
         ));
 
-        playBtn.setPosition(GameInfo.WIDTH / 2 - 95, GameInfo.HEIGHT / 2 + 135);
-        controlsBtn.setPosition(GameInfo.WIDTH / 2 - 95, GameInfo.HEIGHT / 2 + 45);
-        settingsBtn.setPosition(GameInfo.WIDTH / 2 - 95, GameInfo.HEIGHT / 2 - 45);
-        mapsBtn.setPosition(GameInfo.WIDTH / 2 - 95, GameInfo.HEIGHT / 2 - 135);
+
+        playBtn.setPosition(GameInfo.WIDTH / 2 - playBtn.getWidth()/2, GameInfo.HEIGHT / 2 + 40);
+        controlsBtn.setPosition(GameInfo.WIDTH / 2 - playBtn.getWidth()/2, GameInfo.HEIGHT / 2 - 30);
+        settingsBtn.setPosition(GameInfo.WIDTH / 2 - playBtn.getWidth()/2, GameInfo.HEIGHT / 2 - 100);
+        mapsBtn.setPosition(GameInfo.WIDTH / 2 -playBtn.getWidth()/2, GameInfo.HEIGHT / 2 - 170);
 
     }
 
