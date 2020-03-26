@@ -22,7 +22,7 @@ public class AnimalWar extends Game {
 	public void create () {
 		sb = new SpriteBatch();
 		GameManager.getInstance().initializeGameData();
-		setScreen(new MainGame(this));
+		setScreen(new MainMenu(this));
 	}
 
 	@Override
