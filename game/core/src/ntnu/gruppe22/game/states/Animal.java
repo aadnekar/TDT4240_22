@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
+import javax.xml.soap.Text;
+
 
 public class Animal {
 
@@ -30,11 +32,12 @@ public class Animal {
         moving = true;
         health = 100;
         endurance= 5000;
-        animal = new Texture(Gdx.files.internal("player.png"));
+        animal = new Texture(Gdx.files.internal("Animals/chicken.png"));
         spriteAnimal = new Sprite(animal);
         //AnimalRect = new Rectangle(x,y, spriteAnimal.getWidth(),spriteAnimal.getHeight());
-        healthbar = new NinePatch(new Texture(Gdx.files.internal("Rectangle.png")), 0, 0, 0, 0);
+        healthbar = new NinePatch(new Texture(Gdx.files.internal("Animals/Rectangle.png")), 0, 0, 0, 0);
     }
+
 
     //moves Animal to player touch (x-coordinate only)
     public void move() {
@@ -56,6 +59,18 @@ public class Animal {
                 startX = endX;
             }
         }
+    }
+
+    //lagt til metode
+    public Texture getAnimalTexture(){
+        return animal;
+    }
+    public Texture getBarTexture(){return healthbar.getTexture();}
+    public int getX(){
+        return startX;
+    }
+    public int getY(){
+        return startY;
     }
 
     private void updateEndurance() {
