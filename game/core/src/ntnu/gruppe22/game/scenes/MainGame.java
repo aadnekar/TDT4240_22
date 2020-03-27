@@ -105,7 +105,6 @@ public class MainGame implements Screen {
     //antar at vi må sette en ny currencharacter i denne metoden
     public void changeCharacter(){
         if(currentTurn == 0){
-
             int prev = charactersPlayer2.indexOf(currentAnimal);
             if(prev+1 == charactersPlayer1.size()){
                 setCurrentCharacter(charactersPlayer1.get(0));
