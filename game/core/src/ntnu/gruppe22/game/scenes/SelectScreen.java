@@ -44,9 +44,9 @@ public class SelectScreen implements Screen {
 
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
-        bg = new Texture("Backgrounds/menu-bg.png");
         screenBtns = new SelectScreenButtons(game);
         animalbtns = new SelectAnimalButtons(game);
+        bg = new Texture("backgrounds/menu-bg.png");
 
     }
 
