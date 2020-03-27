@@ -19,6 +19,7 @@ import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
 import ntnu.gruppe22.game.scenes.MainMenu;
+import ntnu.gruppe22.game.scenes.SelectScreen;
 import ntnu.gruppe22.game.scenes.Settings;
 
 /**
@@ -93,8 +94,8 @@ public class MainMenuButtons {
                     @Override
                     public void run() {
                         // TODO: Uncomment when MainGame is implemented
-                        game.setScreen(new MainMenu(game));
-                        System.out.println("NEW GAME STARTED!!");
+                        game.setScreen(new SelectScreen(game));
+                        System.out.println("welcome to Selectscreen");
                     }
                 });
 

@@ -19,7 +19,7 @@ import ntnu.gruppe22.game.huds.MainMenuButtons;
  * @author aadne on 12.03.2020 09:53
  */
 
-public class MainMenu extends Object implements Screen {
+public class MainMenu implements Screen {
 
     private AnimalWar game;
     private OrthographicCamera camera;

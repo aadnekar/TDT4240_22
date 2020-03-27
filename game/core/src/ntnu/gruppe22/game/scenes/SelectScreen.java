@@ -5,12 +5,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
-import ntnu.gruppe22.game.huds.MainMenuButtons;
+import ntnu.gruppe22.game.huds.SelectScreenButtons;
 
 /**
  * Antar at denne filen inneholder en screen som gir eg mulighet til å velge characters
@@ -21,21 +21,17 @@ import ntnu.gruppe22.game.huds.MainMenuButtons;
 //extend abstract class in some way?
 public class SelectScreen implements Screen {
 
-    private Array<Character> characters;
-    private Character selectedCharacter;
-    private boolean ready;
-
     private AnimalWar game;
-
     private OrthographicCamera camera;
+    private SelectScreenButtons btns;
     private Viewport gameViewport;
-
     private Texture bg;
 
+    //private Map<Player.username, animal> animalChoices;
+    //private Map<Player.username, Boolean> ready;
 
 
-    public SelectScreen(AnimalWar game){
-        ready = false;
+    public SelectScreen(AnimalWar game) {
         //selectedCharacter = characters.get(0); //henter ut første i lista?
 
         this.game = game;
@@ -47,39 +43,30 @@ public class SelectScreen implements Screen {
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
         bg = new Texture("Backgrounds/menu-bg.png");
-
-
-
+        btns = new SelectScreenButtons(game);
 
     }
 
-    public Character getSelectedCharacter() {
-        return selectedCharacter;
+    public void setCharacter ( int id){
+
     }
 
-    public Array<Character> getCharacters() {
-        return characters;
-    }
 
-    public void setSelectedCharacter(Character character){
-        this.selectedCharacter = character;
-    }
+        //public boolean isReady(){
+        // return this.ready;
+        // }
 
-    public boolean isReady(){
-        return this.ready;
-    }
-
-    public void setReady(boolean ready){
-        this.ready = ready;
-    }
-
-    @Override
-    public void show() {
+    public void setReady ( boolean ready){
 
     }
 
     @Override
-    public void render(float delta) {
+    public void show () {
+
+    }
+
+    @Override
+    public void render ( float delta){
 
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -91,30 +78,37 @@ public class SelectScreen implements Screen {
 
         game.getSb().end();
 
+        game.getSb().setProjectionMatrix(btns.getStage().getCamera().combined);
+        btns.getStage().draw();
+        btns.getStage().act();
+
     }
 
     @Override
-    public void resize(int width, int height) {
+    public void resize ( int width, int height){
         gameViewport.update(width, height);
     }
 
     @Override
-    public void pause() {
+    public void pause () {
 
     }
 
     @Override
-    public void resume() {
+    public void resume () {
 
     }
 
     @Override
-    public void hide() {
+    public void hide () {
 
     }
 
     @Override
-    public void dispose() {
+    public void dispose () {
+        Gdx.input.setInputProcessor(null);
         bg.dispose();
+        btns.disposeStage();
     }
 }
+
