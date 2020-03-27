@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
@@ -46,9 +47,8 @@ public class MainGame implements Screen {
 
     private Texture bg;
 
-    private ArrayList<Animal> charactersPlayer1 = new ArrayList<>();
-    private ArrayList<Animal> charactersPlayer2 = new ArrayList<>();
-    private Animal currentPlayer1, currentPlayer2;
+    private List<Animal> charactersPlayer1;
+    private List<Animal> charactersPlayer2;
     private Animal currentAnimal;
     private int currentTurn;
 
@@ -63,6 +63,8 @@ public class MainGame implements Screen {
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, GameInfo.WIDTH, GameInfo.HEIGHT);
         this.camera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
+        charactersPlayer1 = new ArrayList<>();
+        charactersPlayer2 = new ArrayList<>();
 
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
