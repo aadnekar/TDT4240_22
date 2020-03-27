@@ -37,9 +37,9 @@ public class MainMenu implements Screen {
 
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
-        bg = new Texture("Backgrounds/menu-bg.png");
+        bg = new Texture("backgrounds/menu-bg.png");
 
-        logo = new Texture("ANIMAL WAR.png");
+        logo = new Texture("animal-war.png");
         btns = new MainMenuButtons(game);
 
     }

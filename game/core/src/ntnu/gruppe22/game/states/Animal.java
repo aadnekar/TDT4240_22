@@ -32,10 +32,10 @@ public class Animal {
         moving = true;
         health = 100;
         endurance= 5000;
-        animal = new Texture(Gdx.files.internal("Animals/chicken.png"));
+        animal = new Texture(Gdx.files.internal("animals/chicken.png"));
         spriteAnimal = new Sprite(animal);
         //AnimalRect = new Rectangle(x,y, spriteAnimal.getWidth(),spriteAnimal.getHeight());
-        healthbar = new NinePatch(new Texture(Gdx.files.internal("Animals/Rectangle.png")), 0, 0, 0, 0);
+        healthbar = new NinePatch(new Texture(Gdx.files.internal("animals/rectangle.png")), 0, 0, 0, 0);
     }
 
 

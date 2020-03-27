@@ -52,12 +52,12 @@ public class SelectScreenButtons {
     private void createAndPositionButtons() {
 
         readyBtn = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/play_btn.png"))
+                new Sprite(new Texture("buttons/play-btn.png"))
         ));
 
 
         backBtn = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/homeButton.png"))
+                new Sprite(new Texture("buttons/home-button.png"))
         ));
 
         readyBtn.setPosition(GameInfo.WIDTH / 2 - 95, GameInfo.HEIGHT / 2 + 135);

@@ -31,7 +31,7 @@ public class Settings implements Screen {
 
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
-        bg = new Texture("Backgrounds/menu-bg.png");
+        bg = new Texture("backgrounds/menu-bg.png");
         btns = new SettingsButtons(game);
     }
 

@@ -68,7 +68,7 @@ public class GameManager {
      */
     public void playMusic() {
         if(music == null) {
-            music = Gdx.audio.newMusic(Gdx.files.internal("sounds/blues.ogg"));
+            music = Gdx.audio.newMusic(Gdx.files.internal("sounds/glorious.mp3"));
             System.out.println("Music is playing...");
         }
         if(!music.isPlaying()) {
