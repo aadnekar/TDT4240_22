@@ -11,8 +11,8 @@ import ntnu.gruppe22.game.scenes.MainMenu;
 public class AnimalWar extends Game {
 
 	public static String APP_TITLE = "Animal War";
-	public static final int HEIGHT = 480;
-	public static final int WIDTH = 800;
+	//public static final int HEIGHT = 480;
+	//public static final int WIDTH = 800;
 
 	private SpriteBatch sb;
 	
