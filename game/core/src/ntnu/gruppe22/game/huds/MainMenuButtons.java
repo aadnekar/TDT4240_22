@@ -60,19 +60,19 @@ public class MainMenuButtons {
     private void createAndPositionButtons() {
 
         playBtn = new ImageButton(new SpriteDrawable(
-                        new Sprite(new Texture("buttons/play_btn.png"))
+                        new Sprite(new Texture("buttons/play-btn.png"))
                 ));
 
         controlsBtn = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/controls_btn.png"))
+                new Sprite(new Texture("buttons/controls-btn.png"))
         ));
 
         settingsBtn = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/settings_btn.png"))
+                new Sprite(new Texture("buttons/settings-btn.png"))
         ));
 
         mapsBtn = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/maps_btn.png"))
+                new Sprite(new Texture("buttons/maps-btn.png"))
         ));
 
 

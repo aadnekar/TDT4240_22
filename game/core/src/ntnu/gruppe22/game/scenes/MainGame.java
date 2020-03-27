@@ -68,7 +68,7 @@ public class MainGame implements Screen {
 
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
-        bg = new Texture("Backgrounds/menu-bg.png");
+        bg = new Texture("backgrounds/menu-bg.png");
 
         //legger ved to animals i første omgang. Videre vil vi gi mulighet til fler.
         //posisjon er random, dette må endres etter gitt map

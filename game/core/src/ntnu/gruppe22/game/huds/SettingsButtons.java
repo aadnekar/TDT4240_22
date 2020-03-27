@@ -60,23 +60,23 @@ public class SettingsButtons {
     private void createAndPositionButtons() {
 
         musicOnBtn = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/volumeOn.png"))
+                new Sprite(new Texture("buttons/volume-on.png"))
         ));
 
         musicOffBtn = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/volumeOff.png"))
+                new Sprite(new Texture("buttons/volume-off.png"))
         ));
 
         volumeUp = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/volumeUp.png"))
+                new Sprite(new Texture("buttons/volume-up.png"))
         ));
 
         volumeDown = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/volumeDown.png"))
+                new Sprite(new Texture("buttons/volume-down.png"))
         ));
 
         homeButton = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/homeButton.png"))
+                new Sprite(new Texture("buttons/home-button.png"))
         ));
 
         musicOnBtn.setPosition(GameInfo.WIDTH / 2 - (musicOnBtn.getWidth()/2), GameInfo.HEIGHT / 2 + 70);
