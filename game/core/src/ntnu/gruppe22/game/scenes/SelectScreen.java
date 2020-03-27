@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
+import ntnu.gruppe22.game.huds.SelectAnimalButtons;
 import ntnu.gruppe22.game.huds.SelectScreenButtons;
 
 /**
@@ -23,7 +24,8 @@ public class SelectScreen implements Screen {
 
     private AnimalWar game;
     private OrthographicCamera camera;
-    private SelectScreenButtons btns;
+    private SelectScreenButtons screenBtns;
+    private SelectAnimalButtons animalbtns;
     private Viewport gameViewport;
     private Texture bg;
 
@@ -42,8 +44,9 @@ public class SelectScreen implements Screen {
 
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
-        bg = new Texture("backgrounds/menu-bg.png");
-        btns = new SelectScreenButtons(game);
+        bg = new Texture("Backgrounds/menu-bg.png");
+        screenBtns = new SelectScreenButtons(game);
+        animalbtns = new SelectAnimalButtons(game);
 
     }
 
@@ -78,9 +81,13 @@ public class SelectScreen implements Screen {
 
         game.getSb().end();
 
-        game.getSb().setProjectionMatrix(btns.getStage().getCamera().combined);
-        btns.getStage().draw();
-        btns.getStage().act();
+        game.getSb().setProjectionMatrix(screenBtns.getStage().getCamera().combined);
+        screenBtns.getStage().draw();
+        screenBtns.getStage().act();
+
+        game.getSb().setProjectionMatrix(animalbtns.getStage().getCamera().combined);
+        animalbtns.getStage().draw();
+        animalbtns.getStage().act();
 
     }
 
@@ -108,7 +115,8 @@ public class SelectScreen implements Screen {
     public void dispose () {
         Gdx.input.setInputProcessor(null);
         bg.dispose();
-        btns.disposeStage();
+        screenBtns.disposeStage();
+        animalbtns.disposeStage();
     }
 }
 
