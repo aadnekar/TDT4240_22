@@ -49,6 +49,7 @@ public class MainGame implements Screen {
     private ArrayList<Animal> charactersPlayer1 = new ArrayList<>();
     private ArrayList<Animal> charactersPlayer2 = new ArrayList<>();
     private Animal currentPlayer1, currentPlayer2;
+    private Animal currentAnimal;
     private int currentTurn;
 
     BitmapFont font;
@@ -73,12 +74,13 @@ public class MainGame implements Screen {
         Animal player2 = new Animal(GameInfo.WIDTH/2-50, GameInfo.HEIGHT/2-50);
         Animal player3 = new Animal(GameInfo.WIDTH/2-50, GameInfo.HEIGHT/2-50);
 
-        currentPlayer1 = player1;
-        currentPlayer2 = player2;
-
-        charactersPlayer1.add(currentPlayer1);
-        charactersPlayer1.add(currentPlayer2);
+        charactersPlayer1.add(player1);
+        charactersPlayer1.add(player2);
         charactersPlayer2.add(player3);
+
+        //assuming character 1 begins, turn = 0
+        setCurrentCharacter(charactersPlayer1.get(0));
+        System.out.println(charactersPlayer1.indexOf(currentAnimal));
 
         currentTurn = 0;
 
@@ -92,12 +94,7 @@ public class MainGame implements Screen {
 
     //forandring fra navn i innlevering
     public Animal getCurrentAnimal(){
-        if(currentTurn == 0){
-            return currentPlayer1;
-        } else{
-            return currentPlayer2;
-        }
-
+        return currentAnimal;
     }
 
     //vil lagre hver Animal med en index hos hver spiller
@@ -105,18 +102,20 @@ public class MainGame implements Screen {
     //antar at vi må sette en ny currencharacter i denne metoden
     public void changeCharacter(){
         if(currentTurn == 0){
-            int prev = charactersPlayer1.indexOf(currentPlayer1);
+            System.out.println(charactersPlayer2.indexOf(currentAnimal));
+            int prev = charactersPlayer2.indexOf(currentAnimal);
             if(prev+1 == charactersPlayer1.size()){
                 setCurrentCharacter(charactersPlayer1.get(0));
             } else{
                 setCurrentCharacter(charactersPlayer1.get(prev + 1));
             }
         } else {
-            int prev = charactersPlayer2.indexOf(currentPlayer2);
-            if(prev+1 == charactersPlayer2.size()){
+            System.out.println(charactersPlayer1.indexOf(currentAnimal));
+            int prev = charactersPlayer1.indexOf(currentAnimal);
+            if(prev == charactersPlayer2.size()){
                 setCurrentCharacter(charactersPlayer1.get(0));
             } else{
-                setCurrentCharacter(charactersPlayer2.get(prev + 1));
+                setCurrentCharacter(charactersPlayer2.get(prev));
             }
         }
 
@@ -137,11 +136,7 @@ public class MainGame implements Screen {
     }
 
     public void setCurrentCharacter(Animal animal){
-        if(currentTurn == 0){
-            currentPlayer1 = animal;
-        }else {
-            currentPlayer2 = animal;
-        }
+        currentAnimal = animal;
     }
 
     public void timesUp(){
