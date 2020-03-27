@@ -1,5 +1,4 @@
 package ntnu.gruppe22.game.scenes;
-//import Map from project
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -11,12 +10,11 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.states.Animal;
+import ntnu.gruppe22.game.utils.MainGameTimer;
 
 
 /**
@@ -55,8 +53,8 @@ public class MainGame implements Screen {
 
     BitmapFont font;
 
-    static int interval;
-    static Timer timer;
+    public static boolean bufferTime = false;
+    private MainGameTimer timer;
 
 
     public MainGame(AnimalWar game) {
@@ -82,43 +80,14 @@ public class MainGame implements Screen {
         charactersPlayer1.add(currentPlayer2);
         charactersPlayer2.add(player3);
 
-
         currentTurn = 0;
 
         font = new BitmapFont();
-        startTimer(35);
+
         //import map in some way?
 
-
-
-    }
-
-
-
-
-    private void startTimer(int secs){
-        int delay = 1000;
-        int period = 1000;
-        timer = new Timer();
-        interval = secs;
-        timer.scheduleAtFixedRate(new TimerTask() {
-
-            public void run() {
-                setInterval();
-
-            }
-        }, delay, period);
-    }
-
-    private static final int setInterval() {
-        if (interval == 1)
-            timer.cancel();
-        return --interval;
-    }
-
-    //timer for game
-    public float getPublicTime(){
-        return interval;
+        timer = new MainGameTimer(this);
+        timer.startNewRoundCountDown();
     }
 
     //forandring fra navn i innlevering
@@ -183,17 +152,8 @@ public class MainGame implements Screen {
 
     @Override
     public void render(float dt) {
-
-        //dont move if time is less than 0
-        if(interval-5 >= 0){
+        if (!bufferTime) {
             getCurrentAnimal().move();
-        }
-
-        //sjekker om tiden har gått ut
-        if(interval == 0){
-            timesUp();
-            System.out.println("current turn: " + currentTurn);
-            startTimer(35);
         }
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -201,7 +161,7 @@ public class MainGame implements Screen {
 
         game.getSb().begin();
         game.getSb().draw(bg, 0, 0);
-        font.draw(game.getSb(), getDrawTime(), 50, 50);
+        font.draw(game.getSb(), timer.getDisplayString(), 50, 50);
         for(Animal i : charactersPlayer1){
             game.getSb().draw(i.getAnimalTexture(), i.getX(), i.getY());
             game.getSb().draw(i.getBarTexture(), i.getX()+5, i.getY()+110);
@@ -212,15 +172,6 @@ public class MainGame implements Screen {
         }
 
         game.getSb().end();
-
-    }
-
-    private String getDrawTime(){
-        if(interval-5 > 0){
-            return String.valueOf(interval-5);
-        } else{
-            return "0    TIMES UP!";
-        }
     }
 
     @Override
@@ -251,5 +202,6 @@ public class MainGame implements Screen {
     @Override
     public void dispose() {
         font.dispose();
+        timer.cancel();
     }
 }
