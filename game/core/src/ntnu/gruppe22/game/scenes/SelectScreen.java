@@ -5,15 +5,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
-import ntnu.gruppe22.game.helpers.GameMusic;
-import ntnu.gruppe22.game.huds.MainMenuButtons;
 import ntnu.gruppe22.game.huds.SelectScreenButtons;
 
 /**
@@ -25,24 +21,17 @@ import ntnu.gruppe22.game.huds.SelectScreenButtons;
 //extend abstract class in some way?
 public class SelectScreen implements Screen {
 
-    private Array<Character> characters;
-    private Character selectedCharacter;
-    private boolean ready;
-
     private AnimalWar game;
-
     private OrthographicCamera camera;
-    private Viewport gameViewport;
-
-    private Texture bg;
     private SelectScreenButtons btns;
-    private GameMusic gameMusic;
+    private Viewport gameViewport;
+    private Texture bg;
 
-    private Stage uiStage;
+    //private Map<Player.username, animal> animalChoices;
+    //private Map<Player.username, Boolean> ready;
 
 
-    public SelectScreen(AnimalWar game){
-        ready = false;
+    public SelectScreen(AnimalWar game) {
         //selectedCharacter = characters.get(0); //henter ut første i lista?
 
         this.game = game;
@@ -54,54 +43,34 @@ public class SelectScreen implements Screen {
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
         bg = new Texture("Backgrounds/menu-bg.png");
-        btns = new SelectScreenButtons(game,gameMusic);
-
-        uiStage = new Stage(gameViewport);
-        Gdx.input.setInputProcessor(uiStage);
-
-
-
+        btns = new SelectScreenButtons(game);
 
     }
-    /*public void prepareUI(){
-        Image characterSprite = new Image();
-        characterSprite.setPosition((uiStage.getWidth()-characterSprite.getWidth())/2, (uiStage.getHeight()-characterSprite.getHeight())/2);
-        uiStage.addActor(characterSprite);
-    }*/
 
-    public Character getSelectedCharacter() {
-        return selectedCharacter;
+    public void setCharacter ( int id){
+
     }
 
-    public Array<Character> getCharacters() {
-        return characters;
-    }
 
-    public void setSelectedCharacter(Character character){
-        this.selectedCharacter = character;
-    }
+        //public boolean isReady(){
+        // return this.ready;
+        // }
 
-    public boolean isReady(){
-        return this.ready;
-    }
-
-    public void setReady(boolean ready){
-        this.ready = ready;
-    }
-
-    @Override
-    public void show() {
+    public void setReady ( boolean ready){
 
     }
 
     @Override
-    public void render(float delta) {
+    public void show () {
+
+    }
+
+    @Override
+    public void render ( float delta){
 
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        uiStage.act(delta);
-        uiStage.draw();
 
         game.getSb().begin();
 
@@ -116,30 +85,30 @@ public class SelectScreen implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {
+    public void resize ( int width, int height){
         gameViewport.update(width, height);
     }
 
     @Override
-    public void pause() {
+    public void pause () {
 
     }
 
     @Override
-    public void resume() {
+    public void resume () {
 
     }
 
     @Override
-    public void hide() {
+    public void hide () {
 
     }
 
     @Override
-    public void dispose() {
+    public void dispose () {
         Gdx.input.setInputProcessor(null);
         bg.dispose();
         btns.disposeStage();
-        uiStage.dispose();
     }
 }
+

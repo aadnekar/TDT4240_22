@@ -18,7 +18,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
-import ntnu.gruppe22.game.helpers.GameMusic;
 import ntnu.gruppe22.game.scenes.MainMenu;
 import ntnu.gruppe22.game.scenes.SelectScreen;
 
@@ -28,16 +27,12 @@ public class SelectScreenButtons {
     private Stage stage;
     private Viewport gameViewport;
 
-    private ImageButton playBtn;
-    private ImageButton nextBtn;
-    private ImageButton previousBtn;
-    private ImageButton homeBtn;
+    private ImageButton backBtn;
+    private ImageButton readyBtn;
 
-    private GameMusic gameMusic;
 
-    public SelectScreenButtons(AnimalWar game, GameMusic gameMusic){
+    public SelectScreenButtons(AnimalWar game){
         this.game=game;
-        this.gameMusic = gameMusic;
 
         gameViewport = new FitViewport(GameInfo.WIDTH,GameInfo.HEIGHT,new OrthographicCamera());
 
@@ -48,41 +43,30 @@ public class SelectScreenButtons {
         createAndPositionButtons();
         addAllListeners();
 
-        stage.addActor(playBtn);
-        stage.addActor(nextBtn);
-        stage.addActor(previousBtn);
-        stage.addActor(homeBtn);
+        stage.addActor(readyBtn);
+        stage.addActor(backBtn);
 
         checkMusic();
     }
 
     private void createAndPositionButtons() {
 
-        playBtn = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/play-btn.png"))
+        readyBtn = new ImageButton(new SpriteDrawable(
+                new Sprite(new Texture("buttons/play_btn.png"))
         ));
 
-        nextBtn = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/play-btn.png"))
-        ));
 
-        previousBtn = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/play-btn.png"))
-        ));
-
-        homeBtn = new ImageButton(new SpriteDrawable(
+        backBtn = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/homeButton.png"))
         ));
 
-        playBtn.setPosition(GameInfo.WIDTH / 2 - 95, GameInfo.HEIGHT / 2 + 135);
-        nextBtn.setPosition(GameInfo.WIDTH / 2 + 45, GameInfo.HEIGHT / 2 - 135);
-        previousBtn.setPosition(GameInfo.WIDTH / 2 - 235, GameInfo.HEIGHT / 2 - 135);
-        homeBtn.setPosition(50, GameInfo.HEIGHT - 90);
+        readyBtn.setPosition(GameInfo.WIDTH / 2 - 95, GameInfo.HEIGHT / 2 + 135);
+        backBtn.setPosition(50, GameInfo.HEIGHT - 90);
 
     }
 
     private void addAllListeners() {
-        playBtn.addListener(new ChangeListener() {
+        readyBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 GameManager.getInstance().gameStartedFromMainMenu = true;
@@ -92,7 +76,7 @@ public class SelectScreenButtons {
                     @Override
                     public void run() {
                         game.setScreen(new SelectScreen(game));
-                        System.out.println("NOW GAME STARTED");
+                        System.out.println("You are noe ready to play");
                     }
                 });
 
@@ -104,21 +88,7 @@ public class SelectScreenButtons {
             }
         });
 
-        nextBtn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-
-            }
-        });
-
-        previousBtn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                //Changed to the previous character
-            }
-        });
-
-        homeBtn.addListener(new ChangeListener() {
+        backBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.setScreen(new MainMenu(game));
