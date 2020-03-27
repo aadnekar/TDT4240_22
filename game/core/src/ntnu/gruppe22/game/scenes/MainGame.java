@@ -82,7 +82,6 @@ public class MainGame implements Screen {
 
         //assuming character 1 begins, turn = 0
         setCurrentCharacter(charactersPlayer1.get(0));
-        System.out.println(charactersPlayer1.indexOf(currentAnimal));
 
         currentTurn = 0;
 
@@ -104,7 +103,6 @@ public class MainGame implements Screen {
     //antar at vi må sette en ny currencharacter i denne metoden
     public void changeCharacter(){
         if(currentTurn == 0){
-            System.out.println(charactersPlayer2.indexOf(currentAnimal));
             int prev = charactersPlayer2.indexOf(currentAnimal);
             if(prev+1 == charactersPlayer1.size()){
                 setCurrentCharacter(charactersPlayer1.get(0));
@@ -112,7 +110,6 @@ public class MainGame implements Screen {
                 setCurrentCharacter(charactersPlayer1.get(prev + 1));
             }
         } else {
-            System.out.println(charactersPlayer1.indexOf(currentAnimal));
             int prev = charactersPlayer1.indexOf(currentAnimal);
             if(prev == charactersPlayer2.size()){
                 setCurrentCharacter(charactersPlayer1.get(0));
