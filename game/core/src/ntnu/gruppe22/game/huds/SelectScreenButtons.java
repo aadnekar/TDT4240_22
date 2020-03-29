@@ -19,12 +19,14 @@ import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
 import ntnu.gruppe22.game.scenes.MainGame;
 import ntnu.gruppe22.game.scenes.MainMenu;
+import ntnu.gruppe22.game.scenes.SelectScreen;
 
 
 public class SelectScreenButtons {
     private AnimalWar game;
     private Stage stage;
     private Viewport gameViewport;
+    private SelectScreen selectScreen;
 
     private ImageButton backBtn;
     private ImageButton readyBtn;
@@ -74,7 +76,11 @@ public class SelectScreenButtons {
                 run.setRunnable(new Runnable() {
                     @Override
                     public void run() {
+                        //selectScreen.setReady(true);
+                        //if(selectScreen.isReady()){
                         game.setScreen(new MainGame(game));
+                        System.out.println("You are no ready to play");
+                        //}
                     }
                 });
 
