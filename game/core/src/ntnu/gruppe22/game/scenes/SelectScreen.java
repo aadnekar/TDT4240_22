@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.huds.SelectAnimalButtons;
@@ -28,8 +31,11 @@ public class SelectScreen implements Screen {
     private SelectAnimalButtons animalbtns;
     private Viewport gameViewport;
     private Texture bg;
+    private Boolean ready;
 
-    //private Map<Player.username, animal> animalChoices;
+
+    private HashMap<Integer, ArrayList> animalChoices;
+    private ArrayList<Integer> addedAnimal;
     //private Map<Player.username, Boolean> ready;
 
 
@@ -46,21 +52,36 @@ public class SelectScreen implements Screen {
 
         screenBtns = new SelectScreenButtons(game);
         animalbtns = new SelectAnimalButtons(game);
+        animalChoices = new HashMap<>();
+        addedAnimal = new ArrayList<>();
         bg = new Texture("backgrounds/menu-bg.png");
+
+        this.ready = false;
 
     }
 
     public void setCharacter ( int id){
+        System.out.println(id);
+        if (addedAnimal.contains(id)){
+            addedAnimal.remove(id);
+        }
+        else {
+            addedAnimal.add(id);
+        }
+        if (isReady()){
+            animalChoices.put(1,addedAnimal);
+            System.out.println(animalChoices);
+        }
 
     }
 
 
-        //public boolean isReady(){
-        // return this.ready;
-        // }
+    public boolean isReady(){
+         return this.ready;
+    }
 
     public void setReady ( boolean ready){
-
+        this.ready = ready;
     }
 
     @Override
