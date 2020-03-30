@@ -92,12 +92,13 @@ public class SettingsButtons {
         homeButton.setPosition(5, GameInfo.HEIGHT - 70);
     }
 
-    public void change() {
+    //changes button Texture when clicking music on/off
+    public void SwitchButton() {
         if (GameManager.getInstance().gameData.isMusicOn()) {
-            musicOnBtn.getStyle().imageUp= new TextureRegionDrawable(new Texture("Settings/audio_on.png"));
+            musicOnBtn.getStyle().imageUp= new TextureRegionDrawable(musicOn);
         }
         else if(!GameManager.getInstance().gameData.isMusicOn()) {
-            musicOnBtn.getStyle().imageUp= new TextureRegionDrawable(new Texture("Settings/mute.png"));
+            musicOnBtn.getStyle().imageUp= new TextureRegionDrawable(musicOff);
         }
     }
 
@@ -121,7 +122,7 @@ public class SettingsButtons {
                      GameManager.getInstance().stopMusic();
                      GameManager.getInstance().saveData();
                  }
-                 change();
+                 SwitchButton();
             }
         });
 
