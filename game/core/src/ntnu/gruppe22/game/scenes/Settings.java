@@ -19,6 +19,10 @@ public class Settings implements Screen {
     private Viewport gameViewport;
     private Texture bg;
     private SettingsButtons btns;
+    private Texture musicOnOrOff;
+    private Texture changeVolume;
+    private Texture headline;
+
 
 
     public Settings(AnimalWar game){
@@ -33,6 +37,11 @@ public class Settings implements Screen {
 
         bg = new Texture("backgrounds/menu-bg.png");
         btns = new SettingsButtons(game);
+
+        musicOnOrOff = new Texture(Gdx.files.internal("Settings/Turn_music_on_or_off.png"));
+        changeVolume = new Texture(Gdx.files.internal("Settings/change_volume.png"));
+        headline = new Texture("Settings/settings.png");
+
     }
 
 
@@ -50,6 +59,9 @@ public class Settings implements Screen {
         game.getSb().begin();
 
         game.getSb().draw(bg, 0, 0);
+        game.getSb().draw(musicOnOrOff, GameInfo.WIDTH/2 - musicOnOrOff.getWidth()/2, GameInfo.HEIGHT/2);
+        game.getSb().draw(changeVolume,GameInfo.WIDTH/2 - changeVolume.getWidth()/2 , GameInfo.HEIGHT/2 - 80);
+        game.getSb().draw(headline,GameInfo.WIDTH/2 - headline.getWidth()/2 , GameInfo.HEIGHT - 150);
 
         game.getSb().end();
 
