@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -70,8 +71,8 @@ public class MainGame implements Screen {
         this.camera.setToOrtho(false, GameInfo.WIDTH, GameInfo.HEIGHT);
         this.camera.update();
         this.camera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
-        charactersPlayer1 = new ArrayList<>();
-        charactersPlayer2 = new ArrayList<>();
+        charactersPlayer1 = new ArrayList<Animal>();
+        charactersPlayer2 = new ArrayList<Animal>();
 
 
 
@@ -93,11 +94,6 @@ public class MainGame implements Screen {
         iteratePlayer2 = charactersPlayer2.iterator();
 
         setCurrentCharacter(iteratePlayer1.next());
-        /*
-        //assuming character 1 begins, turn = 0
-        setCurrentCharacter(charactersPlayer1.get(0));
-
-         */
 
         currentTurn = 0;
 
@@ -112,38 +108,23 @@ public class MainGame implements Screen {
         return currentAnimal;
     }
 
-    //vil lagre hver Animal med en index hos hver spiller
-    //får neste Animal i rekken
-    //antar at vi må sette en ny currencharacter i denne metoden
+
+    //antar at vi oppdaterer charactersPlayer1/2 underveis i spillet hvis noen dør
     public void changeCharacter(){
         if(currentTurn == 0){
-            if(iteratePlayer1.hasNext()){
-                setCurrentCharacter(iteratePlayer1.next());
-            } else if()
-            /*
-            int prev = charactersPlayer2.indexOf(currentAnimal);
-            if(prev+1 == charactersPlayer1.size()){
-                setCurrentCharacter(charactersPlayer1.get(0));
-            } else{
-                setCurrentCharacter(charactersPlayer1.get(prev + 1));
-            }
-
-             */
+            setCurrentCharacter(nextAnimal(iteratePlayer1, charactersPlayer1));
         } else {
-            if(iteratePlayer2.hasNext()){
-                setCurrentCharacter(iteratePlayer2.next());
-            }
-            /*
-            int prev = charactersPlayer1.indexOf(currentAnimal);
-            if(prev == charactersPlayer2.size()){
-                setCurrentCharacter(charactersPlayer1.get(0));
-            } else{
-                setCurrentCharacter(charactersPlayer2.get(prev));
-            }
-
-             */
+            setCurrentCharacter(nextAnimal(iteratePlayer2, charactersPlayer2));
         }
+    }
 
+    public Animal nextAnimal(Iterator<Animal> iter, List<Animal> players) {
+        if (iter.hasNext()) {
+            return iter.next();
+        } else {
+            iter = players.iterator();
+            return nextAnimal(iter, players);
+        }
     }
 
     //skal vi ha runder med i spillet i det hele tatt?
