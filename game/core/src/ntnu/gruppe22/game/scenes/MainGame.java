@@ -117,6 +117,7 @@ public class MainGame implements Screen {
         }
     }
 
+
     // TODO: Handle when players.size() = 0 - we have a winner!
     public Animal nextAnimal(Iterator<Animal> iter, List<Animal> players) {
         if (iter.hasNext()) {
