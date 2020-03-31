@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import ntnu.gruppe22.game.AnimalWar;
@@ -59,6 +60,8 @@ public class MainGame implements Screen {
     public static boolean bufferTime = false;
     private MainGameTimer timer;
 
+    Iterator<Animal> iteratePlayer1;
+    Iterator<Animal> iteratePlayer2;
 
     public MainGame(AnimalWar game) {
         this.game = game;
@@ -69,6 +72,8 @@ public class MainGame implements Screen {
         this.camera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
         charactersPlayer1 = new ArrayList<>();
         charactersPlayer2 = new ArrayList<>();
+
+
 
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
@@ -84,8 +89,15 @@ public class MainGame implements Screen {
         charactersPlayer1.add(player2);
         charactersPlayer2.add(player3);
 
+        iteratePlayer1 = charactersPlayer1.iterator();
+        iteratePlayer2 = charactersPlayer2.iterator();
+
+        setCurrentCharacter(iteratePlayer1.next());
+        /*
         //assuming character 1 begins, turn = 0
         setCurrentCharacter(charactersPlayer1.get(0));
+
+         */
 
         currentTurn = 0;
 
@@ -105,19 +117,31 @@ public class MainGame implements Screen {
     //antar at vi må sette en ny currencharacter i denne metoden
     public void changeCharacter(){
         if(currentTurn == 0){
+            if(iteratePlayer1.hasNext()){
+                setCurrentCharacter(iteratePlayer1.next());
+            } else if()
+            /*
             int prev = charactersPlayer2.indexOf(currentAnimal);
             if(prev+1 == charactersPlayer1.size()){
                 setCurrentCharacter(charactersPlayer1.get(0));
             } else{
                 setCurrentCharacter(charactersPlayer1.get(prev + 1));
             }
+
+             */
         } else {
+            if(iteratePlayer2.hasNext()){
+                setCurrentCharacter(iteratePlayer2.next());
+            }
+            /*
             int prev = charactersPlayer1.indexOf(currentAnimal);
             if(prev == charactersPlayer2.size()){
                 setCurrentCharacter(charactersPlayer1.get(0));
             } else{
                 setCurrentCharacter(charactersPlayer2.get(prev));
             }
+
+             */
         }
 
     }
