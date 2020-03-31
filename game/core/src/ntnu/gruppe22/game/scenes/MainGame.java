@@ -75,7 +75,6 @@ public class MainGame implements Screen {
         charactersPlayer2 = new ArrayList<Animal>();
 
 
-
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
         bg = new Texture("backgrounds/menu-bg.png");
