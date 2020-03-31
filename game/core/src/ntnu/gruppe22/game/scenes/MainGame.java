@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ntnu.gruppe22.game.AnimalWar;
+import ntnu.gruppe22.game.Maps.Map;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.states.Animal;
 import ntnu.gruppe22.game.utils.MainGameTimer;
@@ -39,8 +40,8 @@ import ntnu.gruppe22.game.utils.MainGameTimer;
  */
 
 public class MainGame implements Screen {
-
     AnimalWar game;
+    Map map;
 
     private OrthographicCamera camera;
     private Viewport gameViewport;
@@ -60,8 +61,10 @@ public class MainGame implements Screen {
 
     public MainGame(AnimalWar game) {
         this.game = game;
+        map = new Map();
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, GameInfo.WIDTH, GameInfo.HEIGHT);
+        this.camera.update();
         this.camera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
         charactersPlayer1 = new ArrayList<>();
         charactersPlayer2 = new ArrayList<>();
@@ -86,8 +89,6 @@ public class MainGame implements Screen {
         currentTurn = 0;
 
         font = new BitmapFont();
-
-        //import map in some way?
 
         timer = new MainGameTimer(this);
         timer.startNewRoundCountDown();
@@ -166,6 +167,8 @@ public class MainGame implements Screen {
         }
 
         game.getSb().end();
+
+        map.update(camera);
     }
 
     @Override
