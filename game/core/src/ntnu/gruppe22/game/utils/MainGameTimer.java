@@ -4,6 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import ntnu.gruppe22.game.scenes.MainGame;
+import ntnu.gruppe22.game.states.GameRules;
 
 /**
  * @author aadne on 27.03.2020 09:57
@@ -14,10 +15,12 @@ public class MainGameTimer {
     private Timer timer;
     private String displayString;
     private MainGame mainGame;
+    private GameRules gameRules;
 
     public MainGameTimer(MainGame mainGame) {
         this.mainGame = mainGame;
         timer = new Timer();
+        gameRules = new GameRules();
         displayString = "";
     }
 
@@ -26,8 +29,7 @@ public class MainGameTimer {
      * A runnable for the Round Count Down
      */
     class RoundCountDown extends TimerTask {
-        // TODO: Change to GameRules.ROUND_TIME
-        int seconds = 30;
+        int seconds = gameRules.ROUND_TIME;
 
         /**
          * this.cancel the runnable so that the thread no longer needs to run.
@@ -53,8 +55,7 @@ public class MainGameTimer {
      * A runnable for the Buffer Counter Down.
      */
     class BufferCountDown extends TimerTask {
-        // TODO: Change this to GameRules.BUFFER_TIME
-        int seconds = 5;
+        int seconds = GameRules.BUFFER_TIME;
 
         /**
          * this.cancel the runnable so that the thread no longer needs to run.
