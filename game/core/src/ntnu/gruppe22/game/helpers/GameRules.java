@@ -1,4 +1,4 @@
-package ntnu.gruppe22.game.states;
+package ntnu.gruppe22.game.helpers;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ public class GameRules {
     public static final int MAX_NUMBER_OF_ROUNDS = 20;
 
 
-     // Map med alle animals (sprites) og tilhørende id
+     // Map med alle animals (sprites) man kan velge mellom og deres tilhørende id
     private static final Map<Integer,String> animalMap = new HashMap<Integer, String>() {{
         put(1,  "animals/chicken.png");
         put(2,  "animals/monkey.png");
@@ -23,12 +23,5 @@ public class GameRules {
         put(4,  "animals/moose.png");
         put(5,  "animals/rabbit.png");
     }};
-
-    //hvordan skal denne fungere med implementasjonen av timer i GameRules og MainGame?
-    //trenger vi denne i det hele tatt?
-    protected void startRoundTimer() {
-
-    }
-
 
 }
