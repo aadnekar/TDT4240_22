@@ -1,7 +1,6 @@
 package ntnu.gruppe22.game.huds;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -11,43 +10,39 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
-import ntnu.gruppe22.game.scenes.SelectScreen;
 
 public class SelectAnimalButtons {
 
 
     private AnimalWar game;
     private Stage stage;
-    private Viewport gameViewport;
     private ImageButton chicken;
     private ImageButton monkey;
     private ImageButton walrus;
     private ImageButton moose;
     private ImageButton rabbit;
-    private SelectScreen selectScreen;
 
-    public SelectAnimalButtons(AnimalWar game){
+
+    public SelectAnimalButtons(AnimalWar game, Stage stage){
         this.game = game;
+        this.stage= stage;
 
-        gameViewport = new FitViewport(GameInfo.WIDTH,GameInfo.HEIGHT,new OrthographicCamera());
-        stage = new Stage(gameViewport,game.getSb());
+
         Gdx.input.setInputProcessor(stage);
 
         createAndPositionButtons();
         addAllListeners();
-
 
         stage.addActor(chicken);
         stage.addActor(monkey);
         stage.addActor(walrus);
         stage.addActor(moose);
         stage.addActor(rabbit);
+
 
         checkMusic();
 
@@ -103,7 +98,6 @@ public class SelectAnimalButtons {
                 });
 
                 SequenceAction sa = new SequenceAction();
-                //sa.addAction(Actions.fadeOut(1f));
                 sa.addAction(run);
 
                 stage.addAction(sa);
@@ -134,7 +128,6 @@ public class SelectAnimalButtons {
                 });
 
                 SequenceAction sa = new SequenceAction();
-                //sa.addAction(Actions.fadeOut(1f));
                 sa.addAction(run);
 
                 stage.addAction(sa);
@@ -163,7 +156,6 @@ public class SelectAnimalButtons {
                 });
 
                 SequenceAction sa = new SequenceAction();
-                //sa.addAction(Actions.fadeOut(1f));
                 sa.addAction(run);
 
                 stage.addAction(sa);
@@ -192,7 +184,6 @@ public class SelectAnimalButtons {
                 });
 
                 SequenceAction sa = new SequenceAction();
-                //sa.addAction(Actions.fadeOut(1f));
                 sa.addAction(run);
 
                 stage.addAction(sa);
@@ -221,7 +212,6 @@ public class SelectAnimalButtons {
                 });
 
                 SequenceAction sa = new SequenceAction();
-                //sa.addAction(Actions.fadeOut(1f));
                 sa.addAction(run);
 
                 stage.addAction(sa);
@@ -243,4 +233,5 @@ public class SelectAnimalButtons {
     public void disposeStage(){
         this.stage.dispose();
     }
+
 }

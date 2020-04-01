@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -17,7 +18,7 @@ import ntnu.gruppe22.game.huds.SelectAnimalButtons;
 import ntnu.gruppe22.game.huds.SelectScreenButtons;
 
 /**
- * Antar at denne filen inneholder en screen som gir eg mulighet til å velge characters
+ * Denne filen inneholder en screen som gir deg mulighet til å velge characters
  * Importerer metoder som render(), update(), dispose(), handleInput()
  */
 
@@ -32,6 +33,7 @@ public class SelectScreen implements Screen {
     private Viewport gameViewport;
     private Texture bg;
     private Boolean ready;
+    private Stage stage;
 
 
     private HashMap<Integer, ArrayList> animalChoices;
@@ -49,13 +51,16 @@ public class SelectScreen implements Screen {
         this.camera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
 
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
+        stage = new Stage(gameViewport, game.getSb());
 
-        screenBtns = new SelectScreenButtons(game);
-        animalbtns = new SelectAnimalButtons(game);
-        animalChoices = new HashMap<>();
-        addedAnimal = new ArrayList<>();
+        animalbtns = new SelectAnimalButtons(game, stage);
+        screenBtns = new SelectScreenButtons(game, stage);
+
+
         bg = new Texture("backgrounds/menu-bg.png");
 
+        animalChoices = new HashMap<>();
+        addedAnimal = new ArrayList<>();
         this.ready = false;
 
     }
@@ -86,6 +91,7 @@ public class SelectScreen implements Screen {
 
     @Override
     public void show () {
+        
 
     }
 
@@ -102,14 +108,16 @@ public class SelectScreen implements Screen {
 
         game.getSb().end();
 
-        game.getSb().setProjectionMatrix(screenBtns.getStage().getCamera().combined);
+        game.getSb().setProjectionMatrix(stage.getCamera().combined);
+        stage.draw();
+        stage.act();
+        /*
         screenBtns.getStage().draw();
         screenBtns.getStage().act();
 
-        game.getSb().setProjectionMatrix(animalbtns.getStage().getCamera().combined);
         animalbtns.getStage().draw();
         animalbtns.getStage().act();
-
+*/
     }
 
     @Override
