@@ -38,9 +38,9 @@ public class Settings implements Screen {
         bg = new Texture("backgrounds/menu-bg.png");
         btns = new SettingsButtons(game);
 
-        musicOnOrOff = new Texture(Gdx.files.internal("Settings/Turn_music_on_or_off.png"));
-        changeVolume = new Texture(Gdx.files.internal("Settings/change_volume.png"));
-        headline = new Texture("Settings/settings.png");
+        musicOnOrOff = new Texture(Gdx.files.internal("settings/turn-music-on-or-off.png"));
+        changeVolume = new Texture(Gdx.files.internal("settings/change-volume.png"));
+        headline = new Texture("settings/settings.png");
 
     }
 

@@ -50,8 +50,8 @@ public class SettingsButtons {
         createAndPositionButtons();
         addAllListeners();
 
-        musicOff = new Texture("Settings/mute.png");
-        musicOn = new Texture("Settings/audio_on.png");
+        musicOff = new Texture("settings/mute.png");
+        musicOn = new Texture("settings/audio-on.png");
         stage.addActor(musicOnBtn);
         stage.addActor(volumeUp);
         stage.addActor(volumeDown);
@@ -64,25 +64,25 @@ public class SettingsButtons {
     private void createAndPositionButtons() {
 
         volumeUp = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("Settings/plus.png"))
+                new Sprite(new Texture("settings/plus.png"))
         ));
 
         volumeDown = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("Settings/minus.png"))
+                new Sprite(new Texture("settings/minus.png"))
         ));
 
         homeButton = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("Settings/home.png"))
+                new Sprite(new Texture("settings/home.png"))
         ));
 
         if (GameManager.getInstance().gameData.isMusicOn()) {
             musicOnBtn = new ImageButton(new SpriteDrawable(
-                    new Sprite(new Texture("Settings/audio_on.png"))
+                    new Sprite(new Texture("settings/audio-on.png"))
             ));
         }
         else if(!GameManager.getInstance().gameData.isMusicOn()) {
             musicOnBtn = new ImageButton(new SpriteDrawable(
-                    new Sprite(new Texture("Settings/mute.png"))
+                    new Sprite(new Texture("settings/mute.png"))
             ));
         }
 

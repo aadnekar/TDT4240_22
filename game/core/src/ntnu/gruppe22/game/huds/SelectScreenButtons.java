@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
+import ntnu.gruppe22.game.scenes.MainGame;
 import ntnu.gruppe22.game.scenes.MainMenu;
 import ntnu.gruppe22.game.scenes.SelectScreen;
 
@@ -75,13 +76,12 @@ public class SelectScreenButtons {
                 run.setRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        game.setScreen(new SelectScreen(game));
-                        System.out.println("You are noe ready to play");
+                        game.setScreen(new MainGame(game));
                     }
                 });
 
                 SequenceAction sa = new SequenceAction();
-                sa.addAction(Actions.fadeOut(1f));
+                //sa.addAction(Actions.fadeOut(1f));
                 sa.addAction(run);
 
                 stage.addAction(sa);
