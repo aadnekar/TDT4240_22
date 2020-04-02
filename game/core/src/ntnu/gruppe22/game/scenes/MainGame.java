@@ -6,10 +6,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import ntnu.gruppe22.game.AnimalWar;
@@ -50,6 +52,7 @@ public class MainGame implements Screen {
 
     private List<Animal> charactersPlayer1;
     private List<Animal> charactersPlayer2;
+
     private Animal currentAnimal;
     private int currentTurn;
 
@@ -58,6 +61,8 @@ public class MainGame implements Screen {
     public static boolean bufferTime = false;
     private MainGameTimer timer;
 
+    Iterator<Animal> iteratePlayer1;
+    Iterator<Animal> iteratePlayer2;
 
     public MainGame(AnimalWar game) {
         this.game = game;
@@ -66,8 +71,9 @@ public class MainGame implements Screen {
         this.camera.setToOrtho(false, GameInfo.WIDTH, GameInfo.HEIGHT);
         this.camera.update();
         this.camera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
-        charactersPlayer1 = new ArrayList<>();
-        charactersPlayer2 = new ArrayList<>();
+        charactersPlayer1 = new ArrayList<Animal>();
+        charactersPlayer2 = new ArrayList<Animal>();
+
 
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
@@ -83,8 +89,10 @@ public class MainGame implements Screen {
         charactersPlayer1.add(player2);
         charactersPlayer2.add(player3);
 
-        //assuming character 1 begins, turn = 0
-        setCurrentCharacter(charactersPlayer1.get(0));
+        iteratePlayer1 = charactersPlayer1.iterator();
+        iteratePlayer2 = charactersPlayer2.iterator();
+
+        setCurrentCharacter(iteratePlayer1.next());
 
         currentTurn = 0;
 
@@ -99,26 +107,31 @@ public class MainGame implements Screen {
         return currentAnimal;
     }
 
-    //vil lagre hver Animal med en index hos hver spiller
-    //får neste Animal i rekken
-    //antar at vi må sette en ny currencharacter i denne metoden
+
+    //antar at vi oppdaterer charactersPlayer1/2 underveis i spillet hvis noen dør
     public void changeCharacter(){
         if(currentTurn == 0){
-            int prev = charactersPlayer2.indexOf(currentAnimal);
-            if(prev+1 == charactersPlayer1.size()){
-                setCurrentCharacter(charactersPlayer1.get(0));
-            } else{
-                setCurrentCharacter(charactersPlayer1.get(prev + 1));
-            }
+            setCurrentCharacter(nextAnimal(iteratePlayer1, charactersPlayer1));
         } else {
-            int prev = charactersPlayer1.indexOf(currentAnimal);
-            if(prev == charactersPlayer2.size()){
-                setCurrentCharacter(charactersPlayer1.get(0));
-            } else{
-                setCurrentCharacter(charactersPlayer2.get(prev));
-            }
+            setCurrentCharacter(nextAnimal(iteratePlayer2, charactersPlayer2));
         }
+    }
 
+
+    // TODO: Handle when players.size() = 0 - we have a winner!
+    public Animal nextAnimal(Iterator<Animal> iter, List<Animal> players) {
+
+        if (iter.hasNext()) {
+            return iter.next();
+        } else {
+            iter = players.iterator();
+            if(currentTurn == 0){
+                iteratePlayer1 = iter;
+            } else{
+                iteratePlayer2 = iter;
+            }
+            return nextAnimal(iter, players);
+        }
     }
 
     //skal vi ha runder med i spillet i det hele tatt?
@@ -144,11 +157,20 @@ public class MainGame implements Screen {
         changeCharacter();
     }
 
+    public void gameOver(){
+        this.dispose();
+        game.setScreen(new MainMenu(game));
+    }
+
 
     @Override
     public void render(float dt) {
         if (!bufferTime) {
             getCurrentAnimal().move();
+        }
+        // This if-statement can be placed inside die()-method(?)
+        if(charactersPlayer1.size() == 0 || charactersPlayer2.size() == 0){
+            gameOver();
         }
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
