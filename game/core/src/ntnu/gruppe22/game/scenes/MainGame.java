@@ -81,14 +81,17 @@ public class MainGame implements Screen {
 
         //legger ved to animals i første omgang. Videre vil vi gi mulighet til fler.
         //posisjon er random, dette må endres etter gitt map
-        Animal player1 = new Animal(GameInfo.WIDTH/2, GameInfo.HEIGHT/2);
-        Animal player2 = new Animal(GameInfo.WIDTH/2-50, GameInfo.HEIGHT/2-50);
-        Animal player3 = new Animal(GameInfo.WIDTH/2-50, GameInfo.HEIGHT/2-50);
+        Animal animal1 = new Animal(2);
+        Animal animal2 = new Animal(4);
+        Animal animal3 = new Animal(1);
 
-        charactersPlayer1.add(player1);
-        charactersPlayer1.add(player2);
-        charactersPlayer2.add(player3);
+        animal1.setX(GameInfo.WIDTH / 2 - animal1.getWidth()/2);
+        animal2.setX(GameInfo.WIDTH - animal2.getWidth());
 
+        charactersPlayer1.add(animal1);
+        charactersPlayer1.add(animal2);
+        charactersPlayer2.add(animal3);
+        
         iteratePlayer1 = charactersPlayer1.iterator();
         iteratePlayer2 = charactersPlayer2.iterator();
 
@@ -107,8 +110,16 @@ public class MainGame implements Screen {
         return currentAnimal;
     }
 
+    /**
+     * "Randomly" position the animal objects on the screen.
+     */
+    public void positionAnimals() {
 
-    //antar at vi oppdaterer charactersPlayer1/2 underveis i spillet hvis noen dør
+    }
+
+    //vil lagre hver Animal med en index hos hver spiller
+    //får neste Animal i rekken
+    //antar at vi må sette en ny currencharacter i denne metoden
     public void changeCharacter(){
         if(currentTurn == 0){
             setCurrentCharacter(nextAnimal(iteratePlayer1, charactersPlayer1));
@@ -179,18 +190,16 @@ public class MainGame implements Screen {
         game.getSb().begin();
         game.getSb().draw(bg, 0, 0);
         font.draw(game.getSb(), timer.getDisplayString(), 50, 50);
-        for(Animal i : charactersPlayer1){
-            game.getSb().draw(i.getAnimalTexture(), i.getX(), i.getY());
-            game.getSb().draw(i.getBarTexture(), i.getX()+5, i.getY()+110);
+        for(Animal animal : charactersPlayer1){
+            animal.draw(game.getSb());
         }
-        for(Animal i : charactersPlayer2){
-            game.getSb().draw(i.getAnimalTexture(), i.getX(), i.getY());
-            game.getSb().draw(i.getBarTexture(), i.getX()+5, i.getY()+110);
+        for(Animal animal : charactersPlayer2){
+            animal.draw(game.getSb());
         }
 
         game.getSb().end();
 
-        map.update(camera);
+//        map.update(camera);
     }
 
     @Override

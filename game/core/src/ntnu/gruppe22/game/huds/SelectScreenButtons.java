@@ -79,19 +79,19 @@ public class SelectScreenButtons {
         ));
 
         chicken = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("Animals/chicken.png"))
+                new Sprite(new Texture("animals/chicken.png"))
         ));
         monkey = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("Animals/mokey.png"))
+                new Sprite(new Texture("animals/monkey.png"))
         ));
         walrus = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("Animals/walrus.png"))
+                new Sprite(new Texture("animals/walrus.png"))
         ));
         moose = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("Animals/moose.png"))
+                new Sprite(new Texture("animals/moose.png"))
         ));
         rabbit = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("Animals/rabbit.png"))
+                new Sprite(new Texture("animals/rabbit.png"))
         ));
 
         readyBtn.setPosition(GameInfo.WIDTH / 2 - 95, GameInfo.HEIGHT / 2 + 135);
@@ -122,7 +122,7 @@ public class SelectScreenButtons {
                 });
 
                 SequenceAction sa = new SequenceAction();
-                sa.addAction(Actions.fadeOut(1f));
+//                sa.addAction(Actions.fadeOut(1f));
                 sa.addAction(run);
 
                 stage.addAction(sa);
