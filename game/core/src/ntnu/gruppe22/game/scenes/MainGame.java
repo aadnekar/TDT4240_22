@@ -120,6 +120,7 @@ public class MainGame implements Screen {
 
     // TODO: Handle when players.size() = 0 - we have a winner!
     public Animal nextAnimal(Iterator<Animal> iter, List<Animal> players) {
+
         if (iter.hasNext()) {
             return iter.next();
         } else {
@@ -156,11 +157,20 @@ public class MainGame implements Screen {
         changeCharacter();
     }
 
+    public void gameOver(){
+        this.dispose();
+        game.setScreen(new MainMenu(game));
+    }
+
 
     @Override
     public void render(float dt) {
         if (!bufferTime) {
             getCurrentAnimal().move();
+        }
+        // This if-statement can be placed inside die()-method(?)
+        if(charactersPlayer1.size() == 0 || charactersPlayer2.size() == 0){
+            gameOver();
         }
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
