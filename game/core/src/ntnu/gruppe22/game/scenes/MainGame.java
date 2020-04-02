@@ -124,6 +124,11 @@ public class MainGame implements Screen {
             return iter.next();
         } else {
             iter = players.iterator();
+            if(currentTurn == 0){
+                iteratePlayer1 = iter;
+            } else{
+                iteratePlayer2 = iter;
+            }
             return nextAnimal(iter, players);
         }
     }
