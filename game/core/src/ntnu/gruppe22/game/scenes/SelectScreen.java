@@ -13,7 +13,7 @@ import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.huds.SelectScreenButtons;
 
 /**
- * Antar at denne filen inneholder en screen som gir eg mulighet til å velge characters
+ * Denne filen inneholder en screen som gir deg mulighet til å velge characters
  * Importerer metoder som render(), update(), dispose(), handleInput()
  */
 
@@ -23,12 +23,13 @@ public class SelectScreen implements Screen {
 
     private AnimalWar game;
     private OrthographicCamera camera;
-    private SelectScreenButtons btns;
+    private SelectScreenButtons screenBtns;
     private Viewport gameViewport;
     private Texture bg;
 
-    //private Map<Player.username, animal> animalChoices;
-    //private Map<Player.username, Boolean> ready;
+
+
+
 
 
     public SelectScreen(AnimalWar game) {
@@ -42,26 +43,19 @@ public class SelectScreen implements Screen {
 
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
+        screenBtns = new SelectScreenButtons(game);
+
+
         bg = new Texture("backgrounds/menu-bg.png");
-        btns = new SelectScreenButtons(game);
 
-    }
-
-    public void setCharacter ( int id){
 
     }
 
 
-        //public boolean isReady(){
-        // return this.ready;
-        // }
-
-    public void setReady ( boolean ready){
-
-    }
 
     @Override
     public void show () {
+        
 
     }
 
@@ -78,9 +72,10 @@ public class SelectScreen implements Screen {
 
         game.getSb().end();
 
-        game.getSb().setProjectionMatrix(btns.getStage().getCamera().combined);
-        btns.getStage().draw();
-        btns.getStage().act();
+        game.getSb().setProjectionMatrix(screenBtns.getStage().getCamera().combined);
+        screenBtns.getStage().draw();
+        screenBtns.getStage().act();
+
 
     }
 
@@ -108,7 +103,7 @@ public class SelectScreen implements Screen {
     public void dispose () {
         Gdx.input.setInputProcessor(null);
         bg.dispose();
-        btns.disposeStage();
+        screenBtns.disposeStage();
     }
 }
 
