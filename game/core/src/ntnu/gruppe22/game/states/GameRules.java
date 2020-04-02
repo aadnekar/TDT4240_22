@@ -14,7 +14,6 @@ public class GameRules {
     public static final int NUMBER_OF_CHARS = 1;
     public static final int MAX_NUMBER_OF_ROUNDS = 20;
 
-
      // Map med alle animals (sprites) og tilhørende id
     private static final Map<Integer,String> animalMap = new HashMap<Integer, String>() {{
         put(1,  "animals/chicken.png");
@@ -28,6 +27,11 @@ public class GameRules {
     //trenger vi denne i det hele tatt?
     protected void startRoundTimer() {
 
+    }
+
+
+    public static String getAnimalTexture(int animalKey) {
+        return animalMap.get(animalKey);
     }
 
 
