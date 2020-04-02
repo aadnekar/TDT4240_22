@@ -18,6 +18,7 @@ public class AnimalWar extends Game {
 	public void create () {
 		sb = new SpriteBatch();
 		GameManager.getInstance().initializeGameData();
+		//Sette xml-fila for Login som start.
 		setScreen(new MainMenu(this));
 	}
 

@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import ntnu.gruppe22.game.R;
+import ntnu.gruppe22.game.scenes.MainMenu;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseUser user = mAuth.getCurrentUser();
         if(user!=null){
-            Intent intent = new Intent(getApplicationContext(),Profile.class);
+            Intent intent = new Intent(getApplicationContext(), MainMenu.class);
             startActivity(intent);
         }
 
@@ -95,10 +96,12 @@ public class MainActivity extends AppCompatActivity {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
+                //Route videre til MainMenu
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 // ...
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                //Ikke route videre, vis feilmelding.
             }
         }
     }
@@ -114,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Intent intent = new Intent(getApplicationContext(),Profile.class);
+                            Intent intent = new Intent(getApplicationContext(),MainMenu.class);
                             startActivity(intent);
 
                         } else {
