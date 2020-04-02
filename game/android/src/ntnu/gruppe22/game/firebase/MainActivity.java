@@ -22,7 +22,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import ntnu.gruppe22.game.AndroidLauncher;
 import ntnu.gruppe22.game.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseUser user = mAuth.getCurrentUser();
         if(user!=null){
-            Intent intent = new Intent(getApplicationContext(), AndroidLauncher.class);
+            Intent intent = new Intent(getApplicationContext(), Profile.class); //AndroidLauncher
             startActivity(intent);
         }
 
@@ -119,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Intent intent = new Intent(getApplicationContext(), AndroidLauncher.class);
+                            Intent intent = new Intent(getApplicationContext(), Profile.class); //AndroidLauncher
                             startActivity(intent);
 
                         } else {

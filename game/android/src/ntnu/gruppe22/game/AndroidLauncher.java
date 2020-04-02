@@ -12,7 +12,6 @@ public class AndroidLauncher extends AndroidApplication {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		game = new AnimalWar();
-		//Kjøre MainActivity her?? Den kan videre vise til MainMenu.
 		initialize(game, config);
 	}
 }
