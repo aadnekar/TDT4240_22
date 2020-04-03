@@ -23,6 +23,7 @@ import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
 import ntnu.gruppe22.game.scenes.MainGame;
 import ntnu.gruppe22.game.scenes.MainMenu;
+import ntnu.gruppe22.game.scenes.SelectScreen;
 
 
 public class SelectScreenButtons {
@@ -37,7 +38,8 @@ public class SelectScreenButtons {
     private ImageButton walrus;
     private ImageButton moose;
     private ImageButton rabbit;
-    private Integer player = 0;
+    private int playerNumber;
+
 
     private HashMap<Integer, ArrayList> animalChoices;
     private ArrayList<Integer> addedAnimal;
@@ -45,8 +47,10 @@ public class SelectScreenButtons {
     //private Map<Player.username, Boolean> ready;
 
 
-    public SelectScreenButtons(AnimalWar game){
+    public SelectScreenButtons(AnimalWar game ,int playerNumber){
         this.game=game;
+        this.playerNumber=playerNumber;
+
 
         gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
         stage = new Stage(gameViewport, game.getSb());
@@ -72,12 +76,9 @@ public class SelectScreenButtons {
         readyBtn = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/play-btn.png"))
         ));
-
-
         backBtn = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/home-button.png"))
         ));
-
         chicken = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("animals/chicken.png"))
         ));
@@ -116,8 +117,16 @@ public class SelectScreenButtons {
                 run.setRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        game.setScreen(new MainGame(game));
-                        System.out.println("You are no ready to play");
+                        if (playerNumber ==0){
+                            playerNumber =1;
+                            game.setScreen(new SelectScreen(game,playerNumber));
+                            System.out.println("Player2 can now chose characters");
+                        }
+                        else {
+                            game.setScreen(new MainGame(game));
+                            System.out.println("You are no ready to play");
+                        }
+
                     }
                 });
 
