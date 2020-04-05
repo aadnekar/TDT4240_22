@@ -8,6 +8,9 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import ntnu.gruppe22.game.helpers.GameInfo;
+import ntnu.gruppe22.game.scenes.MainGame;
+
 
 /**
  * @author Jane. Created on 29.03.2020 18:40
@@ -30,9 +33,9 @@ public class B2WorldCreator {
         for (MapObject object : TileMap.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / GameInfo.PPM, (rect.getY() + rect.getHeight() / 2)/GameInfo.PPM);
             body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth() / 2 , rect.getHeight() / 2);
+            shape.setAsBox(rect.getWidth() / 2 / GameInfo.PPM, rect.getHeight() / 2 / GameInfo.PPM);
             body.createFixture(shape,0.0f);
         }
     }

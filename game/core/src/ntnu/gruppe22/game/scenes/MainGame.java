@@ -1,11 +1,17 @@
 package ntnu.gruppe22.game.scenes;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -44,11 +50,10 @@ import ntnu.gruppe22.game.utils.MainGameTimer;
 public class MainGame implements Screen {
     AnimalWar game;
     Map map;
+    World world;
 
     private OrthographicCamera camera;
     private Viewport gameViewport;
-
-    private Texture bg;
 
     private List<Animal> charactersPlayer1;
     private List<Animal> charactersPlayer2;
@@ -66,18 +71,32 @@ public class MainGame implements Screen {
 
     public MainGame(AnimalWar game, HashMap<Integer, ArrayList<Integer>> roster) {
         this.game = game;
-        map = new Map();
+        //create our Box2D world, setting no gravity in X, -10 gravity in Y, and allow bodies to sleep
+        this.world = new World(new Vector2(0, -10), true);
+        map = new Map(world);
+
         this.camera = new OrthographicCamera();
-        this.camera.setToOrtho(false, GameInfo.WIDTH, GameInfo.HEIGHT);
+        this.camera.setToOrtho(false, GameInfo.WIDTH /GameInfo.PPM, GameInfo.HEIGHT /GameInfo.PPM);
         this.camera.update();
-        this.camera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
 
-        charactersPlayer1 = generateAnimals(roster.get(0));
-        charactersPlayer2 = generateAnimals(roster.get(1));
+        this.camera.position.set(GameInfo.WIDTH / 2f /GameInfo.PPM, GameInfo.HEIGHT / 2f /GameInfo.PPM, 0);
+        charactersPlayer1 = new ArrayList<Animal>();
+        charactersPlayer2 = new ArrayList<Animal>();
 
-        gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
+        gameViewport = new FitViewport(GameInfo.WIDTH /GameInfo.PPM, GameInfo.HEIGHT/GameInfo.PPM, camera);
 
-        bg = new Texture("backgrounds/menu-bg.png");
+        //legger ved to animals i første omgang. Videre vil vi gi mulighet til fler.
+        //posisjon er random, dette må endres etter gitt map
+        Animal animal1 = new Animal(this,2);
+        Animal animal2 = new Animal(this, 4);
+        Animal animal3 = new Animal(this, 1);
+
+        //animal1.setX(GameInfo.WIDTH / 2 - animal1.getWidth()/2);
+        //animal2.setX(GameInfo.WIDTH - animal2.getWidth());
+
+        charactersPlayer1.add(animal1);
+        charactersPlayer1.add(animal2);
+        charactersPlayer2.add(animal3);
 
         iteratePlayer1 = charactersPlayer1.iterator();
         iteratePlayer2 = charactersPlayer2.iterator();
@@ -94,12 +113,24 @@ public class MainGame implements Screen {
     public List<Animal> generateAnimals(ArrayList rosterList) {
         List<Animal> animals = new ArrayList<>();
         for (Object i : rosterList ){
-            animals.add(new Animal((Integer) i));
+            animals.add(new Animal(this, (Integer) i));
         }
         return animals;
 
     }
 
+    public void handleInput(float dt){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+            currentAnimal.b2body.applyLinearImpulse(new Vector2(0, 5f), currentAnimal.b2body.getWorldCenter(), true);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+            camera.position.x += 2f;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && currentAnimal.b2body.getLinearVelocity().x <= 2)
+            currentAnimal.b2body.applyLinearImpulse(new Vector2(0.1f, 0), currentAnimal.b2body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && currentAnimal.b2body.getLinearVelocity().x >= -2)
+            currentAnimal.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), currentAnimal.b2body.getWorldCenter(), true);
+    }
     //forandring fra navn i innlevering
     public Animal getCurrentAnimal(){
         return currentAnimal;
@@ -171,6 +202,9 @@ public class MainGame implements Screen {
 
     @Override
     public void render(float dt) {
+        handleInput(dt);
+        //set camera to follow current player
+        camera.position.x = currentAnimal.b2body.getPosition().x;
         if (!bufferTime) {
             getCurrentAnimal().move();
         }
@@ -178,25 +212,28 @@ public class MainGame implements Screen {
         if(charactersPlayer1.size() == 0 || charactersPlayer2.size() == 0){
             gameOver();
         }
-
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        map.update(camera); //Needs to be created before animal texture
+        camera.update();
+        game.getSb().setProjectionMatrix(camera.combined);
         game.getSb().begin();
-        game.getSb().draw(bg, 0, 0);
         font.draw(game.getSb(), timer.getDisplayString(), 50, 50);
         for(Animal animal : charactersPlayer1){
             animal.draw(game.getSb());
+            animal.update(dt);
         }
         for(Animal animal : charactersPlayer2){
             animal.draw(game.getSb());
+            animal.update(dt);
         }
-
+        currentAnimal.draw(game.getSb());
         game.getSb().end();
-
-//        map.update(camera);
     }
 
+    public World getWorld(){
+        return world;
+    }
     @Override
     public void show() {
 
