@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
 /**
  * @author Jane. Created on 29.03.2020 18:40
  * this Class creates renders the object-layers of the map
- * which creates boxes around the tiles for collision detection
+ * which creates boxes around the object-tiles for collision detection
  */
 
 public class B2WorldCreator {
