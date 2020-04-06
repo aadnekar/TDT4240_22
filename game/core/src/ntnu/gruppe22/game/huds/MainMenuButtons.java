@@ -93,7 +93,7 @@ public class MainMenuButtons {
                     @Override
                     public void run() {
                         // TODO: Uncomment when MainGame is implemented
-                        game.setScreen(new SelectScreen(game,0));
+                        game.setScreen(new SelectScreen(game));
                         System.out.println("welcome to Selectscreen");
                     }
                 });

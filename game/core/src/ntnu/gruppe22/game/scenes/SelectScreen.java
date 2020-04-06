@@ -9,6 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.huds.SelectScreenButtons;
@@ -28,36 +31,24 @@ public class SelectScreen implements Screen {
     private SelectScreenButtons screenBtns;
     private Viewport gameViewport;
     private Texture bg;
-    private int playerNumber;
-    private TextField player1;
-    private TextField player2;
+    private HashMap<Integer, ArrayList<Integer>> animalChoices;
 
 
 
 
 
-    public SelectScreen(AnimalWar game, int playerNumber ) {
+    public SelectScreen(AnimalWar game) {
         //selectedCharacter = characters.get(0); //henter ut første i lista?
 
         this.game = game;
-        this.playerNumber=playerNumber;
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, GameInfo.WIDTH, GameInfo.HEIGHT);
         this.camera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
 
+
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
-        screenBtns = new SelectScreenButtons(game, playerNumber);
-
-       /* if(playerNumber==0){
-            //player1 = new TextField(" ",new AssetLoader(1));
-        }
-        else if (playerNumber==1){
-            //player2 = new TextField(" ",new AssetLoader(1));
-
-        }*/
-
-
+        screenBtns = new SelectScreenButtons(game);
 
         bg = new Texture("backgrounds/menu-bg.png");
 
