@@ -5,8 +5,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
@@ -21,12 +25,13 @@ import ntnu.gruppe22.game.huds.SelectScreenButtons;
 //extend abstract class in some way?
 public class SelectScreen implements Screen {
 
+
     private AnimalWar game;
     private OrthographicCamera camera;
     private SelectScreenButtons screenBtns;
     private Viewport gameViewport;
     private Texture bg;
-
+    private HashMap<Integer, ArrayList<Integer>> animalChoices;
 
 
 
@@ -36,15 +41,14 @@ public class SelectScreen implements Screen {
         //selectedCharacter = characters.get(0); //henter ut første i lista?
 
         this.game = game;
-
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, GameInfo.WIDTH, GameInfo.HEIGHT);
         this.camera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
 
+
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
         screenBtns = new SelectScreenButtons(game);
-
 
         bg = new Texture("backgrounds/menu-bg.png");
 

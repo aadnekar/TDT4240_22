@@ -18,7 +18,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
-import ntnu.gruppe22.game.scenes.MainMenu;
 import ntnu.gruppe22.game.scenes.SelectScreen;
 import ntnu.gruppe22.game.scenes.Settings;
 

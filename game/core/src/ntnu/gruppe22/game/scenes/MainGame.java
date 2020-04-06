@@ -6,16 +6,16 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 import ntnu.gruppe22.game.AnimalWar;
-import ntnu.gruppe22.game.Maps.Map;
+import ntnu.gruppe22.game.maps.Map;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.states.Animal;
 import ntnu.gruppe22.game.utils.MainGameTimer;
@@ -64,34 +64,21 @@ public class MainGame implements Screen {
     Iterator<Animal> iteratePlayer1;
     Iterator<Animal> iteratePlayer2;
 
-    public MainGame(AnimalWar game) {
+    public MainGame(AnimalWar game, HashMap<Integer, ArrayList<Integer>> roster) {
         this.game = game;
         map = new Map();
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, GameInfo.WIDTH, GameInfo.HEIGHT);
         this.camera.update();
         this.camera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
-        charactersPlayer1 = new ArrayList<Animal>();
-        charactersPlayer2 = new ArrayList<Animal>();
 
+        charactersPlayer1 = generateAnimals(roster.get(0));
+        charactersPlayer2 = generateAnimals(roster.get(1));
 
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
         bg = new Texture("backgrounds/menu-bg.png");
 
-        //legger ved to animals i første omgang. Videre vil vi gi mulighet til fler.
-        //posisjon er random, dette må endres etter gitt map
-        Animal animal1 = new Animal(2);
-        Animal animal2 = new Animal(4);
-        Animal animal3 = new Animal(1);
-
-        animal1.setX(GameInfo.WIDTH / 2 - animal1.getWidth()/2);
-        animal2.setX(GameInfo.WIDTH - animal2.getWidth());
-
-        charactersPlayer1.add(animal1);
-        charactersPlayer1.add(animal2);
-        charactersPlayer2.add(animal3);
-        
         iteratePlayer1 = charactersPlayer1.iterator();
         iteratePlayer2 = charactersPlayer2.iterator();
 
@@ -103,6 +90,14 @@ public class MainGame implements Screen {
 
         timer = new MainGameTimer(this);
         timer.startNewRoundCountDown();
+    }
+    public List<Animal> generateAnimals(ArrayList rosterList) {
+        List<Animal> animals = new ArrayList<>();
+        for (Object i : rosterList ){
+            animals.add(new Animal((Integer) i));
+        }
+        return animals;
+
     }
 
     //forandring fra navn i innlevering
