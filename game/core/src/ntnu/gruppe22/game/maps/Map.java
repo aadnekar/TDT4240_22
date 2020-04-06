@@ -1,4 +1,4 @@
-package ntnu.gruppe22.game.Maps;
+package ntnu.gruppe22.game.maps;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;

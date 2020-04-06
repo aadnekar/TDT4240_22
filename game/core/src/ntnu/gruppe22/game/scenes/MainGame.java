@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -16,7 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import ntnu.gruppe22.game.AnimalWar;
-import ntnu.gruppe22.game.Maps.Map;
+import ntnu.gruppe22.game.maps.Map;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.states.Animal;
 import ntnu.gruppe22.game.utils.MainGameTimer;
