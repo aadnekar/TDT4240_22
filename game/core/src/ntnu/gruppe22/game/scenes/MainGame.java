@@ -1,6 +1,7 @@
 package ntnu.gruppe22.game.scenes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,7 +19,13 @@ import java.util.List;
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.maps.Map;
 import ntnu.gruppe22.game.helpers.GameInfo;
+
 import ntnu.gruppe22.game.sprites.Animal;
+
+//import ntnu.gruppe22.game.states.Animal;
+import ntnu.gruppe22.game.states.wapons.ListenerClass;
+import ntnu.gruppe22.game.states.wapons.Stone;
+
 import ntnu.gruppe22.game.utils.MainGameTimer;
 
 
@@ -48,6 +55,7 @@ public class MainGame implements Screen {
     World world;
 
 
+    private Boolean thrown;
     private OrthographicCamera camera;
     private Viewport gameViewport;
 
@@ -56,8 +64,10 @@ public class MainGame implements Screen {
 
     private Animal currentAnimal;
     private int currentTurn;
+    private Stone stone;
 
     BitmapFont font;
+    ListenerClass listenerClass;
 
     public static boolean bufferTime = false;
     private MainGameTimer timer;
@@ -71,7 +81,11 @@ public class MainGame implements Screen {
         //create our Box2D world, setting no gravity in X, -10 gravity in Y, and allow bodies to sleep
         this.world = new World(new Vector2(0, -10), true);
         map = new Map(world);
-        
+
+        listenerClass = new ListenerClass(this, world);
+        world.setContactListener(listenerClass);
+
+
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, GameInfo.WIDTH /GameInfo.PPM, GameInfo.HEIGHT /GameInfo.PPM);
         this.camera.update();
@@ -106,6 +120,26 @@ public class MainGame implements Screen {
         return animals;
     }
 
+
+    public void handleInput(float dt){
+        if (!bufferTime) {
+            getCurrentAnimal().move(this.camera);
+        }
+    }
+
+    public void throwStone(float dt) {
+        stone = new Stone(this);
+        boolean hit = false;
+        stone.b2body.applyLinearImpulse(new Vector2(5f, 5f), stone.b2body.getWorldCenter(), true);
+        stone.draw((game.getSb()));
+        stone.update(dt);
+
+        //stone.getTexture().dispose();
+
+    }
+
+
+    //forandring fra navn i innlevering
     public Animal getCurrentAnimal(){
         return currentAnimal;
     }
@@ -170,12 +204,6 @@ public class MainGame implements Screen {
         this.dispose();
     }
 
-    public void handleInput(float dt){
-
-        if (!bufferTime) {
-            getCurrentAnimal().move(this.camera);
-        }
-    }
 
     public float cameraBounds(float animalPosition, float mapEnd, float mapStart) {
         if(animalPosition > mapStart) {
@@ -212,8 +240,14 @@ public class MainGame implements Screen {
         for(Animal animal : charactersPlayer2){
             animal.draw(game.getSb());
             animal.update(dt);
+            thrown = false;
         }
         currentAnimal.draw(game.getSb());
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+            throwStone(dt);
+        }
+
         game.getSb().end();
 
 
@@ -252,5 +286,6 @@ public class MainGame implements Screen {
     public void dispose() {
         font.dispose();
         timer.cancel();
+
     }
 }

@@ -25,6 +25,7 @@ import ntnu.gruppe22.game.utils.BodyEditorLoader;
 
 public class Animal extends Sprite {
     private static float MAX_VELOCITY = 1f;
+    public Body b2body;
 
     private int health;
     private int endurance;
