@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 
+import ntnu.gruppe22.game.helpers.GameInfo;
+
 /**
  * @author jane on 29.03.2020 19:00.
  * This class loads a tilemap into the MainGame-screen
@@ -24,15 +26,14 @@ public class Map{
     private Box2DDebugRenderer b2dr;
     private B2WorldCreator creator;
 
-    public Map() {
+    public Map(World world) {
         /* Create map */
-        //create our Box2D world, setting no gravity in X, -10 gravity in Y, and allow bodies to sleep
-        world = new World(new Vector2(0, -10), true); // !!NB Do not move. The world needs to be created first
+        this.world = world; // !!NB Do not move. The world needs to be created first
         b2dr = new Box2DDebugRenderer();
         //render tile maps
         maploader = new TmxMapLoader();
         map = maploader.load("map/straightMap.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map,1);
+        renderer = new OrthogonalTiledMapRenderer(map,1/GameInfo.PPM);
         creator = new B2WorldCreator(this);
     }
 
