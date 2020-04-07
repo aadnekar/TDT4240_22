@@ -85,18 +85,8 @@ public class MainGame implements Screen {
 
         gameViewport = new FitViewport(GameInfo.WIDTH /GameInfo.PPM, GameInfo.HEIGHT/GameInfo.PPM, camera);
 
-        //legger ved to animals i første omgang. Videre vil vi gi mulighet til fler.
-        //posisjon er random, dette må endres etter gitt map
-        Animal animal1 = new Animal(this,2);
-        Animal animal2 = new Animal(this, 4);
-        Animal animal3 = new Animal(this, 1);
-
-        //animal1.setX(GameInfo.WIDTH / 2 - animal1.getWidth()/2);
-        //animal2.setX(GameInfo.WIDTH - animal2.getWidth());
-
-        charactersPlayer1.add(animal1);
-        charactersPlayer1.add(animal2);
-        charactersPlayer2.add(animal3);
+        charactersPlayer1 = generateAnimals(roster.get(0));
+        charactersPlayer2 = generateAnimals(roster.get(1));
 
         iteratePlayer1 = charactersPlayer1.iterator();
         iteratePlayer2 = charactersPlayer2.iterator();
