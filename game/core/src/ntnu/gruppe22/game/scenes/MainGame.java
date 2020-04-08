@@ -50,11 +50,13 @@ import ntnu.gruppe22.game.utils.MainGameTimer;
  */
 
 public class MainGame implements Screen {
-    AnimalWar game;
-    Map map;
-    World world;
 
 
+    private AnimalWar game;
+    private Map map;
+    private World world;
+
+    public boolean ShowStone = true;
     private Boolean thrown;
     private OrthographicCamera camera;
     private Viewport gameViewport;
@@ -86,6 +88,7 @@ public class MainGame implements Screen {
         world.setContactListener(listenerClass);
 
 
+
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, GameInfo.WIDTH /GameInfo.PPM, GameInfo.HEIGHT /GameInfo.PPM);
         this.camera.update();
@@ -109,6 +112,9 @@ public class MainGame implements Screen {
         font = new BitmapFont();
         timer = new MainGameTimer(this);
         timer.startNewRoundCountDown();
+        listenerClass = new ListenerClass(this, world);
+        world.setContactListener(listenerClass);
+
     }
 
 
@@ -205,6 +211,7 @@ public class MainGame implements Screen {
     }
 
 
+
     public float cameraBounds(float animalPosition, float mapEnd, float mapStart) {
         if(animalPosition > mapStart) {
             if(animalPosition < mapEnd) {
@@ -212,6 +219,8 @@ public class MainGame implements Screen {
             } else return mapEnd;
         } else return mapStart;
     }
+
+
 
     @Override
     public void render(float dt) {
@@ -246,6 +255,12 @@ public class MainGame implements Screen {
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             throwStone(dt);
+
+            //stone.b2body.destroyFixture(stone.ff);
+        }
+        if(!ShowStone) {
+            listenerClass.getFb().getBody().destroyFixture(listenerClass.getFb());
+            ShowStone = true;
         }
 
         game.getSb().end();
