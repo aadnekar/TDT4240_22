@@ -71,6 +71,7 @@ public class MainGame implements Screen {
 
     public MainGame(AnimalWar game, HashMap<Integer, ArrayList<Integer>> roster) {
         this.game = game;
+
         //create our Box2D world, setting no gravity in X, -10 gravity in Y, and allow bodies to sleep
         this.world = new World(new Vector2(0, -10), true);
         map = new Map(world);
