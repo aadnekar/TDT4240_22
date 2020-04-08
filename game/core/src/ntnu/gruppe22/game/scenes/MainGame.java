@@ -1,18 +1,13 @@
 package ntnu.gruppe22.game.scenes;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
@@ -23,7 +18,7 @@ import java.util.List;
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.maps.Map;
 import ntnu.gruppe22.game.helpers.GameInfo;
-import ntnu.gruppe22.game.states.Animal;
+import ntnu.gruppe22.game.sprites.Animal;
 import ntnu.gruppe22.game.utils.MainGameTimer;
 
 
@@ -71,6 +66,7 @@ public class MainGame implements Screen {
 
     public MainGame(AnimalWar game, HashMap<Integer, ArrayList<Integer>> roster) {
         this.game = game;
+
         //create our Box2D world, setting no gravity in X, -10 gravity in Y, and allow bodies to sleep
         this.world = new World(new Vector2(0, -10), true);
         map = new Map(world);
@@ -96,32 +92,24 @@ public class MainGame implements Screen {
         currentTurn = 0;
 
         font = new BitmapFont();
-
         timer = new MainGameTimer(this);
         timer.startNewRoundCountDown();
     }
+
+
     public List<Animal> generateAnimals(ArrayList rosterList) {
         List<Animal> animals = new ArrayList<>();
         for (Object i : rosterList ){
             animals.add(new Animal(this, (Integer) i));
         }
         return animals;
-
     }
 
     public void handleInput(float dt){
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
-            currentAnimal.b2body.applyLinearImpulse(new Vector2(0, 5f), currentAnimal.b2body.getWorldCenter(), true);
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            camera.position.x += 2f;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && currentAnimal.b2body.getLinearVelocity().x <= 2)
-            currentAnimal.b2body.applyLinearImpulse(new Vector2(0.1f, 0), currentAnimal.b2body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && currentAnimal.b2body.getLinearVelocity().x >= -2)
-            currentAnimal.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), currentAnimal.b2body.getWorldCenter(), true);
+
     }
-    //forandring fra navn i innlevering
+
+
     public Animal getCurrentAnimal(){
         return currentAnimal;
     }
@@ -133,9 +121,7 @@ public class MainGame implements Screen {
 
     }
 
-    //vil lagre hver Animal med en index hos hver spiller
-    //får neste Animal i rekken
-    //antar at vi må sette en ny currencharacter i denne metoden
+
     public void changeCharacter(){
         if(currentTurn == 0){
             setCurrentCharacter(nextAnimal(iteratePlayer1, charactersPlayer1));
@@ -161,15 +147,14 @@ public class MainGame implements Screen {
         }
     }
 
-    //skal vi ha runder med i spillet i det hele tatt?
-    //dt?
+
     public void setCurrentTurn(){
+        // TODO Check for gameOver
+
         if(currentTurn == 1){
             this.currentTurn = 0;
-            //update(dt);
         } else if(currentTurn == 0){
             this.currentTurn = 1;
-            //update(dt);
         } else{
             System.out.println("Wrong turn-number?!");
         }
@@ -185,28 +170,31 @@ public class MainGame implements Screen {
     }
 
     public void gameOver(){
-        this.dispose();
         game.setScreen(new MainMenu(game));
+        this.dispose();
     }
 
 
     @Override
     public void render(float dt) {
-        handleInput(dt);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        //handleInput(dt);
+
         //set camera to follow current player
-        camera.position.x = currentAnimal.b2body.getPosition().x;
+        camera.position.x = currentAnimal.getX();
+
         if (!bufferTime) {
             getCurrentAnimal().move();
         }
-        // This if-statement can be placed inside die()-method(?)
-        if(charactersPlayer1.size() == 0 || charactersPlayer2.size() == 0){
-            gameOver();
-        }
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         map.update(camera); //Needs to be created before animal texture
+
         camera.update();
+
         game.getSb().setProjectionMatrix(camera.combined);
+
         game.getSb().begin();
         font.draw(game.getSb(), timer.getDisplayString(), 50, 50);
         for(Animal animal : charactersPlayer1){
@@ -219,6 +207,9 @@ public class MainGame implements Screen {
         }
         currentAnimal.draw(game.getSb());
         game.getSb().end();
+
+
+        world.step(dt, 6, 2);
     }
 
     public World getWorld(){

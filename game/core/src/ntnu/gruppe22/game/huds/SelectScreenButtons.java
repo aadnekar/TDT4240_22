@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -24,8 +23,7 @@ import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
 import ntnu.gruppe22.game.scenes.MainGame;
 import ntnu.gruppe22.game.scenes.MainMenu;
-import ntnu.gruppe22.game.scenes.SelectScreen;
-import ntnu.gruppe22.game.states.GameRules;
+import ntnu.gruppe22.game.helpers.GameRules;
 
 
 public class SelectScreenButtons {
@@ -42,13 +40,13 @@ public class SelectScreenButtons {
     private ImageButton rabbit;
     private int playerNumber;
 
-    private static final int CHICKEN_POSITION_X = GameInfo.WIDTH/5-92;
-    private static final int MONKEY_POSITION_X = 2*GameInfo.WIDTH/5-(195/2);
-    private static final int WALRUS_POSITION_X = 3*GameInfo.WIDTH/5-(183/2);
-    private static final int MOOSE_POSITION_X = 4*GameInfo.WIDTH/5-(227/2);
-    private static final int RABBIT_POSITION_X = 5*GameInfo.WIDTH/5-(183/2);
-    private static final int Y_POSITION_DEFAULT = GameInfo.HEIGHT/3-52;
-    private static final int Y_POSITION_CHOSEN = GameInfo.HEIGHT/3;
+    private static final float CHICKEN_POSITION_X = GameInfo.WIDTH/5-92;
+    private static final float MONKEY_POSITION_X = 2*GameInfo.WIDTH/5-(195/2);
+    private static final float WALRUS_POSITION_X = 3*GameInfo.WIDTH/5-(183/2);
+    private static final float MOOSE_POSITION_X = 4*GameInfo.WIDTH/5-(227/2);
+    private static final float RABBIT_POSITION_X = 5*GameInfo.WIDTH/5-(183/2);
+    private static final float Y_POSITION_DEFAULT = GameInfo.HEIGHT/3-52;
+    private static final float Y_POSITION_CHOSEN = GameInfo.HEIGHT/3;
 
 
 

@@ -3,8 +3,8 @@ package ntnu.gruppe22.game.utils;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import ntnu.gruppe22.game.helpers.GameRules;
 import ntnu.gruppe22.game.scenes.MainGame;
-import ntnu.gruppe22.game.states.GameRules;
 
 /**
  * @author aadne on 27.03.2020 09:57

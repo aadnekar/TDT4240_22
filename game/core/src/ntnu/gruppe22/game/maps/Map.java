@@ -42,9 +42,6 @@ public class Map{
         renderer.render();
         renderer.setView(camera);
         b2dr.render(world, camera.combined); //Box2DDebugLines
-
-        //Updates Box2D-world through time
-        world.step(1/60f, 6, 2);
     }
 
 
