@@ -66,6 +66,8 @@ public class Animal extends Sprite {
         bdef.position.set(rand.nextInt(500) /GameInfo.PPM, 335 / GameInfo.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
+        b2body.setUserData(this);
+
 
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();

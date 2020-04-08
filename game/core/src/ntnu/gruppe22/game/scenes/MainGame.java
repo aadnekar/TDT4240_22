@@ -50,10 +50,12 @@ import ntnu.gruppe22.game.utils.MainGameTimer;
  */
 
 public class MainGame implements Screen {
-    AnimalWar game;
-    Map map;
-    World world;
 
+    private AnimalWar game;
+    private Map map;
+    private World world;
+
+    public boolean ShowStone = true;
     private Boolean thrown;
     private OrthographicCamera camera;
     private Viewport gameViewport;
@@ -79,8 +81,7 @@ public class MainGame implements Screen {
         //create our Box2D world, setting no gravity in X, -10 gravity in Y, and allow bodies to sleep
         this.world = new World(new Vector2(0, -10), true);
         map = new Map(world);
-        listenerClass = new ListenerClass(this, world);
-        world.setContactListener(listenerClass);
+
 
 
         this.camera = new OrthographicCamera();
@@ -119,6 +120,9 @@ public class MainGame implements Screen {
 
         timer = new MainGameTimer(this);
         timer.startNewRoundCountDown();
+        listenerClass = new ListenerClass(this, world);
+        world.setContactListener(listenerClass);
+
     }
     public List<Animal> generateAnimals(ArrayList rosterList) {
         List<Animal> animals = new ArrayList<>();
@@ -227,6 +231,8 @@ public class MainGame implements Screen {
     }
 
 
+
+
     @Override
     public void render(float dt) {
         handleInput(dt);
@@ -259,9 +265,11 @@ public class MainGame implements Screen {
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             throwStone(dt);
-
             //stone.b2body.destroyFixture(stone.ff);
-
+        }
+        if(!ShowStone) {
+            listenerClass.getFb().getBody().destroyFixture(listenerClass.getFb());
+            ShowStone = true;
         }
 
         game.getSb().end();

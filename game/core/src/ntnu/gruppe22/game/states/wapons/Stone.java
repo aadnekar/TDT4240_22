@@ -26,6 +26,7 @@ public class Stone extends Sprite {
     public Body b2body;
     private int damage;
     public FixtureDef fdef;
+    public Fixture fixture;
 
     public Stone(MainGame screen) {
         super(new Texture(Gdx.files.internal("weapons/rock.png")));
@@ -33,13 +34,14 @@ public class Stone extends Sprite {
 
         this.screen = screen;
         this.world = screen.getWorld();
-        defineStone();
 
         damage = 1;
 
         stone = new TextureRegion(getTexture(), 0, 0, 100/ GameInfo.PPM, 104/GameInfo.PPM);
         setBounds(0, 0, 40/ GameInfo.PPM, 40/GameInfo.PPM);
         setRegion(stone);
+        defineStone();
+
     }
 
     public void defineStone() {
@@ -47,14 +49,17 @@ public class Stone extends Sprite {
         BodyDef bdef = new BodyDef();
         bdef.position.set(rand.nextInt(500) /GameInfo.PPM, 335 / GameInfo.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
-        //bdef.bullet = true;
+        bdef.bullet = true;
         b2body = world.createBody(bdef);
+        b2body.setUserData(this);
 
         fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(20 /GameInfo.PPM, 20/GameInfo.PPM);
         fdef.shape = shape;
         b2body.createFixture(fdef);
+        fixture = b2body.createFixture(fdef);
+
 
     }
 

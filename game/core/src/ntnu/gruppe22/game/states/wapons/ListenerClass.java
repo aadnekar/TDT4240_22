@@ -9,14 +9,28 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ntnu.gruppe22.game.scenes.MainGame;
 import ntnu.gruppe22.game.states.Animal;
 
 
 public class ListenerClass implements ContactListener {
 
-    MainGame game;
-    World world;
+    private MainGame game;
+    private World world;
+    private Fixture fa;
+    private Fixture fb;
+
+
+    public Fixture getFa() {
+        return fa;
+    }
+
+    public Fixture getFb() {
+        return fb;
+    }
 
     public ListenerClass(MainGame game, World world) {
         this.game =game;
@@ -26,11 +40,20 @@ public class ListenerClass implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
         System.out.println("contactlistener");
-        Fixture fa = contact.getFixtureA();
-        Fixture fb = contact.getFixtureB();
+        fa = contact.getFixtureA();
+        fb = contact.getFixtureB();
 
-        //if(fb.getBody().getUserData() instanceof Stone && fa.getBody().getUserData() instanceof Animal){
-        System.out.println("bøøøø");
+        //if(fa == null || fb == null) return;
+        if (fb.getBody().getUserData() instanceof Stone && fa.getBody().getUserData() instanceof Animal) {
+            System.out.println("bøøøø");
+            game.ShowStone = false;
+
+        }
+        if (fa.getBody().getUserData() instanceof Stone && fb.getBody().getUserData() instanceof Animal) {
+            System.out.println("iiiiii");
+            game.ShowStone = false;
+
+        }
 
 
     }
@@ -42,7 +65,18 @@ public class ListenerClass implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
+/*
+        if (fb.getUserData() instanceof Stone && fa.getUserData() instanceof Animal) {
+            System.out.println("bøøøø");
+            fb.getBody().destroyFixture(fb);
+            world.destroyBody(fb.getBody());
+        } else if (fa.getUserData() instanceof Stone && fb.getUserData() instanceof Animal) {
+            System.out.println("bøøøø2");
+            //fa.getBody().destroyFixture(fa);
+            world.destroyBody(fa.getBody());
 
+
+        }*/
     }
 
     @Override
