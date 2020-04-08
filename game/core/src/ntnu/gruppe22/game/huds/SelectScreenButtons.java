@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -24,8 +23,7 @@ import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
 import ntnu.gruppe22.game.scenes.MainGame;
 import ntnu.gruppe22.game.scenes.MainMenu;
-import ntnu.gruppe22.game.scenes.SelectScreen;
-import ntnu.gruppe22.game.states.GameRules;
+import ntnu.gruppe22.game.helpers.GameRules;
 
 
 public class SelectScreenButtons {

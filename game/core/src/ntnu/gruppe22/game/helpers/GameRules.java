@@ -1,4 +1,4 @@
-package ntnu.gruppe22.game.states;
+package ntnu.gruppe22.game.helpers;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package ntnu.gruppe22.game.states;
+package ntnu.gruppe22.game.sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -7,24 +7,17 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.Random;
 
-import javax.xml.soap.Text;
-
-import ntnu.gruppe22.game.helpers.GameData;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.scenes.MainGame;
+import ntnu.gruppe22.game.helpers.GameRules;
 import ntnu.gruppe22.game.utils.BodyEditorLoader;
 
 
@@ -56,7 +49,7 @@ public class Animal extends Sprite {
         this.screen = screen;
         this.world = screen.getWorld();
 
-        defineAnimal();
+        defineAnimal(animalKey);
 
         //Animal texture region
         animalStand = new TextureRegion(getTexture(), 0, 0, 100/ GameInfo.PPM, 104/GameInfo.PPM);
@@ -67,11 +60,11 @@ public class Animal extends Sprite {
     /**
      * Create animal fixture in box2d-world
      */
-    public void defineAnimal(){
+    public void defineAnimal(int animalKey){
         Random rand = new Random();
 
-        // TODO Make this pick the correct shape. Prob make a class for it?
-        BodyEditorLoader bodyEditorLoader = new BodyEditorLoader(Gdx.files.internal("sprite-shapes/chicken.json"));
+        ShapeManager shapeManager = new ShapeManager(animalKey);
+        BodyEditorLoader bodyEditorLoader = new BodyEditorLoader(Gdx.files.internal(shapeManager.getFilePath()));
 
         // Defines a body for box2d
         BodyDef bodyDef = new BodyDef();
@@ -91,8 +84,9 @@ public class Animal extends Sprite {
         fixtureDef.friction = 0.1f;     // Friction against other objects
         //fixtureDef.restitution = 0.4f;  // Bounciness
 
-        bodyEditorLoader.attachFixture(body, "chicken", fixtureDef, getWidth()/ GameInfo.PPM);
+        bodyEditorLoader.attachFixture(body, shapeManager.getName(), fixtureDef, getWidth()/ GameInfo.PPM);
     }
+
 
     public void update(float dt){
         setX(getPositionX() - getWidth()/2);
@@ -148,17 +142,14 @@ public class Animal extends Sprite {
 
     //when hit by weapon that deals x damage
     public void setHealth(int damage) {
-        this.health = damage;
-        if (damage <= 0) {
+        this.health -= damage;
+        if (this.health <= 0) {
             die();
         }
     }
 
     private void die() {
-        //set new "dying" sprite
         this.setTexture(new Texture("dead"));
-//        spriteAnimal = new Sprite(animalTexture);
-        // remove this Animal after ... time (maybe add a animation? )
     }
 
     public int getHealth() {
@@ -169,10 +160,9 @@ public class Animal extends Sprite {
         return endurance;
     }
 
-
-   /*public void draw(Batch batch) {
+   public void draw(Batch batch) {
         super.draw(batch);
-        //batch.draw(animalTexture, 200 /GameInfo.PPM, 200 /GameInfo.PPM);
-        batch.draw(healthbar.getTexture(), this.getX() + 5, this.getY() + 110);
-    }*/
+        //batch.draw(this.getTexture(), getPositionX(), getPositionY());
+        //batch.draw(healthbar.getTexture(), this.getX() + 5, this.getY() + 110);
+    }
 }
