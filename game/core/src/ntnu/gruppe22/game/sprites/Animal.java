@@ -2,11 +2,13 @@ package ntnu.gruppe22.game.sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -122,15 +124,17 @@ public class Animal extends Sprite {
      * the screen.
      * Need to scale the input location to the Pixel Per Meter (PPM).
      */
-    public void move() {
+    public void move(OrthographicCamera camera) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && onGround()) {
             jump();
         }
-        if (Gdx.input.isTouched()) {
-            if (Gdx.input.getX()/GameInfo.PPM > getPositionX() && !hasMaxVelocity()) {
-                moveRight();
 
-            } else if (Gdx.input.getX()/GameInfo.PPM <= getPositionX() && !hasMaxVelocity()) {
+        if (Gdx.input.isTouched()) {
+            Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.unproject(touchPos);
+            if (touchPos.x > getPositionX() && !hasMaxVelocity()) {
+                moveRight();
+            } else if (touchPos.x <= getPositionX() && !hasMaxVelocity()) {
                 moveLeft();
             }
         }
