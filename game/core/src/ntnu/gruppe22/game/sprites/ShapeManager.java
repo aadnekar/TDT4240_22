@@ -17,8 +17,7 @@ public class ShapeManager {
             case 1:
                 chicken();
                 break;
-                // TODO Add these when their shapes have been imported
-/*            case 2:
+            case 2:
                 monkey();
                 break;
             case 3:
@@ -26,7 +25,7 @@ public class ShapeManager {
                 break;
             case 4:
                 moose();
-                break;*/
+                break;
             default:
                 rabbit();
                 break;
