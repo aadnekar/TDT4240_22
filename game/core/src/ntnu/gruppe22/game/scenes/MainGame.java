@@ -47,6 +47,7 @@ public class MainGame implements Screen {
     Map map;
     World world;
 
+
     private OrthographicCamera camera;
     private Viewport gameViewport;
 
@@ -70,16 +71,16 @@ public class MainGame implements Screen {
         //create our Box2D world, setting no gravity in X, -10 gravity in Y, and allow bodies to sleep
         this.world = new World(new Vector2(0, -10), true);
         map = new Map(world);
-
+        
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, GameInfo.WIDTH /GameInfo.PPM, GameInfo.HEIGHT /GameInfo.PPM);
         this.camera.update();
 
-        this.camera.position.set(GameInfo.WIDTH / 2f /GameInfo.PPM, GameInfo.HEIGHT / 2f /GameInfo.PPM, 0);
-        charactersPlayer1 = new ArrayList<Animal>();
-        charactersPlayer2 = new ArrayList<Animal>();
+        //this.camera.position.set(GameInfo.WIDTH / 2f /GameInfo.PPM, GameInfo.HEIGHT / 2f /GameInfo.PPM, 0);
+        charactersPlayer1 = new ArrayList<>();
+        charactersPlayer2 = new ArrayList<>();
 
-        gameViewport = new FitViewport(GameInfo.WIDTH /GameInfo.PPM, GameInfo.HEIGHT/GameInfo.PPM, camera);
+        //gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
         charactersPlayer1 = generateAnimals(roster.get(0));
         charactersPlayer2 = generateAnimals(roster.get(1));
@@ -104,11 +105,6 @@ public class MainGame implements Screen {
         }
         return animals;
     }
-
-    public void handleInput(float dt){
-
-    }
-
 
     public Animal getCurrentAnimal(){
         return currentAnimal;
@@ -174,20 +170,22 @@ public class MainGame implements Screen {
         this.dispose();
     }
 
+    public void handleInput(float dt){
+
+        if (!bufferTime) {
+            getCurrentAnimal().move(this.camera);
+        }
+    }
 
     @Override
     public void render(float dt) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        //handleInput(dt);
+        handleInput(dt);
 
         //set camera to follow current player
         camera.position.x = currentAnimal.getX();
-
-        if (!bufferTime) {
-            getCurrentAnimal().move();
-        }
 
         map.update(camera); //Needs to be created before animal texture
 
