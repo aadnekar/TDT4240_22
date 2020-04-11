@@ -177,6 +177,14 @@ public class MainGame implements Screen {
         }
     }
 
+    public float cameraBounds(float animalPosition, float mapEnd, float mapStart) {
+        if(animalPosition > mapStart) {
+            if(animalPosition < mapEnd) {
+                return animalPosition;
+            } else return mapEnd;
+        } else return mapStart;
+    }
+
     @Override
     public void render(float dt) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -184,8 +192,10 @@ public class MainGame implements Screen {
 
         handleInput(dt);
 
-        //set camera to follow current player
-        camera.position.x = currentAnimal.getX();
+        //set camera to follow current player within bounds
+        //mapEnd: 1920 is the total length of the map, 640 is the total height.
+        camera.position.x = cameraBounds(currentAnimal.getX(), (1920-(GameInfo.WIDTH/2))/100, camera.viewportWidth/2);
+        camera.position.y = cameraBounds(currentAnimal.getY() + currentAnimal.getHeight(), (640-(GameInfo.HEIGHT/2))/100, 0);
 
         map.update(camera); //Needs to be created before animal texture
 
