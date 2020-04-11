@@ -15,7 +15,7 @@ import java.util.Random;
 
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.scenes.MainGame;
-import ntnu.gruppe22.game.states.GameRules;
+//import ntnu.gruppe22.game.states.GameRules;
 
 public class Stone extends Sprite {
 
@@ -47,7 +47,7 @@ public class Stone extends Sprite {
     public void defineStone() {
         Random rand = new Random();
         BodyDef bdef = new BodyDef();
-        bdef.position.set(screen.getCurrentAnimal().getX()+ screen.getCurrentAnimal().getWidth(), screen.getCurrentAnimal().getY() + 0.7f);
+        bdef.position.set(screen.getCurrentAnimal().getX()+(110/GameInfo.PPM), screen.getCurrentAnimal().getY()+(130/GameInfo.PPM));
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.bullet = true;
         b2body = world.createBody(bdef);
