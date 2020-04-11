@@ -133,15 +133,20 @@ public class Animal extends Sprite {
             Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPos);
             if (touchPos.x > getPositionX() && !hasMaxVelocity()) {
-                moveRight();
+                if(getPositionX() < (1920/GameInfo.PPM)-getWidth()){
+                    moveRight();
+                }
             } else if (touchPos.x <= getPositionX() && !hasMaxVelocity()) {
-                moveLeft();
+                if(getPositionX() > 1){
+                    moveLeft();
+                }
+
             }
         }
     }
 
     private void jump() {
-        this.body.applyLinearImpulse(0f, 2.0f, getPositionX(), getPositionY(), true);
+        this.body.applyLinearImpulse(0f, 1.0f, getPositionX(), getPositionY(), true);
     }
 
     //when hit by weapon that deals x damage
