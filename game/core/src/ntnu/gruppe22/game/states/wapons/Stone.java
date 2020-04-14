@@ -37,7 +37,7 @@ public class Stone extends Sprite {
 
         damage = 1;
 
-        stone = new TextureRegion(getTexture(), 0, 0, 100/ GameInfo.PPM, 104/GameInfo.PPM);
+        stone = new TextureRegion(getTexture(), 0, 0, 100/ GameInfo.PPM, 100/GameInfo.PPM);
         setBounds(0, 0, 40/ GameInfo.PPM, 40/GameInfo.PPM);
         setRegion(stone);
         defineStone();
@@ -47,7 +47,7 @@ public class Stone extends Sprite {
     public void defineStone() {
         Random rand = new Random();
         BodyDef bdef = new BodyDef();
-        bdef.position.set(rand.nextInt(500) /GameInfo.PPM, 335 / GameInfo.PPM);
+        bdef.position.set(screen.getCurrentAnimal().getX()+ screen.getCurrentAnimal().getWidth(), screen.getCurrentAnimal().getY() + 0.7f);
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.bullet = true;
         b2body = world.createBody(bdef);
@@ -60,13 +60,12 @@ public class Stone extends Sprite {
         b2body.createFixture(fdef);
         fixture = b2body.createFixture(fdef);
 
-
     }
 
     public void update(float dt){
         //connect texture with box2D fixture
         //setPosition(screen.getCurrentAnimal().getX() + 10, screen.getCurrentAnimal().getY() + 55);
-        setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
+        //setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
 
     }
 

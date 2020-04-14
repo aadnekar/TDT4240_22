@@ -56,7 +56,7 @@ public class MainGame implements Screen {
     private Map map;
     private World world;
 
-    public boolean ShowStone = true;
+    public boolean DestroyStone = false;
     private Boolean thrown;
     private OrthographicCamera camera;
     private Viewport gameViewport;
@@ -136,7 +136,7 @@ public class MainGame implements Screen {
     public void throwStone(float dt) {
         stone = new Stone(this);
         boolean hit = false;
-        stone.b2body.applyLinearImpulse(new Vector2(5f, 5f), stone.b2body.getWorldCenter(), true);
+        stone.b2body.applyLinearImpulse(new Vector2(2f, 2f), stone.b2body.getWorldCenter(), true);
         stone.draw((game.getSb()));
         stone.update(dt);
 
@@ -212,6 +212,7 @@ public class MainGame implements Screen {
 
 
 
+
     public float cameraBounds(float animalPosition, float mapEnd, float mapStart) {
         if(animalPosition > mapStart) {
             if(animalPosition < mapEnd) {
@@ -219,7 +220,6 @@ public class MainGame implements Screen {
             } else return mapEnd;
         } else return mapStart;
     }
-
 
 
     @Override
@@ -251,22 +251,30 @@ public class MainGame implements Screen {
             animal.update(dt);
             thrown = false;
         }
-        currentAnimal.draw(game.getSb());
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             throwStone(dt);
 
             //stone.b2body.destroyFixture(stone.ff);
         }
-        if(!ShowStone) {
-            listenerClass.getFb().getBody().destroyFixture(listenerClass.getFb());
-            ShowStone = true;
+        if(stone != null) {
+            stone.draw(game.getSb());
+            stone.setPosition(stone.b2body.getPosition().x - stone.getWidth() / 2, stone.b2body.getPosition().y - stone.getHeight() / 2);
         }
+
 
         game.getSb().end();
 
 
+
         world.step(dt, 6, 2);
+
+        if(DestroyStone) {
+            listenerClass.getFb().getBody().destroyFixture(listenerClass.getFb());
+        }
+        DestroyStone = false;
+
+
     }
 
     public World getWorld(){
