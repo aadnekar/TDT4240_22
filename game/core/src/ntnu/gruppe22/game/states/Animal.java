@@ -42,7 +42,7 @@ public class Animal extends Sprite {
         super(new Texture(Gdx.files.internal(GameRules.getAnimalTexture(animalKey))));
         animalTexture = new Texture(Gdx.files.internal(GameRules.getAnimalTexture(animalKey)));
 
-        health = 100;
+        health = 3;
         endurance= 5000;
         healthbar = new NinePatch(new Texture(Gdx.files.internal("animals/rectangle.png")), 0, 0, 0, 0);
 
@@ -97,15 +97,17 @@ public class Animal extends Sprite {
 
     //when hit by weapon that deals x damage
     public void setHealth(int damage) {
-        this.health = damage;
-        if (damage <= 0) {
+        if (this.health >= 1) {
+            this.health -= damage;
+        }
+        else {
             die();
         }
     }
 
-    private void die() {
+        private void die() {
         //set new "dying" sprite
-        animalTexture = new Texture("dead");
+        animalTexture = new Texture("dead.png");
 //        spriteAnimal = new Sprite(animalTexture);
         // remove this Animal after ... time (maybe add a animation? )
     }

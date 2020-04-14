@@ -1,18 +1,14 @@
 package ntnu.gruppe22.game.scenes;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
@@ -55,7 +51,7 @@ public class MainGame implements Screen {
     private Map map;
     private World world;
 
-    public boolean ShowStone = true;
+    public boolean DestroyStone = false;
     private Boolean thrown;
     private OrthographicCamera camera;
     private Viewport gameViewport;
@@ -150,7 +146,7 @@ public class MainGame implements Screen {
     public void throwStone(float dt) {
         stone = new Stone(this);
         boolean hit = false;
-        stone.b2body.applyLinearImpulse(new Vector2(5f, 5f), stone.b2body.getWorldCenter(), true);
+        stone.b2body.applyLinearImpulse(new Vector2(2f, 2f), stone.b2body.getWorldCenter(), true);
         stone.draw((game.getSb()));
         stone.update(dt);
 
@@ -231,8 +227,6 @@ public class MainGame implements Screen {
     }
 
 
-
-
     @Override
     public void render(float dt) {
         handleInput(dt);
@@ -261,18 +255,24 @@ public class MainGame implements Screen {
             animal.update(dt);
             thrown = false;
         }
-        currentAnimal.draw(game.getSb());
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             throwStone(dt);
             //stone.b2body.destroyFixture(stone.ff);
         }
-        if(!ShowStone) {
-            listenerClass.getFb().getBody().destroyFixture(listenerClass.getFb());
-            ShowStone = true;
+        if(stone != null) {
+            stone.draw(game.getSb());
+            stone.setPosition(stone.b2body.getPosition().x - stone.getWidth() / 2, stone.b2body.getPosition().y - stone.getHeight() / 2);
         }
 
+
         game.getSb().end();
+
+        if(DestroyStone) {
+            listenerClass.getFb().getBody().destroyFixture(listenerClass.getFb());
+        }
+        DestroyStone = false;
+
     }
 
     public World getWorld(){
