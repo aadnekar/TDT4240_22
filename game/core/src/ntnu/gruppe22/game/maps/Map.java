@@ -1,6 +1,7 @@
 package ntnu.gruppe22.game.maps;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -32,7 +33,7 @@ public class Map{
         b2dr = new Box2DDebugRenderer();
         //render tile maps
         maploader = new TmxMapLoader();
-        map = maploader.load("map/straightMap.tmx");
+        map = maploader.load("map/platform2Map.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,1/GameInfo.PPM);
         creator = new B2WorldCreator(this);
     }

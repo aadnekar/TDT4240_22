@@ -74,7 +74,7 @@ public class Animal extends Sprite {
         // Since animals move we need it to be dynamic, the opposite would be ground which would be static.
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
-        bodyDef.position.set(rand.nextInt(500) /GameInfo.PPM, 335 / GameInfo.PPM);
+        bodyDef.position.set(rand.nextInt(1800) /GameInfo.PPM, 335 / GameInfo.PPM);
 
         // Create the body in the world defined in MainGame.
         this.body = world.createBody(bodyDef);
@@ -146,7 +146,7 @@ public class Animal extends Sprite {
     }
 
     private void jump() {
-        this.body.applyLinearImpulse(0f, 1.0f, getPositionX(), getPositionY(), true);
+        this.body.applyLinearImpulse(0f, 4.0f, getPositionX(), getPositionY(), true);
     }
 
     //when hit by weapon that deals x damage
