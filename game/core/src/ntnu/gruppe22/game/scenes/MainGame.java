@@ -195,7 +195,7 @@ public class MainGame implements Screen {
         //set camera to follow current player within bounds
         //mapEnd: 1920 is the total length of the map, 640 is the total height.
         camera.position.x = cameraBounds(currentAnimal.getX(), (1920-(GameInfo.WIDTH/2))/100, camera.viewportWidth/2);
-        camera.position.y = cameraBounds(currentAnimal.getY() + currentAnimal.getHeight(), (640-(GameInfo.HEIGHT/2))/100, 0);
+        camera.position.y = cameraBounds(currentAnimal.getY(), (640-(GameInfo.HEIGHT/2))/100, camera.viewportHeight/2);
 
         map.update(camera); //Needs to be created before animal texture
 
