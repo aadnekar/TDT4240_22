@@ -120,6 +120,8 @@ public class MainGameTimer {
      * Save resources by using this if there is no longer need for the timer.
      */
     public void cancel() {
-        this.cancel();
+        timer.cancel();
+        timer.purge();
+
     }
 }
