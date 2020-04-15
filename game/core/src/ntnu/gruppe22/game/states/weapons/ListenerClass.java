@@ -1,4 +1,4 @@
-package ntnu.gruppe22.game.states.wapons;
+package ntnu.gruppe22.game.states.weapons;
 
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -48,8 +48,8 @@ public class ListenerClass implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-        
->
+
+
     }
 
     @Override
