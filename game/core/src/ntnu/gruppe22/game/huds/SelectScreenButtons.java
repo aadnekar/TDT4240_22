@@ -31,8 +31,8 @@ public class SelectScreenButtons {
     private Stage stage;
     private Viewport gameViewport;
 
-    private ImageButton backBtn;
-    private ImageButton readyBtn;
+    private ImageButton back;
+    private ImageButton ready;
     private ImageButton chicken;
     private ImageButton monkey;
     private ImageButton walrus;
@@ -70,8 +70,8 @@ public class SelectScreenButtons {
         createAndPositionButtons();
         addAllListeners();
 
-        stage.addActor(readyBtn);
-        stage.addActor(backBtn);
+        stage.addActor(ready);
+        stage.addActor(back);
         stage.addActor(chicken);
         stage.addActor(monkey);
         stage.addActor(walrus);
@@ -84,10 +84,10 @@ public class SelectScreenButtons {
 
     private void createAndPositionButtons() {
 
-        readyBtn = new ImageButton(new SpriteDrawable(
+        ready = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/play-btn.png"))
         ));
-        backBtn = new ImageButton(new SpriteDrawable(
+        back = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/home-button.png"))
         ));
         chicken = new ImageButton(new SpriteDrawable(
@@ -106,8 +106,8 @@ public class SelectScreenButtons {
                 new Sprite(new Texture("animals/rabbit.png"))
         ));
 
-        readyBtn.setPosition(GameInfo.WIDTH / 2 - 95, GameInfo.HEIGHT / 2 + 135);
-        backBtn.setPosition(50, GameInfo.HEIGHT - 90);
+        ready.setPosition(GameInfo.WIDTH / 2 - 95, GameInfo.HEIGHT / 2 + 135);
+        back.setPosition(50, GameInfo.HEIGHT - 90);
 
         //the width in position is width of 1/5- 65 + (half the image)
         chicken.setPosition(CHICKEN_POSITION_X,Y_POSITION_DEFAULT);
@@ -119,7 +119,7 @@ public class SelectScreenButtons {
     }
 
     private void addAllListeners() {
-        readyBtn.addListener(new ChangeListener() {
+        ready.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 GameManager.getInstance().gameStartedFromMainMenu = true;
@@ -128,12 +128,15 @@ public class SelectScreenButtons {
                 run.setRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        if (playerNumber == 0){
-                            nextPlayer();
+                        if (hasFullRoster()){
+                            if (playerNumber == 0){
+                                nextPlayer();
+                            }
+                            else {
+                                game.setScreen(new MainGame(game, animalChoices));
+                            }
                         }
-                        else {
-                            game.setScreen(new MainGame(game, animalChoices));
-                        }
+
                     }
                 });
 
@@ -145,7 +148,7 @@ public class SelectScreenButtons {
             }
         });
 
-        backBtn.addListener(new ChangeListener() {
+        back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 GameManager.getInstance().gameStartedFromMainMenu = true;
@@ -276,5 +279,8 @@ public class SelectScreenButtons {
         animal.setY(Y_POSITION_DEFAULT);
     }
 
+    private boolean hasFullRoster(){
+        return animalChoices.get(playerNumber).size() == GameRules.NUMBER_OF_CHARS;
+    }
 
 }
