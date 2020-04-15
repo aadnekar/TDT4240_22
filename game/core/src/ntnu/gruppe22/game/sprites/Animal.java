@@ -43,7 +43,7 @@ public class Animal extends Sprite {
     public Animal(MainGame screen, int animalKey) {
         super(new Texture(Gdx.files.internal(GameRules.getAnimalTexture(animalKey))));
 
-        health = 10;
+        health = 30;
         endurance= 5000;
         healthbar = new NinePatch(new Texture(Gdx.files.internal("animals/rectangle.png")), 0, 0, 0, 0);
 
