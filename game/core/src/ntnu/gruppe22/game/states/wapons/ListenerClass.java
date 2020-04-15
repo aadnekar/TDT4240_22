@@ -20,6 +20,7 @@ public class ListenerClass implements ContactListener {
     private Fixture stoneFixture;
 
 
+
     public Fixture getFb() {
         return stoneFixture;
     }
@@ -47,7 +48,8 @@ public class ListenerClass implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-
+        
+>
     }
 
     @Override

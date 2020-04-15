@@ -5,10 +5,13 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
@@ -21,8 +24,6 @@ import ntnu.gruppe22.game.maps.Map;
 import ntnu.gruppe22.game.helpers.GameInfo;
 
 import ntnu.gruppe22.game.sprites.Animal;
-
-//import ntnu.gruppe22.game.states.Animal;
 import ntnu.gruppe22.game.states.wapons.ListenerClass;
 import ntnu.gruppe22.game.states.wapons.Stone;
 
@@ -51,7 +52,6 @@ import ntnu.gruppe22.game.utils.MainGameTimer;
 
 public class MainGame implements Screen {
 
-
     private AnimalWar game;
     private Map map;
     private World world;
@@ -61,8 +61,6 @@ public class MainGame implements Screen {
     private Viewport gameViewport;
 
     private List<Animal> charactersPlayer1;
-
-
     private List<Animal> charactersPlayer2;
 
     private Animal currentAnimal;
@@ -80,7 +78,6 @@ public class MainGame implements Screen {
 
     public MainGame(AnimalWar game, HashMap<Integer, ArrayList<Integer>> roster) {
         this.game = game;
-
         //create our Box2D world, setting no gravity in X, -10 gravity in Y, and allow bodies to sleep
         this.world = new World(new Vector2(0, -10), true);
         map = new Map(world);
@@ -140,8 +137,8 @@ public class MainGame implements Screen {
             animals.add(new Animal(this, (Integer) i));
         }
         return animals;
-    }
 
+    }
 
     public void handleInput(float dt){
         if (!bufferTime) {
@@ -155,8 +152,6 @@ public class MainGame implements Screen {
         stone.draw((game.getSb()));
         stone.update(dt);
     }
-
-
     //forandring fra navn i innlevering
     public Animal getCurrentAnimal(){
         return currentAnimal;
@@ -169,7 +164,9 @@ public class MainGame implements Screen {
 
     }
 
-
+    //vil lagre hver Animal med en index hos hver spiller
+    //får neste Animal i rekken
+    //antar at vi må sette en ny currencharacter i denne metoden
     public void changeCharacter(){
         if(currentTurn == 0){
             setCurrentCharacter(nextAnimal(iteratePlayer1, charactersPlayer1));
@@ -195,10 +192,9 @@ public class MainGame implements Screen {
         }
     }
 
-
+    //skal vi ha runder med i spillet i det hele tatt?
+    //dt?
     public void setCurrentTurn(){
-        // TODO Check for gameOver
-
         if(currentTurn == 1){
             this.currentTurn = 0;
         } else if(currentTurn == 0){
@@ -284,9 +280,6 @@ public class MainGame implements Screen {
         world.step(dt, 6, 2);
 
     }
-
-
-
 
     public World getWorld(){
         return world;
