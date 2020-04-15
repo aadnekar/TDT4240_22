@@ -57,11 +57,12 @@ public class MainGame implements Screen {
     private World world;
 
     public boolean DestroyStone = false;
-    private Boolean thrown;
     private OrthographicCamera camera;
     private Viewport gameViewport;
 
     private List<Animal> charactersPlayer1;
+
+
     private List<Animal> charactersPlayer2;
 
     private Animal currentAnimal;
@@ -118,6 +119,21 @@ public class MainGame implements Screen {
     }
 
 
+    public void removeAnimal(Animal animal) {
+        if (charactersPlayer1.contains(animal)) {
+            charactersPlayer1.remove(animal);
+            if (charactersPlayer1.size() == 0) {
+                gameOver();
+            }
+        }
+        else {
+            charactersPlayer2.remove(animal);
+            if (charactersPlayer2.size() == 0) {
+                gameOver();
+            }
+        }
+    }
+
     public List<Animal> generateAnimals(ArrayList rosterList) {
         List<Animal> animals = new ArrayList<>();
         for (Object i : rosterList ){
@@ -135,13 +151,9 @@ public class MainGame implements Screen {
 
     public void throwStone(float dt) {
         stone = new Stone(this);
-        boolean hit = false;
         stone.b2body.applyLinearImpulse(new Vector2(2f, 2f), stone.b2body.getWorldCenter(), true);
         stone.draw((game.getSb()));
         stone.update(dt);
-
-        //stone.getTexture().dispose();
-
     }
 
 
@@ -206,8 +218,8 @@ public class MainGame implements Screen {
     }
 
     public void gameOver(){
-        game.setScreen(new MainMenu(game));
         this.dispose();
+        game.setScreen(new MainMenu(game));
     }
 
 
@@ -229,6 +241,7 @@ public class MainGame implements Screen {
 
         handleInput(dt);
 
+
         //set camera to follow current player within bounds
         //mapEnd: 1920 is the total length of the map, 640 is the total height.
         camera.position.x = cameraBounds(currentAnimal.getX(), (1920-(GameInfo.WIDTH/2))/100, camera.viewportWidth/2);
@@ -249,33 +262,31 @@ public class MainGame implements Screen {
         for(Animal animal : charactersPlayer2){
             animal.draw(game.getSb());
             animal.update(dt);
-            thrown = false;
         }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
             throwStone(dt);
-
-            //stone.b2body.destroyFixture(stone.ff);
         }
+
+        if(DestroyStone) {
+            listenerClass.getFb().getBody().destroyFixture(listenerClass.getFb());
+            DestroyStone = false;
+        }
+
+
         if(stone != null) {
             stone.draw(game.getSb());
             stone.setPosition(stone.b2body.getPosition().x - stone.getWidth() / 2, stone.b2body.getPosition().y - stone.getHeight() / 2);
         }
 
-
         game.getSb().end();
-
-
 
         world.step(dt, 6, 2);
 
-        if(DestroyStone) {
-            listenerClass.getFb().getBody().destroyFixture(listenerClass.getFb());
-        }
-        DestroyStone = false;
-
-
     }
+
+
+
 
     public World getWorld(){
         return world;
@@ -311,4 +322,6 @@ public class MainGame implements Screen {
         timer.cancel();
 
     }
+
+
 }

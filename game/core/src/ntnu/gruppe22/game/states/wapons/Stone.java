@@ -15,7 +15,6 @@ import java.util.Random;
 
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.scenes.MainGame;
-//import ntnu.gruppe22.game.states.GameRules;
 
 public class Stone extends Sprite {
 
@@ -63,19 +62,11 @@ public class Stone extends Sprite {
     }
 
     public void update(float dt){
-        //connect texture with box2D fixture
-        //setPosition(screen.getCurrentAnimal().getX() + 10, screen.getCurrentAnimal().getY() + 55);
-        //setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
-
-    }
-
-    public void throwStone() {
 
     }
 
     public int getDamage() {
         return damage;
     }
-
 
 }

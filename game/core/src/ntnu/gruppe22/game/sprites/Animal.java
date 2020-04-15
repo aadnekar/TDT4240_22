@@ -25,7 +25,6 @@ import ntnu.gruppe22.game.utils.BodyEditorLoader;
 
 public class Animal extends Sprite {
     private static float MAX_VELOCITY = 1f;
-    public Body b2body;
 
     private int health;
     private int endurance;
@@ -33,7 +32,6 @@ public class Animal extends Sprite {
 
     private TextureRegion animalStand;
     private NinePatch healthbar;
-    private Fixture fixture;
 
     //creating fixture for Box2D collision detection
     private MainGame screen;
@@ -41,10 +39,11 @@ public class Animal extends Sprite {
     public Body body;
 
 
+
     public Animal(MainGame screen, int animalKey) {
         super(new Texture(Gdx.files.internal(GameRules.getAnimalTexture(animalKey))));
 
-        health = 100;
+        health = 10;
         endurance= 5000;
         healthbar = new NinePatch(new Texture(Gdx.files.internal("animals/rectangle.png")), 0, 0, 0, 0);
 
@@ -72,6 +71,7 @@ public class Animal extends Sprite {
         // Defines a body for box2d
         BodyDef bodyDef = new BodyDef();
 
+
         // Since animals move we need it to be dynamic, the opposite would be ground which would be static.
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
@@ -79,6 +79,7 @@ public class Animal extends Sprite {
 
         // Create the body in the world defined in MainGame.
         this.body = world.createBody(bodyDef);
+        this.body.setUserData(this);
         // Restrict rotation to make sure the animal does not tilt.
         this.body.setFixedRotation(true);
 
@@ -88,6 +89,7 @@ public class Animal extends Sprite {
         //fixtureDef.restitution = 0.4f;  // Bounciness
 
         bodyEditorLoader.attachFixture(body, shapeManager.getName(), fixtureDef, getWidth()/ GameInfo.PPM);
+
     }
 
 
@@ -159,7 +161,10 @@ public class Animal extends Sprite {
     }
 
     private void die() {
-        this.setTexture(new Texture("dead"));
+        this.flip(false, true);
+        screen.removeAnimal(this);
+
+
     }
 
     public int getHealth() {
