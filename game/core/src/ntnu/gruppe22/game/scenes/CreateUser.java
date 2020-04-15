@@ -22,8 +22,6 @@ public class CreateUser implements Screen {
     private Texture logo;
     private CreateUserButtons btns;
 
-    private String name1, name2;
-
 
     BitmapFont font;
 
@@ -42,9 +40,6 @@ public class CreateUser implements Screen {
         btns = new CreateUserButtons(game);
 
         font = new BitmapFont();
-
-        name1 = CreateUserButtons.nameLabel1.getText();
-        name2 = CreateUserButtons.nameLabel2.getText();
     }
 
 
@@ -63,17 +58,14 @@ public class CreateUser implements Screen {
         game.getSb().draw(bg, 0, 0);
         game.getSb().draw(logo, GameInfo.WIDTH/2 - logo.getWidth()/2, GameInfo.HEIGHT - 100);
 
-        font.draw(game.getSb(),name1, 50, 50);
-        font.draw(game.getSb(),name2, 100, 50);
+        font.draw(game.getSb(),"Player 1: " + btns.getNick1(), 50, 50);
 
+        font.draw(game.getSb(),"Player 2: " + btns.getNick2(), 200, 50);
 
         game.getSb().end();
         game.getSb().setProjectionMatrix(btns.getStage().getCamera().combined);
         btns.getStage().draw();
         btns.getStage().act();
-
-
-
     }
 
 

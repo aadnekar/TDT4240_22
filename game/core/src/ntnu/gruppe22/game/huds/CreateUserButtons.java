@@ -15,8 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import java.awt.Label;
-
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
@@ -35,24 +33,17 @@ public class CreateUserButtons {
 
     private CreateUserInput listener;
     private CreateUserInput listener2;
-    public static Label nameLabel1;
-    public static Label nameLabel2;
 
 
-
-
-
-    //user-input fields
+    private String nick1, nick2;
 
 
     public CreateUserButtons(AnimalWar game) {
         this.game = game;
 
-        nameLabel1 = new Label("");
-        listener = new CreateUserInput(nameLabel1);
 
-        nameLabel2 = new Label("");
-        listener2 = new CreateUserInput(nameLabel2);
+        listener = new CreateUserInput();
+        listener2 = new CreateUserInput();
 
         gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
 
@@ -64,17 +55,11 @@ public class CreateUserButtons {
         addAllListeners();
 
         stage.addActor(continueToGame);
-
         stage.addActor(addNickname1);
-
         stage.addActor(addNickname2);
 
         checkMusic();
     }
-
-
-
-
 
     private void createAndPositionButtons() {
         addNickname1 = new ImageButton(new SpriteDrawable(
@@ -92,11 +77,14 @@ public class CreateUserButtons {
         continueToGame.setPosition(GameInfo.WIDTH / 2 - continueToGame.getWidth()/2, GameInfo.HEIGHT / 2 - 150);
     }
 
+
     private void addAllListeners() {
         addNickname1.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.input.getTextInput(listener, "Enter information", "Player1:", "");
+                nick1 = listener.text;
+
 
             }
         });
@@ -104,6 +92,7 @@ public class CreateUserButtons {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.input.getTextInput(listener2, "Enter information", "Player2:", "");
+                nick2 = listener2.text;
             }
         });
         continueToGame.addListener(new ChangeListener() {
@@ -125,12 +114,21 @@ public class CreateUserButtons {
             }
         });
 
+
     }
 
     private void checkMusic() {
         if(GameManager.getInstance().gameData.isMusicOn()) {
             GameManager.getInstance().playMusic();
         }
+    }
+
+    public String getNick1() {
+        return listener.text;
+    }
+
+    public String getNick2() {
+        return listener2.text;
     }
 
     public Stage getStage() {
