@@ -52,7 +52,7 @@ public class MainGame implements Screen {
     private Map map;
     private World world;
 
-    public boolean DestroyStone = false;
+    public boolean DestroyWeapon = false;
     private OrthographicCamera camera;
     private Viewport gameViewport;
 
@@ -80,8 +80,6 @@ public class MainGame implements Screen {
 
         listenerClass = new ListenerClass(this, world);
         world.setContactListener(listenerClass);
-
-
 
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, GameInfo.WIDTH /GameInfo.PPM, GameInfo.HEIGHT /GameInfo.PPM);
@@ -225,6 +223,18 @@ public class MainGame implements Screen {
         } else return mapStart;
     }
 
+    //programmet stopper i ca 1 sek før steinen forsvinner
+    private void destroyWeapon() {
+        try {
+            Thread.sleep(800); //bedre måte å løse dette på? Tror ikke dette er helt optimalt
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        world.destroyBody(stone.b2body);
+        stone = null;
+        DestroyWeapon = false;
+    }
+
 
     @Override
     public void render(float dt) {
@@ -256,15 +266,21 @@ public class MainGame implements Screen {
             animal.update(dt);
         }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER) && (stone == null)){
             throwStone(dt);
         }
 
-        if(DestroyStone) {
-            listenerClass.getFb().getBody().destroyFixture(listenerClass.getFb());
-            DestroyStone = false;
+        if(DestroyWeapon) {
+            destroyWeapon();
+            timer.cancel();
+            timer.setNewTurn();
         }
 
+        if(stone !=null && (stone.b2body.getPosition().x <= 1 || stone.b2body.getPosition().x > (1920/GameInfo.PPM))) {
+            destroyWeapon();
+            timer.cancel();
+            timer.setNewTurn();
+        }
 
         if(stone != null) {
             stone.draw(game.getSb());
@@ -274,7 +290,6 @@ public class MainGame implements Screen {
         game.getSb().end();
 
         world.step(dt, 6, 2);
-
     }
 
     public World getWorld(){
@@ -292,12 +307,10 @@ public class MainGame implements Screen {
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
