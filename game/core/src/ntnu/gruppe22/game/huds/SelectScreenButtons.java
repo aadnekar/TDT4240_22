@@ -1,19 +1,14 @@
 package ntnu.gruppe22.game.huds;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,15 +16,12 @@ import java.util.HashMap;
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
+import ntnu.gruppe22.game.helpers.GameRules;
 import ntnu.gruppe22.game.scenes.MainGame;
 import ntnu.gruppe22.game.scenes.MainMenu;
-import ntnu.gruppe22.game.helpers.GameRules;
 
 
-public class SelectScreenButtons {
-    private AnimalWar game;
-    private Stage stage;
-    private Viewport gameViewport;
+public class SelectScreenButtons extends Buttons {
 
     private ImageButton back;
     private ImageButton ready;
@@ -48,10 +40,7 @@ public class SelectScreenButtons {
     private static final float Y_POSITION_DEFAULT = GameInfo.HEIGHT/3-52;
     private static final float Y_POSITION_CHOSEN = GameInfo.HEIGHT/3;
 
-
-
     private HashMap<Integer, ArrayList<Integer>> animalChoices;
-
 
 
     public SelectScreenButtons(AnimalWar game){
@@ -60,15 +49,7 @@ public class SelectScreenButtons {
         this.animalChoices = new HashMap<>();
         this.animalChoices.put(playerNumber,new ArrayList<Integer>());
 
-
-
-        gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
-        stage = new Stage(gameViewport, game.getSb());
-
-        Gdx.input.setInputProcessor(stage);
-
-        createAndPositionButtons();
-        addAllListeners();
+        this.initializeButtons(game);
 
         stage.addActor(ready);
         stage.addActor(back);
@@ -77,12 +58,10 @@ public class SelectScreenButtons {
         stage.addActor(walrus);
         stage.addActor(moose);
         stage.addActor(rabbit);
-
-        checkMusic();
     }
 
 
-    private void createAndPositionButtons() {
+    protected void createAndPositionButtons() {
 
         ready = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/play-btn.png"))
@@ -115,10 +94,10 @@ public class SelectScreenButtons {
         walrus.setPosition(WALRUS_POSITION_X,Y_POSITION_DEFAULT);
         moose.setPosition(MOOSE_POSITION_X,Y_POSITION_DEFAULT);
         rabbit.setPosition(RABBIT_POSITION_X,Y_POSITION_DEFAULT);
-
     }
 
-    private void addAllListeners() {
+    protected void addButtonListeners() {
+
         ready.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -177,8 +156,6 @@ public class SelectScreenButtons {
                 }
             });
 
-
-
         monkey.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -186,7 +163,6 @@ public class SelectScreenButtons {
                 setCharacter(2);
             }
         });
-
 
         walrus.addListener(new ChangeListener() {
             @Override
@@ -196,7 +172,6 @@ public class SelectScreenButtons {
             }
         });
 
-
         moose.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -204,6 +179,7 @@ public class SelectScreenButtons {
                 setCharacter(4);
             }
         });
+
         rabbit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -211,23 +187,8 @@ public class SelectScreenButtons {
                 setCharacter(5);
             }
         });
-
-
     }
 
-    private void checkMusic() {
-        if(GameManager.getInstance().gameData.isMusicOn()) {
-            GameManager.getInstance().playMusic();
-        }
-    }
-
-    public Stage getStage() {
-        return this.stage;
-    }
-
-    public void disposeStage() {
-        this.stage.dispose();
-    }
 
     public void setCharacter(int id) {
         if (animalChoices.get(playerNumber).contains(id)) {
