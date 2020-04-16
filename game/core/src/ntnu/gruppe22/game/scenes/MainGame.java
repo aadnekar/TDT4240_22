@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import ntnu.gruppe22.game.AnimalWar;
+import ntnu.gruppe22.game.huds.MainGameButtons;
 import ntnu.gruppe22.game.maps.Map;
 import ntnu.gruppe22.game.helpers.GameInfo;
 
@@ -55,6 +56,7 @@ public class MainGame implements Screen {
     public boolean DestroyStone = false;
     private OrthographicCamera camera;
     private Viewport gameViewport;
+    private MainGameButtons btns;
 
     private List<Animal> charactersPlayer1;
     private List<Animal> charactersPlayer2;
@@ -80,7 +82,7 @@ public class MainGame implements Screen {
 
         listenerClass = new ListenerClass(this, world);
         world.setContactListener(listenerClass);
-
+        btns = new MainGameButtons(game);
 
 
         this.camera = new OrthographicCamera();
@@ -142,15 +144,17 @@ public class MainGame implements Screen {
         }
     }
 
-    public void throwStone(float dt) {
-        stone = new Stone(this);
-        stone.b2body.applyLinearImpulse(new Vector2(2f, 2f), stone.b2body.getWorldCenter(), true);
-        stone.draw((game.getSb()));
-        stone.update(dt);
-    }
     //forandring fra navn i innlevering
     public Animal getCurrentAnimal(){
         return currentAnimal;
+    }
+
+    public Stone getStone(){
+        return this.stone;
+    }
+
+    public void setStone(int pos){
+        this.stone = new Stone(this, pos);
     }
 
     /**
@@ -215,8 +219,6 @@ public class MainGame implements Screen {
     }
 
 
-
-
     public float cameraBounds(float animalPosition, float mapEnd, float mapStart) {
         if(animalPosition > mapStart) {
             if(animalPosition < mapEnd) {
@@ -245,8 +247,11 @@ public class MainGame implements Screen {
 
         game.getSb().setProjectionMatrix(camera.combined);
 
+
         game.getSb().begin();
         font.draw(game.getSb(), timer.getDisplayString(), 50, 50);
+        btns.replaceEventListener(currentAnimal, dt);
+
         for(Animal animal : charactersPlayer1){
             animal.draw(game.getSb());
             animal.update(dt);
@@ -256,22 +261,27 @@ public class MainGame implements Screen {
             animal.update(dt);
         }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
-            throwStone(dt);
+
+        if(Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+            currentAnimal.throwRight(game, dt);
         }
+
 
         if(DestroyStone) {
             listenerClass.getFb().getBody().destroyFixture(listenerClass.getFb());
             DestroyStone = false;
         }
 
-
         if(stone != null) {
             stone.draw(game.getSb());
             stone.setPosition(stone.b2body.getPosition().x - stone.getWidth() / 2, stone.b2body.getPosition().y - stone.getHeight() / 2);
         }
 
+
         game.getSb().end();
+
+        btns.getStage().draw();
+        btns.getStage().act();
 
         world.step(dt, 6, 2);
 
@@ -309,7 +319,7 @@ public class MainGame implements Screen {
     public void dispose() {
         font.dispose();
         timer.cancel();
-
+        btns.disposeStage();
     }
 
 

@@ -8,15 +8,16 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.Random;
 
+import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.scenes.MainGame;
 import ntnu.gruppe22.game.helpers.GameRules;
@@ -38,11 +39,16 @@ public class Animal extends Sprite {
     public World world;
     public Body body;
 
+    /**
+     * when flipped is true animal points to the left
+     */
+    private boolean flipped;
 
 
     public Animal(MainGame screen, int animalKey) {
         super(new Texture(Gdx.files.internal(GameRules.getAnimalTexture(animalKey))));
 
+        flipped = false;
         health = 30;
         endurance= 5000;
         healthbar = new NinePatch(new Texture(Gdx.files.internal("animals/rectangle.png")), 0, 0, 0, 0);
@@ -107,10 +113,12 @@ public class Animal extends Sprite {
     }
 
     private void moveRight() {
+        flipAnimal(true);
         this.body.applyLinearImpulse(0.1f, 0, getPositionX(), getPositionY(), true);
     }
 
     private void moveLeft() {
+        flipAnimal(false);
         this.body.applyLinearImpulse(-0.1f, 0, getPositionX(), getPositionY(), true);
     }
 
@@ -118,9 +126,10 @@ public class Animal extends Sprite {
         return Math.abs(this.body.getLinearVelocity().x) >= MAX_VELOCITY;
     }
 
-    private boolean onGround() {
+    public boolean onGround() {
         return this.body.getLinearVelocity().y == 0;
     }
+
 
     /**
      * Move animal in the target direction where the player is touching
@@ -128,9 +137,12 @@ public class Animal extends Sprite {
      * Need to scale the input location to the Pixel Per Meter (PPM).
      */
     public void move(OrthographicCamera camera) {
+        /*
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && onGround()) {
             jump();
         }
+
+         */
 
         if (Gdx.input.isTouched()) {
             Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -148,8 +160,55 @@ public class Animal extends Sprite {
         }
     }
 
-    private void jump() {
+    public void jump() {
         this.body.applyLinearImpulse(0f, 4.0f, getPositionX(), getPositionY(), true);
+    }
+
+    public void throwRight(AnimalWar game, float dt) {
+        screen.setStone(110);
+        flipAnimal(true);
+        screen.getStone().b2body.applyLinearImpulse(new Vector2(2f, 2f), screen.getStone().b2body.getWorldCenter(), true);
+        drawStone(game);
+        screen.getStone().update(dt);
+    }
+
+
+    public void throwLeft(AnimalWar game, float dt) {
+        screen.setStone(-5);
+        flipAnimal(false);
+        screen.getStone().b2body.applyLinearImpulse(new Vector2(-2f, 2f), screen.getStone().b2body.getWorldCenter(), true);
+        drawStone(game);
+        screen.getStone().update(dt);
+    }
+
+    private void drawStone(AnimalWar game){
+        game.getSb().begin();
+        screen.getStone().draw(game.getSb());
+        game.getSb().end();
+    }
+
+
+    private void flipAnimal(boolean right){
+        if(flipped){
+            if(right){
+                this.flip(true, false);
+                flipped = false;
+            } else{
+                this.flip(false, false);
+            }
+        } else{
+            if(right){
+                this.flip(false, false);
+            } else{
+                this.flip(true, false);
+                flipped = true;
+            }
+        }
+
+    }
+
+    public boolean isFlipped(){
+        return flipped;
     }
 
     //when hit by weapon that deals x damage
