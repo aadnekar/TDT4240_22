@@ -12,11 +12,18 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
 import ntnu.gruppe22.game.helpers.GameRules;
+import ntnu.gruppe22.game.huds.buttons.AnimalButton;
+import ntnu.gruppe22.game.huds.buttons.ChickenButton;
+import ntnu.gruppe22.game.huds.buttons.MonkeyButton;
+import ntnu.gruppe22.game.huds.buttons.MooseButton;
+import ntnu.gruppe22.game.huds.buttons.RabbitButton;
+import ntnu.gruppe22.game.huds.buttons.WalrusButton;
 import ntnu.gruppe22.game.scenes.MainGame;
 import ntnu.gruppe22.game.scenes.MainMenu;
 
@@ -25,30 +32,24 @@ public class SelectScreenButtons extends Buttons {
 
     private ImageButton back;
     private ImageButton ready;
-    private ImageButton chicken;
-    private ImageButton monkey;
-    private ImageButton walrus;
-    private ImageButton moose;
-    private ImageButton rabbit;
+    private AnimalButton chicken;
+    private AnimalButton monkey;
+    private AnimalButton walrus;
+    private AnimalButton moose;
+    private AnimalButton rabbit;
     private int playerNumber;
 
-    private static final float CHICKEN_POSITION_X = GameInfo.WIDTH/5-92;
-    private static final float MONKEY_POSITION_X = 2*GameInfo.WIDTH/5-(195/2);
-    private static final float WALRUS_POSITION_X = 3*GameInfo.WIDTH/5-(183/2);
-    private static final float MOOSE_POSITION_X = 4*GameInfo.WIDTH/5-(227/2);
-    private static final float RABBIT_POSITION_X = 5*GameInfo.WIDTH/5-(183/2);
-    private static final float Y_POSITION_DEFAULT = GameInfo.HEIGHT/3-52;
-    private static final float Y_POSITION_CHOSEN = GameInfo.HEIGHT/3;
-
     private HashMap<Integer, ArrayList<Integer>> animalChoices;
+    private List<AnimalButton> animalButtonList;
 
 
     public SelectScreenButtons(AnimalWar game){
         this.game=game;
         this.playerNumber=0;
         this.animalChoices = new HashMap<>();
-        this.animalChoices.put(playerNumber,new ArrayList<Integer>());
+        this.animalChoices.put(playerNumber, new ArrayList<Integer>());
 
+        this.animalButtonList = new ArrayList<>();
         this.initializeButtons(game);
 
         stage.addActor(ready);
@@ -69,31 +70,21 @@ public class SelectScreenButtons extends Buttons {
         back = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("settings/home.png"))
         ));
-        chicken = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("animals/chicken.png"))
-        ));
-        monkey = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("animals/monkey.png"))
-        ));
-        walrus = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("animals/walrus.png"))
-        ));
-        moose = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("animals/moose.png"))
-        ));
-        rabbit = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("animals/rabbit.png"))
-        ));
+
+        chicken = new ChickenButton();
+        animalButtonList.add(chicken);
+        monkey = new MonkeyButton();
+        animalButtonList.add(monkey);
+        walrus = new WalrusButton();
+        animalButtonList.add(walrus);
+        moose = new MooseButton();
+        animalButtonList.add(moose);
+        rabbit = new RabbitButton();
+        animalButtonList.add(rabbit);
 
         ready.setPosition(GameInfo.WIDTH / 2 - 95, GameInfo.HEIGHT / 2 + 135);
         back.setPosition(5, GameInfo.HEIGHT - 70);
 
-        //the width in position is width of 1/5- 65 + (half the image)
-        chicken.setPosition(CHICKEN_POSITION_X,Y_POSITION_DEFAULT);
-        monkey.setPosition(MONKEY_POSITION_X,Y_POSITION_DEFAULT);
-        walrus.setPosition(WALRUS_POSITION_X,Y_POSITION_DEFAULT);
-        moose.setPosition(MOOSE_POSITION_X,Y_POSITION_DEFAULT);
-        rabbit.setPosition(RABBIT_POSITION_X,Y_POSITION_DEFAULT);
     }
 
     protected void addButtonListeners() {
@@ -120,7 +111,6 @@ public class SelectScreenButtons extends Buttons {
                 });
 
                 SequenceAction sa = new SequenceAction();
-//                sa.addAction(Actions.fadeOut(1f));
                 sa.addAction(run);
 
                 stage.addAction(sa);
@@ -151,94 +141,86 @@ public class SelectScreenButtons extends Buttons {
         chicken.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                    setPosition(chicken);
-                    setCharacter(1);
-                }
-            });
+                selectAnimal(chicken.select(), chicken.getId());
+            }
+        });
 
         monkey.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                setPosition(monkey);
-                setCharacter(2);
+                selectAnimal(monkey.select(), monkey.getId());
             }
         });
 
         walrus.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                setPosition(walrus);
-                setCharacter(3);
+                selectAnimal(walrus.select(), walrus.getId());
             }
         });
 
         moose.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                setPosition(moose);
-                setCharacter(4);
+                selectAnimal(moose.select(), moose.getId());
             }
         });
 
         rabbit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                setPosition(rabbit);
-                setCharacter(5);
+                selectAnimal(rabbit.select(), rabbit.getId());
             }
         });
     }
 
 
-    public void setCharacter(int id) {
-        if (animalChoices.get(playerNumber).contains(id)) {
-            animalChoices.get(playerNumber).remove(
-                    animalChoices.get(playerNumber).indexOf(id)
-            );
-        }
-        else {
-            checkLengthAndRemoveAnimal();
-            animalChoices.get(playerNumber).add(id);
+    public void selectAnimal(boolean add, int id) {
+        checkLengthAndRemoveAnimal();
+        if (add == true) {
+            addAnimalChoice(id);
+        } else {
+            removeAnimalChoice(id);
         }
     }
 
-    public void setPosition(ImageButton animal) {
-        if (animal.getY() != Y_POSITION_CHOSEN){
-            animal.setY( Y_POSITION_CHOSEN);
-        }
-        else {
-            animal.setY(Y_POSITION_DEFAULT);
+    private void removeAnimalChoice(int id) {
+        int index = animalChoices.get(playerNumber).indexOf(id);
+        if (index >= 0) {
+            animalChoices.get(playerNumber).remove(index);
         }
     }
 
-    private ImageButton getImagebuttonFromID(int id) {
-        switch (id){
-            case 1:return chicken;
-            case 2:return monkey;
-            case 3:return walrus;
-            case 4:return moose;
-            default:return rabbit;
-        }
+    private void addAnimalChoice(int id) {
+        animalChoices.get(playerNumber).add(id);
     }
 
+    /**
+     * If too many animals are selected by a player, remove the first selected animal.
+     */
     private void checkLengthAndRemoveAnimal() {
         if (animalChoices.get(playerNumber).size() == GameRules.NUMBER_OF_CHARS){
-            setPosition(getImagebuttonFromID(animalChoices.get(playerNumber).get(0)));
-            animalChoices.get(playerNumber).remove(0);
+            getAnimalButton(animalChoices.get(playerNumber).remove(0)).resetPosition();
         }
+    }
+
+    /**
+     * Return the button matching the id of an animal.
+     * @param id - 1 is equal to the index of the given animal.
+     * @return the related animalButton.
+     */
+    private AnimalButton getAnimalButton(int id) {
+        return animalButtonList.get(id - 1);
     }
 
     private void nextPlayer() {
-        for (int animal=1 ; animal<6; animal++){
-            resetToDefaultPosition(getImagebuttonFromID(animal));
+        for (AnimalButton btn : animalButtonList) {
+            btn.resetPosition();
         }
         playerNumber++;
         animalChoices.put(playerNumber, new ArrayList<Integer>());
     }
 
-    private void resetToDefaultPosition(ImageButton animal) {
-        animal.setY(Y_POSITION_DEFAULT);
-    }
 
     private boolean hasFullRoster(){
         return animalChoices.get(playerNumber).size() == GameRules.NUMBER_OF_CHARS;

@@ -1,0 +1,34 @@
+package ntnu.gruppe22.game.huds.buttons;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+
+import ntnu.gruppe22.game.helpers.GameInfo;
+
+/**
+ * @author aadne on 16.04.2020 11:15
+ */
+
+public class MonkeyButton extends AnimalButton {
+
+    private static final float MONKEY_POSITION_X = 2* GameInfo.WIDTH/5-(195/2);
+
+    public MonkeyButton() {
+        super(new SpriteDrawable(new Sprite(new Texture("animals/monkey.png"))));
+
+        this.setId(2);
+        this.setButtonPosition(MONKEY_POSITION_X, Y_POSITION_DEFAULT);
+    }
+
+    @Override
+    public void setButtonPosition(float x, float y) {
+        this.setPosition(x, y);
+    }
+
+
+
+    public int getId() {
+        return this.ID;
+    }
+}
