@@ -11,20 +11,20 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
-import ntnu.gruppe22.game.huds.CreateUserButtons;
+import ntnu.gruppe22.game.huds.GameOverButtons;
 
-public class CreateUser implements Screen {
-
+public class GameOver implements Screen {
     private AnimalWar game;
     private OrthographicCamera camera;
     private Viewport gameViewport;
     private Texture bg;
     private Texture logo;
-    private CreateUserButtons btns;
+    private GameOverButtons btns;
 
     BitmapFont font;
 
-    public CreateUser(AnimalWar game){
+
+    public GameOver(AnimalWar game) {
         this.game = game;
 
         this.camera = new OrthographicCamera();
@@ -36,9 +36,19 @@ public class CreateUser implements Screen {
         bg = new Texture("backgrounds/menu-bg.png");
 
         logo = new Texture("animal-war.png");
-        btns = new CreateUserButtons(game);
+        btns = new GameOverButtons(game);
 
         font = new BitmapFont();
+    }
+
+    public String getWinner() {
+        //Returns the winner of the game.
+        return "winner!!";
+    }
+
+    public int getScore() {
+        //Returns the score of the winner. Add the score to the highscorelist.
+        return 123;
     }
 
 
@@ -49,7 +59,6 @@ public class CreateUser implements Screen {
 
     @Override
     public void render(float delta) {
-
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -57,16 +66,11 @@ public class CreateUser implements Screen {
         game.getSb().draw(bg, 0, 0);
         game.getSb().draw(logo, GameInfo.WIDTH/2 - logo.getWidth()/2, GameInfo.HEIGHT - 100);
 
-        font.draw(game.getSb(),"Player 1: " + btns.getNick1(), 50, 50);
-
-        font.draw(game.getSb(),"Player 2: " + btns.getNick2(), 200, 50);
-
         game.getSb().end();
         game.getSb().setProjectionMatrix(btns.getStage().getCamera().combined);
         btns.getStage().draw();
         btns.getStage().act();
     }
-
 
     @Override
     public void resize(int width, int height) {

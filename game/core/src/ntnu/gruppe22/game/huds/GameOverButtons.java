@@ -18,28 +18,25 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
+import ntnu.gruppe22.game.scenes.Highscore;
 import ntnu.gruppe22.game.scenes.MainMenu;
+import ntnu.gruppe22.game.scenes.SelectScreen;
 
+public class GameOverButtons {
 
-public class CreateUserButtons {
     private AnimalWar game;
     private Stage stage;
     private Viewport gameViewport;
 
-    private ImageButton continueToGame;
-    private ImageButton addNickname1;
-    private ImageButton addNickname2;
+    private ImageButton highscoreList;
+    private ImageButton newGame;
+    private ImageButton quit;
 
-    private CreateUserInput listener;
-    private CreateUserInput listener2;
 
     private String nick1, nick2;
 
-    public CreateUserButtons(AnimalWar game) {
+    public GameOverButtons(AnimalWar game) {
         this.game = game;
-
-        listener = new CreateUserInput();
-        listener2 = new CreateUserInput();
 
         gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
         stage = new Stage(gameViewport, game.getSb());
@@ -48,47 +45,49 @@ public class CreateUserButtons {
         createAndPositionButtons();
         addAllListeners();
 
-        stage.addActor(continueToGame);
-        stage.addActor(addNickname1);
-        stage.addActor(addNickname2);
+        stage.addActor(highscoreList);
+        stage.addActor(newGame);
+        stage.addActor(quit);
 
         checkMusic();
     }
 
     private void createAndPositionButtons() {
-        addNickname1 = new ImageButton(new SpriteDrawable(
+        newGame = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/settings-btn.png"))
         ));
-        addNickname2 = new ImageButton(new SpriteDrawable(
+        quit = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/settings-btn.png"))
         ));
-        continueToGame = new ImageButton(new SpriteDrawable(
+        highscoreList = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/play-btn.png"))
         ));
 
-        addNickname1.setPosition(GameInfo.WIDTH / 2 - continueToGame.getWidth()/2, GameInfo.HEIGHT / 2 + 50);
-        addNickname2.setPosition(GameInfo.WIDTH/2 - continueToGame.getWidth()/2, GameInfo.HEIGHT/2-50);
-        continueToGame.setPosition(GameInfo.WIDTH / 2 - continueToGame.getWidth()/2, GameInfo.HEIGHT / 2 - 150);
+        newGame.setPosition(GameInfo.WIDTH / 2 - highscoreList.getWidth()/2, GameInfo.HEIGHT / 2 + 50);
+        quit.setPosition(GameInfo.WIDTH/2 - highscoreList.getWidth()/2, GameInfo.HEIGHT/2-50);
+        highscoreList.setPosition(GameInfo.WIDTH / 2 - highscoreList.getWidth()/2, GameInfo.HEIGHT / 2 - 150);
     }
 
 
     private void addAllListeners() {
-        addNickname1.addListener(new ChangeListener() {
+        newGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Gdx.input.getTextInput(listener, "Enter information", "Player1:", "");
-                nick1 = listener.text;
-
+                RunnableAction run = new RunnableAction();
+                run.setRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        game.setScreen(new SelectScreen(game/*, gameMusic*/));
+                        System.out.println("GOING TO THE MAIN MENU!!");
+                    }
+                });
+                SequenceAction sa = new SequenceAction();
+                sa.addAction(Actions.fadeOut(1f));
+                sa.addAction(run);
+                stage.addAction(sa);
             }
         });
-        addNickname2.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Gdx.input.getTextInput(listener2, "Enter information", "Player2:", "");
-                nick2 = listener2.text;
-            }
-        });
-        continueToGame.addListener(new ChangeListener() {
+        quit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 RunnableAction run = new RunnableAction();
@@ -96,6 +95,23 @@ public class CreateUserButtons {
                     @Override
                     public void run() {
                         game.setScreen(new MainMenu(game/*, gameMusic*/));
+                        System.out.println("GOING TO THE MAIN MENU!!");
+                    }
+                });
+                SequenceAction sa = new SequenceAction();
+                sa.addAction(Actions.fadeOut(1f));
+                sa.addAction(run);
+                stage.addAction(sa);
+            }
+        });
+        highscoreList.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                RunnableAction run = new RunnableAction();
+                run.setRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        game.setScreen(new Highscore(game/*, gameMusic*/));
                         System.out.println("GOING TO THE MAIN MENU!!");
                     }
                 });
@@ -113,14 +129,6 @@ public class CreateUserButtons {
         }
     }
 
-    public String getNick1() {
-        return listener.text;
-    }
-
-    public String getNick2() {
-        return listener2.text;
-    }
-
     public Stage getStage() {
         return this.stage;
     }
@@ -129,4 +137,3 @@ public class CreateUserButtons {
         this.stage.dispose();
     }
 }
-

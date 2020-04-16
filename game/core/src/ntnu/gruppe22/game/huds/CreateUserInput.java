@@ -3,10 +3,10 @@ package ntnu.gruppe22.game.huds;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Input;
 
-
 public class CreateUserInput extends ApplicationAdapter implements Input.TextInputListener {
 
-    String text;
+    String text = "null";
+
 
     public CreateUserInput() {
 
@@ -21,6 +21,5 @@ public class CreateUserInput extends ApplicationAdapter implements Input.TextInp
     public void canceled() {
 
     }
-
 
 }
