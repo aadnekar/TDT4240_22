@@ -1,35 +1,46 @@
 package ntnu.gruppe22.game.firebase;
 
-public class FirebaseHighscore {
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+public class FirebaseHighscore extends AppCompatActivity {
+
+ //   FirebaseDatabase rootNode;
+ //   DatabaseReference reference;
+ //   Highscore h;
+ //   GameOver g;
 
 
-    /*private static final String TAG = "MainActivity";
 
 
-    public void basicReadWrite() {
-        // [START write_message]
-        // Write a message to the database
-        FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
-        DatabaseReference reference = rootNode.getReference("message");
+/*    public FirebaseHighscore() {
 
-        reference.setValue("Hello, World!");
+        //if(h.isGameOver()) {
+            //(write) Vinner legges til i databasen med highscorelista.
+            //(read) Highscorelista, med den nye scoren, printes ut på highscore scenen.
+        //}
+    }
 
-        // Read from the database
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value is: " + value);
-            }
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-        // [END read_message]
+    public static void main(String args[]) {
+        FirebaseHighscore f = new FirebaseHighscore();
     }*/
+
+
+    FirebaseDatabase rootNode;
+    DatabaseReference reference;
+
+    // Read from the database
+    @Override
+    protected void onCreate(Bundle savedInstance) {
+    super.onCreate(savedInstance);
+        rootNode = FirebaseDatabase.getInstance();
+        System.out.println(rootNode);
+    }
+
+
 }

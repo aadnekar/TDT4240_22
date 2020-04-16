@@ -75,6 +75,10 @@ public class Highscore implements Screen {
         btns.getStage().act();
     }
 
+    public boolean isGameOver() {
+        return true;
+    }
+
 
     @Override
     public void show() {
