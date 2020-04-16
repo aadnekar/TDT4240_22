@@ -18,17 +18,7 @@ public class RabbitButton extends AnimalButton {
     public RabbitButton() {
         super(new SpriteDrawable(new Sprite(new Texture("animals/rabbit.png"))));
 
-        this.setId(GameRules.animalInstanceToId.get(GameRules.Animal.RABBIT));
+        this.ID = GameRules.animalInstanceToId.get(GameRules.Animal.RABBIT);
         this.setButtonPosition(RABBIT_POSITION_X, Y_POSITION_DEFAULT);
-    }
-
-    @Override
-    public void setButtonPosition(float x, float y) {
-        this.setPosition(x, y);
-    }
-
-
-    public int getId() {
-        return this.ID;
     }
 }

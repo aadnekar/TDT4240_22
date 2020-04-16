@@ -18,18 +18,7 @@ public class MonkeyButton extends AnimalButton {
     public MonkeyButton() {
         super(new SpriteDrawable(new Sprite(new Texture("animals/monkey.png"))));
 
-        this.setId(GameRules.animalInstanceToId.get(GameRules.Animal.MONKEY));
+        this.ID = GameRules.animalInstanceToId.get(GameRules.Animal.MONKEY);
         this.setButtonPosition(MONKEY_POSITION_X, Y_POSITION_DEFAULT);
-    }
-
-    @Override
-    public void setButtonPosition(float x, float y) {
-        this.setPosition(x, y);
-    }
-
-
-
-    public int getId() {
-        return this.ID;
     }
 }

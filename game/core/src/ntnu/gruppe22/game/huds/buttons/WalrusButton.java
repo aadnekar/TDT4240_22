@@ -18,16 +18,7 @@ public class WalrusButton extends AnimalButton {
     public WalrusButton() {
         super(new SpriteDrawable(new Sprite(new Texture("animals/walrus.png"))));
 
-        this.setId(GameRules.animalInstanceToId.get(GameRules.Animal.WALRUS));
+        this.ID = GameRules.animalInstanceToId.get(GameRules.Animal.WALRUS);
         this.setButtonPosition(WALRUS_POSITION_X, Y_POSITION_DEFAULT);
-    }
-
-    @Override
-    public void setButtonPosition(float x, float y) {
-        this.setPosition(x, y);
-    }
-
-    public int getId() {
-        return this.ID;
     }
 }
