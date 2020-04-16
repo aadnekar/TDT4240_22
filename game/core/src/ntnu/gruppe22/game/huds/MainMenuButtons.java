@@ -1,19 +1,14 @@
 package ntnu.gruppe22.game.huds;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
@@ -25,65 +20,50 @@ import ntnu.gruppe22.game.scenes.Settings;
  * @author aadne on 12.03.2020 12:15
  */
 
-public class MainMenuButtons {
-    private AnimalWar game;
-    private Stage stage;
-    private Viewport gameViewport;
-
-    private ImageButton playBtn;
-    private ImageButton controlsBtn;
-    private ImageButton settingsBtn;
-    private ImageButton mapsBtn;
+public class MainMenuButtons extends Buttons {
+    private ImageButton play;
+    private ImageButton controls;
+    private ImageButton settings;
+    private ImageButton maps;
 
 
     public MainMenuButtons(AnimalWar game) {
-        this.game = game;
+        this.initializeButtons(game);
 
-        gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
-
-        stage = new Stage(gameViewport, game.getSb());
-
-        Gdx.input.setInputProcessor(stage);
-
-        createAndPositionButtons();
-        addAllListeners();
-
-        stage.addActor(playBtn);
-        stage.addActor(controlsBtn);
-        stage.addActor(settingsBtn);
-        stage.addActor(mapsBtn);
-
-        checkMusic();
+        this.stage.addActor(play);
+        this.stage.addActor(controls);
+        this.stage.addActor(settings);
+        this.stage.addActor(maps);
     }
 
-    private void createAndPositionButtons() {
+    public void createAndPositionButtons() {
 
-        playBtn = new ImageButton(new SpriteDrawable(
+        play = new ImageButton(new SpriteDrawable(
                         new Sprite(new Texture("buttons/play-btn.png"))
                 ));
 
-        controlsBtn = new ImageButton(new SpriteDrawable(
+        controls = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/controls-btn.png"))
         ));
 
-        settingsBtn = new ImageButton(new SpriteDrawable(
+        settings = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/settings-btn.png"))
         ));
 
-        mapsBtn = new ImageButton(new SpriteDrawable(
+        maps = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/maps-btn.png"))
         ));
 
-
-        playBtn.setPosition(GameInfo.WIDTH / 2 - playBtn.getWidth()/2, GameInfo.HEIGHT / 2 + 40);
-        controlsBtn.setPosition(GameInfo.WIDTH / 2 - playBtn.getWidth()/2, GameInfo.HEIGHT / 2 - 30);
-        settingsBtn.setPosition(GameInfo.WIDTH / 2 - playBtn.getWidth()/2, GameInfo.HEIGHT / 2 - 100);
-        mapsBtn.setPosition(GameInfo.WIDTH / 2 -playBtn.getWidth()/2, GameInfo.HEIGHT / 2 - 170);
+        play.setPosition(GameInfo.WIDTH / 2 - play.getWidth()/2, GameInfo.HEIGHT / 2 + 40);
+        controls.setPosition(GameInfo.WIDTH / 2 - play.getWidth()/2, GameInfo.HEIGHT / 2 - 30);
+        settings.setPosition(GameInfo.WIDTH / 2 - play.getWidth()/2, GameInfo.HEIGHT / 2 - 100);
+        maps.setPosition(GameInfo.WIDTH / 2 -play.getWidth()/2, GameInfo.HEIGHT / 2 - 170);
 
     }
 
-    private void addAllListeners() {
-        playBtn.addListener(new ChangeListener() {
+
+    public void addButtonListeners() {
+        play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 GameManager.getInstance().gameStartedFromMainMenu = true;
@@ -106,7 +86,7 @@ public class MainMenuButtons {
             }
         });
 
-        controlsBtn.addListener(new ChangeListener() {
+        controls.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 // TODO: Uncomment this when Controls screen is implemented.
@@ -114,7 +94,7 @@ public class MainMenuButtons {
             }
         });
 
-        settingsBtn.addListener(new ChangeListener() {
+        settings.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
 
@@ -134,28 +114,12 @@ public class MainMenuButtons {
             }
         });
 
-        mapsBtn.addListener(new ChangeListener() {
+        maps.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 // TODO uncomment this when MapScreen screen is implemented
                 /*game.setScreen(new MapScreen(game));*/
             }
         });
-
     }
-
-    private void checkMusic() {
-        if(GameManager.getInstance().gameData.isMusicOn()) {
-            GameManager.getInstance().playMusic();
-        }
-    }
-
-    public Stage getStage() {
-        return this.stage;
-    }
-
-    public void disposeStage() {
-        this.stage.dispose();
-    }
-
 }
