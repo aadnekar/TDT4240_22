@@ -1,5 +1,6 @@
 package ntnu.gruppe22.game.helpers;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +15,23 @@ public class GameRules {
     public static final int NUMBER_OF_CHARS = 1;
     public static final int MAX_NUMBER_OF_ROUNDS = 20;
 
-    private static final Map<Integer,String> animalMap = new HashMap<Integer, String>() {{
+    public enum Animal {
+        CHICKEN,
+        MONKEY,
+        MOOSE,
+        RABBIT,
+        WALRUS
+    }
+
+    public static final Map<Animal, Integer> animalInstanceToId = new EnumMap<Animal, Integer>(Animal.class) {{
+       put(Animal.CHICKEN, 1);
+       put(Animal.MONKEY, 2);
+       put(Animal.MOOSE, 3);
+       put(Animal.RABBIT, 4);
+       put(Animal.WALRUS, 5);
+    }};
+
+    private static final Map<Integer,String> animalIdToTexture = new HashMap<Integer, String>() {{
         put(1,  "animals/chicken.png");
         put(2,  "animals/monkey.png");
         put(3,  "animals/walrus.png");
@@ -23,7 +40,7 @@ public class GameRules {
     }};
 
     public static String getAnimalTexture(int animalKey) {
-        return animalMap.get(animalKey);
+        return animalIdToTexture.get(animalKey);
     }
 
 
