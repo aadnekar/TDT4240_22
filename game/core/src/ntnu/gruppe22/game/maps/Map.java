@@ -43,6 +43,7 @@ public class Map{
         //render tile maps
         maploader = new TmxMapLoader();
         map = maploader.load(chosenMap);
+
         renderer = new OrthogonalTiledMapRenderer(map,1/GameInfo.PPM);
         creator = new B2WorldCreator(this);
     }

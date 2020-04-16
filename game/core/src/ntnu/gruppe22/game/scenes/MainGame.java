@@ -1,13 +1,13 @@
 package ntnu.gruppe22.game.scenes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
@@ -18,7 +18,11 @@ import java.util.List;
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.maps.Map;
 import ntnu.gruppe22.game.helpers.GameInfo;
+
 import ntnu.gruppe22.game.sprites.Animal;
+import ntnu.gruppe22.game.states.weapons.ListenerClass;
+import ntnu.gruppe22.game.states.weapons.Stone;
+
 import ntnu.gruppe22.game.utils.MainGameTimer;
 
 
@@ -43,11 +47,12 @@ import ntnu.gruppe22.game.utils.MainGameTimer;
  */
 
 public class MainGame implements Screen {
-    AnimalWar game;
-    Map map;
-    World world;
 
+    private AnimalWar game;
+    private Map map;
+    private World world;
 
+    public boolean DestroyStone = false;
     private OrthographicCamera camera;
     private Viewport gameViewport;
 
@@ -56,8 +61,10 @@ public class MainGame implements Screen {
 
     private Animal currentAnimal;
     private int currentTurn;
+    private Stone stone;
 
     BitmapFont font;
+    ListenerClass listenerClass;
 
     public static boolean bufferTime = false;
     private MainGameTimer timer;
@@ -67,11 +74,15 @@ public class MainGame implements Screen {
 
     public MainGame(AnimalWar game, HashMap<Integer, ArrayList<Integer>> roster) {
         this.game = game;
-
         //create our Box2D world, setting no gravity in X, -10 gravity in Y, and allow bodies to sleep
         this.world = new World(new Vector2(0, -10), true);
         map = new Map(world);
-        
+
+        listenerClass = new ListenerClass(this, world);
+        world.setContactListener(listenerClass);
+
+
+
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, GameInfo.WIDTH /GameInfo.PPM, GameInfo.HEIGHT /GameInfo.PPM);
         this.camera.update();
@@ -95,8 +106,26 @@ public class MainGame implements Screen {
         font = new BitmapFont();
         timer = new MainGameTimer(this);
         timer.startNewRoundCountDown();
+        listenerClass = new ListenerClass(this, world);
+        world.setContactListener(listenerClass);
+
     }
 
+
+    public void removeAnimal(Animal animal) {
+        if (charactersPlayer1.contains(animal)) {
+            charactersPlayer1.remove(animal);
+            if (charactersPlayer1.size() == 0) {
+                gameOver();
+            }
+        }
+        else {
+            charactersPlayer2.remove(animal);
+            if (charactersPlayer2.size() == 0) {
+                gameOver();
+            }
+        }
+    }
 
     public List<Animal> generateAnimals(ArrayList rosterList) {
         List<Animal> animals = new ArrayList<>();
@@ -104,8 +133,22 @@ public class MainGame implements Screen {
             animals.add(new Animal(this, (Integer) i));
         }
         return animals;
+
     }
 
+    public void handleInput(float dt){
+        if (!bufferTime) {
+            getCurrentAnimal().move(this.camera);
+        }
+    }
+
+    public void throwStone(float dt) {
+        stone = new Stone(this);
+        stone.b2body.applyLinearImpulse(new Vector2(2f, 2f), stone.b2body.getWorldCenter(), true);
+        stone.draw((game.getSb()));
+        stone.update(dt);
+    }
+    //forandring fra navn i innlevering
     public Animal getCurrentAnimal(){
         return currentAnimal;
     }
@@ -117,7 +160,9 @@ public class MainGame implements Screen {
 
     }
 
-
+    //vil lagre hver Animal med en index hos hver spiller
+    //får neste Animal i rekken
+    //antar at vi må sette en ny currencharacter i denne metoden
     public void changeCharacter(){
         if(currentTurn == 0){
             setCurrentCharacter(nextAnimal(iteratePlayer1, charactersPlayer1));
@@ -143,10 +188,9 @@ public class MainGame implements Screen {
         }
     }
 
-
+    //skal vi ha runder med i spillet i det hele tatt?
+    //dt?
     public void setCurrentTurn(){
-        // TODO Check for gameOver
-
         if(currentTurn == 1){
             this.currentTurn = 0;
         } else if(currentTurn == 0){
@@ -166,16 +210,12 @@ public class MainGame implements Screen {
     }
 
     public void gameOver(){
-        game.setScreen(new MainMenu(game));
         this.dispose();
+        game.setScreen(new MainMenu(game));
     }
 
-    public void handleInput(float dt){
 
-        if (!bufferTime) {
-            getCurrentAnimal().move(this.camera);
-        }
-    }
+
 
     public float cameraBounds(float animalPosition, float mapEnd, float mapStart) {
         if(animalPosition > mapStart) {
@@ -185,12 +225,14 @@ public class MainGame implements Screen {
         } else return mapStart;
     }
 
+
     @Override
     public void render(float dt) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         handleInput(dt);
+
 
         //set camera to follow current player within bounds
         //mapEnd: 1920 is the total length of the map, 640 is the total height.
@@ -213,11 +255,26 @@ public class MainGame implements Screen {
             animal.draw(game.getSb());
             animal.update(dt);
         }
-        currentAnimal.draw(game.getSb());
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+            throwStone(dt);
+        }
+
+        if(DestroyStone) {
+            listenerClass.getFb().getBody().destroyFixture(listenerClass.getFb());
+            DestroyStone = false;
+        }
+
+
+        if(stone != null) {
+            stone.draw(game.getSb());
+            stone.setPosition(stone.b2body.getPosition().x - stone.getWidth() / 2, stone.b2body.getPosition().y - stone.getHeight() / 2);
+        }
+
         game.getSb().end();
 
-
         world.step(dt, 6, 2);
+
     }
 
     public World getWorld(){
@@ -252,5 +309,8 @@ public class MainGame implements Screen {
     public void dispose() {
         font.dispose();
         timer.cancel();
+
     }
+
+
 }
