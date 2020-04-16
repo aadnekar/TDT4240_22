@@ -27,7 +27,7 @@ public class Stone extends Sprite {
     public FixtureDef fdef;
     public Fixture fixture;
 
-    public Stone(MainGame screen) {
+    public Stone(MainGame screen, int pos) {
         super(new Texture(Gdx.files.internal("weapons/rock.png")));
         stoneTexture = new Texture(Gdx.files.internal("weapons/rock.png"));
 
@@ -39,14 +39,14 @@ public class Stone extends Sprite {
         stone = new TextureRegion(getTexture(), 0, 0, 100/ GameInfo.PPM, 100/GameInfo.PPM);
         setBounds(0, 0, 40/ GameInfo.PPM, 40/GameInfo.PPM);
         setRegion(stone);
-        defineStone();
+        defineStone(pos);
 
     }
 
-    public void defineStone() {
+    public void defineStone(int pos) {
         Random rand = new Random();
         BodyDef bdef = new BodyDef();
-        bdef.position.set(screen.getCurrentAnimal().getX()+(110/GameInfo.PPM), screen.getCurrentAnimal().getY()+(130/GameInfo.PPM));
+        bdef.position.set(screen.getCurrentAnimal().getX()+(pos/GameInfo.PPM), screen.getCurrentAnimal().getY()+(130/GameInfo.PPM));
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.bullet = true;
         b2body = world.createBody(bdef);
