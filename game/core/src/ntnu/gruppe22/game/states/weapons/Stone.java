@@ -54,7 +54,7 @@ public class Stone extends Sprite {
 
         fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(20 /GameInfo.PPM, 20/GameInfo.PPM);
+        shape.setAsBox(22 /GameInfo.PPM, 2/GameInfo.PPM);
         fdef.shape = shape;
         b2body.createFixture(fdef);
         fixture = b2body.createFixture(fdef);

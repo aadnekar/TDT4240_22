@@ -20,7 +20,6 @@ public class ListenerClass implements ContactListener {
     private Fixture stoneFixture;
 
 
-
     public Fixture getFb() {
         return stoneFixture;
     }
@@ -35,7 +34,7 @@ public class ListenerClass implements ContactListener {
         fa = contact.getFixtureA();
         fb = contact.getFixtureB();
         if (fb.getBody().getUserData() instanceof Stone){
-            game.DestroyStone = true;
+            game.DestroyWeapon = true;
             stoneFixture = fb;
             if (fa.getBody().getUserData() instanceof Animal) {
                 Stone stone = (Stone) fb.getBody().getUserData();
@@ -61,4 +60,6 @@ public class ListenerClass implements ContactListener {
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
     }
+
+
 }
