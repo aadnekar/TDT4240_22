@@ -67,7 +67,7 @@ public class SelectScreenButtons extends Buttons {
                 new Sprite(new Texture("buttons/play-btn.png"))
         ));
         back = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/home-button.png"))
+                new Sprite(new Texture("settings/home.png"))
         ));
         chicken = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("animals/chicken.png"))
@@ -86,7 +86,7 @@ public class SelectScreenButtons extends Buttons {
         ));
 
         ready.setPosition(GameInfo.WIDTH / 2 - 95, GameInfo.HEIGHT / 2 + 135);
-        back.setPosition(50, GameInfo.HEIGHT - 90);
+        back.setPosition(5, GameInfo.HEIGHT - 70);
 
         //the width in position is width of 1/5- 65 + (half the image)
         chicken.setPosition(CHICKEN_POSITION_X,Y_POSITION_DEFAULT);
