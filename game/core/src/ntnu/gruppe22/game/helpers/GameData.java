@@ -9,6 +9,7 @@ public class GameData {
 
     private boolean musicOn;
     private float musicVolume;
+    private int chosenMap = 1;
 
     public boolean isMusicOn() {
         return musicOn;
@@ -25,4 +26,8 @@ public class GameData {
     public void setMusicVolume(float volume) {
         this.musicVolume = volume;
     }
+
+    public void setChosenMap(int mapID){ this.chosenMap = mapID; }
+
+    public int getChosenMap(){ return this.chosenMap;}
 }

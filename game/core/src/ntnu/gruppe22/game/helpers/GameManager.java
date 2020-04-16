@@ -30,7 +30,6 @@ public class GameManager {
             gameData = new GameData();
             gameData.setMusicOn(true);
             gameData.setMusicVolume(0.5f);
-
             saveData();
         } else {
             loadData();
@@ -141,6 +140,5 @@ public class GameManager {
         gameData.setMusicVolume(volume);
         this.music.setVolume(volume);
     }
-
 
 }
