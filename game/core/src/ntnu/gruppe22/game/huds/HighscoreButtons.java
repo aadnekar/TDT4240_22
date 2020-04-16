@@ -18,24 +18,19 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
-import ntnu.gruppe22.game.scenes.Highscore;
 import ntnu.gruppe22.game.scenes.MainMenu;
-import ntnu.gruppe22.game.scenes.SelectScreen;
 
-public class GameOverButtons {
-
+public class HighscoreButtons {
     private AnimalWar game;
     private Stage stage;
     private Viewport gameViewport;
 
-    public static ImageButton highscoreList;
-    private ImageButton newGame;
     private ImageButton quit;
 
 
     private String nick1, nick2;
 
-    public GameOverButtons(AnimalWar game) {
+    public HighscoreButtons(AnimalWar game) {
         this.game = game;
 
         gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
@@ -45,48 +40,23 @@ public class GameOverButtons {
         createAndPositionButtons();
         addAllListeners();
 
-        stage.addActor(highscoreList);
-        stage.addActor(newGame);
         stage.addActor(quit);
 
         checkMusic();
     }
 
     private void createAndPositionButtons() {
-        newGame = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/settings-btn.png"))
-        ));
+
         quit = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/settings-btn.png"))
         ));
-        highscoreList = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/play-btn.png"))
-        ));
 
-        newGame.setPosition(GameInfo.WIDTH / 2 - highscoreList.getWidth()/2, GameInfo.HEIGHT / 2 + 50);
-        quit.setPosition(GameInfo.WIDTH/2 - highscoreList.getWidth()/2, GameInfo.HEIGHT/2-50);
-        highscoreList.setPosition(GameInfo.WIDTH / 2 - highscoreList.getWidth()/2, GameInfo.HEIGHT / 2 - 150);
-    }
+
+        quit.setPosition(GameInfo.WIDTH/2 - quit.getWidth()/2, GameInfo.HEIGHT/2-50);
+        }
 
 
     private void addAllListeners() {
-        newGame.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                RunnableAction run = new RunnableAction();
-                run.setRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        game.setScreen(new SelectScreen(game/*, gameMusic*/));
-                        System.out.println("GOING TO THE MAIN MENU!!");
-                    }
-                });
-                SequenceAction sa = new SequenceAction();
-                sa.addAction(Actions.fadeOut(1f));
-                sa.addAction(run);
-                stage.addAction(sa);
-            }
-        });
         quit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -96,24 +66,6 @@ public class GameOverButtons {
                     public void run() {
                         game.setScreen(new MainMenu(new AnimalWar()/*, gameMusic*/));
                         System.out.println("GOING TO THE MAIN MENU!!");
-                    }
-                });
-                SequenceAction sa = new SequenceAction();
-                sa.addAction(Actions.fadeOut(1f));
-                sa.addAction(run);
-                stage.addAction(sa);
-            }
-        });
-        highscoreList.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                RunnableAction run = new RunnableAction();
-                run.setRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        game.setScreen(new Highscore(game/*, gameMusic*/));
-                        System.out.println("GOING TO THE MAIN MENU!!");
-
                     }
                 });
                 SequenceAction sa = new SequenceAction();

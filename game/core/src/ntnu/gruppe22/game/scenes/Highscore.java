@@ -3,72 +3,58 @@ package ntnu.gruppe22.game.scenes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import ntnu.gruppe22.game.AnimalWar;
-import ntnu.gruppe22.game.sprites.Animal;
+import ntnu.gruppe22.game.helpers.GameInfo;
+import ntnu.gruppe22.game.huds.HighscoreButtons;
 
 public class Highscore implements Screen {
     AnimalWar game;
-    private Animal currentAnimal;
     BitmapFont font;
 
-    private String winner; //Skal være nicknamet
+    private Texture bg;
+    private Texture logo;
+    private HighscoreButtons btns;
 
 
-    Map<String,Integer> myMap = new HashMap<String,Integer>();
+    public static Map<String,Integer> highscoreList = new HashMap<String,Integer>();
 
-
-    Iterator<Animal> iteratePlayer1;
-    Iterator<Animal> iteratePlayer2;
 
     public Highscore(AnimalWar game) {
+        GameOver.addWinnerToHighscore();
         this.game = game;
 
+        this.game = game;
+        font = new BitmapFont();
+
+
+        bg = new Texture("backgrounds/menu-bg.png");
+
+        logo = new Texture("animal-war.png");
+        btns = new HighscoreButtons(game);
+
         //font = new BitmapFont();
-        myMap.put("ABC",1);
-        myMap.put("ABCD",2);
-        myMap.put("ABCDE",10);
-        myMap.put("ABCDE",3);
+        highscoreList.put("ABC",1);
+        highscoreList.put("ABCD",2);
+        highscoreList.put("ABCDE",10);
+        highscoreList.put("ABCDE",3);
 
         //myMap.get(0);
     }
 
 
-
     public void getHighscores() {
-        for(Map.Entry<String, Integer> entry: myMap.entrySet()) {
+        for(Map.Entry<String, Integer> entry: highscoreList.entrySet()) {
             System.out.println(entry.getKey());
             System.out.println(entry.getValue());
+            //String name = entry.getKey();
+            //int number = entry.getValue();
         }
-
-    }
-
-
-    //public String winner() {
-
-    //}
-
-
-
-    public Animal getCurrentAnimal(){
-        return currentAnimal;
-    }
-
-
-
-
-
-
-
-
-    public void gameOver(){
-        game.setScreen(new MainMenu(game));
-        this.dispose();
     }
 
 
@@ -77,12 +63,16 @@ public class Highscore implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
-
-
         game.getSb().begin();
+        game.getSb().draw(bg, 0, 0);
+        game.getSb().draw(logo, GameInfo.WIDTH/2 - logo.getWidth()/2, GameInfo.HEIGHT - 100);
+
+        font.draw(game.getSb(),"Highscorelist: " + highscoreList, 200, 50);
 
         game.getSb().end();
+        game.getSb().setProjectionMatrix(btns.getStage().getCamera().combined);
+        btns.getStage().draw();
+        btns.getStage().act();
     }
 
 
@@ -93,7 +83,6 @@ public class Highscore implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override
@@ -113,11 +102,8 @@ public class Highscore implements Screen {
 
     @Override
     public void dispose() {
-        font.dispose();
+        bg.dispose();
+        btns.disposeStage();
     }
 
-    public static void main(String args[]) {
-        Highscore a = new Highscore(new AnimalWar());
-        a.getHighscores();
-    }
 }
