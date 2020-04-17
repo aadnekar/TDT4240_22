@@ -20,18 +20,18 @@ public class Highscore implements Screen {
     private Texture bg;
     private Texture logo;
     private HighscoreButtons btns;
+    public static String highscores;
 
 
-    public static Map<String,Integer> highscoreList = new HashMap<String,Integer>();
+    public static Map<String,String> highscoreList = new HashMap<String,String>();
 
 
     public Highscore(AnimalWar game) {
-        GameOver.addWinnerToHighscore();
+        //GameOver.addWinnerToHighscore();
         this.game = game;
 
         this.game = game;
         font = new BitmapFont();
-
 
         bg = new Texture("backgrounds/menu-bg.png");
 
@@ -39,17 +39,17 @@ public class Highscore implements Screen {
         btns = new HighscoreButtons(game);
 
         //font = new BitmapFont();
-        highscoreList.put("ABC",1);
-        highscoreList.put("ABCD",2);
-        highscoreList.put("ABCDE",10);
-        highscoreList.put("ABCDE",3);
+        //highscoreList.put("ABC",1);
+        //highscoreList.put("ABCD",2);
+        //highscoreList.put("ABCDE",10);
+        //highscoreList.put("ABCDE",3);
 
         //myMap.get(0);
     }
 
 
     public void getHighscores() {
-        for(Map.Entry<String, Integer> entry: highscoreList.entrySet()) {
+        for(Map.Entry<String, String> entry: highscoreList.entrySet()) {
             System.out.println(entry.getKey());
             System.out.println(entry.getValue());
             //String name = entry.getKey();
@@ -67,7 +67,7 @@ public class Highscore implements Screen {
         game.getSb().draw(bg, 0, 0);
         game.getSb().draw(logo, GameInfo.WIDTH/2 - logo.getWidth()/2, GameInfo.HEIGHT - 100);
 
-        font.draw(game.getSb(),"Highscorelist: " + highscoreList, 200, 50);
+        font.draw(game.getSb(),"Highscorelist: " + highscores, 200, 50);
 
         game.getSb().end();
         game.getSb().setProjectionMatrix(btns.getStage().getCamera().combined);
@@ -79,6 +79,14 @@ public class Highscore implements Screen {
         return true;
     }
 
+
+    public void getScores(Map<String, String> map) {
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            System.out.println("This is the entry: " + entry.getValue());
+
+        }
+
+    }
 
     @Override
     public void show() {

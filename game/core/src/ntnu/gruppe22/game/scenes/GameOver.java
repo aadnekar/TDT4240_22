@@ -41,20 +41,21 @@ public class GameOver implements Screen {
         font = new BitmapFont();
     }
 
-    public static String getWinner() {
+    public static String getLastWinner() {
         //Returns the nickname of the winner of the game. Dette skal printes på skjermen.
-        return "testNickname";
+        //return userBtn.getNick1();
+        return "getWinnerTest";
     }
 
-    public static int getScore() {
+    public static int getLastScore() {
         //Returns the score of the winner.
-        return 123;
+        return 99;
     }
 
-    public static void addWinnerToHighscore() {
-        Highscore.highscoreList.put(getWinner(),getScore());
+    /*public static void addWinnerToHighscore() {
+        Highscore.highscoreList.put(getLastWinner(),getLastScore());
 
-    }
+    }*/
 
 
     @Override
@@ -71,7 +72,7 @@ public class GameOver implements Screen {
         game.getSb().draw(bg, 0, 0);
         game.getSb().draw(logo, GameInfo.WIDTH/2 - logo.getWidth()/2, GameInfo.HEIGHT - 100);
 
-        font.draw(game.getSb(),"The winner is : " + getWinner(), GameInfo.WIDTH/2, 50);
+        font.draw(game.getSb(),"The winner is : " + getLastWinner(), GameInfo.WIDTH/2, 50);
 
 
         game.getSb().end();

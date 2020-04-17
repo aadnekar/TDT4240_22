@@ -15,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.Observable;
+
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
@@ -22,7 +24,7 @@ import ntnu.gruppe22.game.scenes.Highscore;
 import ntnu.gruppe22.game.scenes.MainMenu;
 import ntnu.gruppe22.game.scenes.SelectScreen;
 
-public class GameOverButtons {
+public class GameOverButtons extends Observable {
 
     private AnimalWar game;
     private Stage stage;
@@ -32,11 +34,14 @@ public class GameOverButtons {
     private ImageButton newGame;
     private ImageButton quit;
 
+    public static boolean isGameOver;
+
 
     private String nick1, nick2;
 
     public GameOverButtons(AnimalWar game) {
         this.game = game;
+        isGameOver = false;
 
         gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
         stage = new Stage(gameViewport, game.getSb());
@@ -50,6 +55,9 @@ public class GameOverButtons {
         stage.addActor(quit);
 
         checkMusic();
+
+        setGameOver(false);
+
     }
 
     private void createAndPositionButtons() {
@@ -78,6 +86,9 @@ public class GameOverButtons {
                     @Override
                     public void run() {
                         game.setScreen(new SelectScreen(game/*, gameMusic*/));
+
+                        //variable for firebase som sier at runden er over.
+                        setGameOver(true);
                         System.out.println("GOING TO THE MAIN MENU!!");
                     }
                 });
@@ -123,6 +134,28 @@ public class GameOverButtons {
             }
         });
     }
+
+
+
+    //Observer-pattern
+
+    public void setGameOver(boolean isGameOver) {
+        synchronized (this) {
+            this.isGameOver = isGameOver;
+        }
+        setChanged();
+        notifyObservers();
+    }
+
+    public synchronized boolean getGameOver() {
+        return isGameOver;
+    }
+
+
+
+
+
+
 
     private void checkMusic() {
         if(GameManager.getInstance().gameData.isMusicOn()) {
