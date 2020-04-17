@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
+import ntnu.gruppe22.game.scenes.Maps;
 import ntnu.gruppe22.game.scenes.SelectScreen;
 import ntnu.gruppe22.game.scenes.Settings;
 
@@ -117,8 +118,18 @@ public class MainMenuButtons extends Buttons {
         maps.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                // TODO uncomment this when MapScreen screen is implemented
-                /*game.setScreen(new MapScreen(game));*/
+                RunnableAction run = new RunnableAction();
+                run.setRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        game.setScreen(new Maps(game));
+                    }
+                });
+
+                SequenceAction sa = new SequenceAction();
+                sa.addAction(Actions.fadeOut(1f));
+                sa.addAction(run);
+                stage.addAction(sa);
             }
         });
     }
