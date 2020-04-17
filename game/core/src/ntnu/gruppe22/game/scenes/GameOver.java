@@ -43,7 +43,7 @@ public class GameOver implements Screen {
 
     public static String getWinner() {
         //Returns the nickname of the winner of the game. Dette skal printes på skjermen.
-        return "winner!!";
+        return "testNickname";
     }
 
     public static int getScore() {

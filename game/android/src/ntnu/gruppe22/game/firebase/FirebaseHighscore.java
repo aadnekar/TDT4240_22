@@ -1,11 +1,6 @@
 package ntnu.gruppe22.game.firebase;
 
-import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class FirebaseHighscore extends AppCompatActivity {
 
@@ -31,16 +26,33 @@ public class FirebaseHighscore extends AppCompatActivity {
     }*/
 
 
-    FirebaseDatabase rootNode;
-    DatabaseReference reference;
+
+/*
+
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference ref = database.getReference("server/saving-data/fireblog/posts");
+
+
 
     // Read from the database
     @Override
     protected void onCreate(Bundle savedInstance) {
     super.onCreate(savedInstance);
-        rootNode = FirebaseDatabase.getInstance();
-        System.out.println(rootNode);
+        database = FirebaseDatabase.getInstance();
+        System.out.println(database);
     }
+
+
+
+    // Get a reference to our posts
+
+
+    DatabaseReference usersRef = ref.child("Highscore");
+*/
+
+
+
+
 
 
 }
