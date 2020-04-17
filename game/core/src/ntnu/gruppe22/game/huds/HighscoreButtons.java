@@ -20,32 +20,19 @@ import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
 import ntnu.gruppe22.game.scenes.MainMenu;
 
-public class HighscoreButtons {
-    private AnimalWar game;
-    private Stage stage;
-    private Viewport gameViewport;
+public class HighscoreButtons extends Buttons {
 
     private ImageButton quit;
 
-
-    private String nick1, nick2;
-
     public HighscoreButtons(AnimalWar game) {
-        this.game = game;
+        this.initializeButtons(game);
 
-        gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
-        stage = new Stage(gameViewport, game.getSb());
-        Gdx.input.setInputProcessor(stage);
-
-        createAndPositionButtons();
-        addAllListeners();
 
         stage.addActor(quit);
 
-        checkMusic();
     }
 
-    private void createAndPositionButtons() {
+    protected void createAndPositionButtons() {
 
         quit = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/back-to-menu.png"))
@@ -56,7 +43,7 @@ public class HighscoreButtons {
         }
 
 
-    private void addAllListeners() {
+    protected void addButtonListeners() {
         quit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -76,17 +63,4 @@ public class HighscoreButtons {
         });
     }
 
-    private void checkMusic() {
-        if(GameManager.getInstance().gameData.isMusicOn()) {
-            GameManager.getInstance().playMusic();
-        }
-    }
-
-    public Stage getStage() {
-        return this.stage;
-    }
-
-    public void disposeStage() {
-        this.stage.dispose();
-    }
 }
