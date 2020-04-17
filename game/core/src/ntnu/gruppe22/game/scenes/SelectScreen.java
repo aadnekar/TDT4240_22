@@ -19,27 +19,14 @@ public class SelectScreen extends Menu{
 
     }
 
+    @Override
     public void render ( float delta){
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        game.getSb().begin();
-        game.getSb().draw(bg, 0, 0);
-        game.getSb().end();
+        super.render(delta);
 
         game.getSb().setProjectionMatrix(btns.getStage().getCamera().combined);
         btns.getStage().draw();
         btns.getStage().act();
     }
 
-    public void resize ( int width, int height){
-        gameViewport.update(width, height);
-    }
-
-    public void dispose () {
-        Gdx.input.setInputProcessor(null);
-        bg.dispose();
-        btns.disposeStage();
-    }
 }
 

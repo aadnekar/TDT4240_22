@@ -20,29 +20,18 @@ import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
 import ntnu.gruppe22.game.scenes.MainMenu;
 
-public class MapButtons {
-    private AnimalWar game;
-    private Stage stage;
-    private Viewport gameViewport;
+public class MapButtons extends Buttons{
 
     private ImageButton platformMap;
     private ImageButton winterMap;
     private ImageButton backButton;
     private float RectangleX;
     private float RectangleY;
-    private float PositionX = 0;
+    public float PositionX = 0;
     private float PositionY = 0;
 
     public MapButtons(AnimalWar game) {
-
-        this.game = game;
-        gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
-        stage = new Stage(gameViewport, game.getSb());
-
-        Gdx.input.setInputProcessor(stage);
-
-        createAndPositionMaps();
-        addListeners();
+        this.initializeButtons(game);
 
         stage.addActor(platformMap);
         stage.addActor(winterMap);
@@ -53,7 +42,7 @@ public class MapButtons {
      * Initializes the image buttons of the maps and sets their position
      * also gets the proportions of the map-images into the varables RectangleX and RectangleY
      */
-    public void createAndPositionMaps(){
+    protected void createAndPositionButtons(){
         //creates the image buttons
         platformMap = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("map/platform2Map.png"))
@@ -80,7 +69,7 @@ public class MapButtons {
      * When the maps is touched, the chosenMap-variable is changed to the id of the touched map,
      * also the position of the rectangle that is beeing drawed around the chosen map.
      */
-    private void addListeners(){
+    protected void addButtonListeners(){
         platformMap.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -122,12 +111,9 @@ public class MapButtons {
 
     }
 
-    //functions for handling stage and chosen map
+    //function for handling chosen map
     private void setChosenMap(int id){ GameManager.getInstance().gameData.setChosenMap(id);}
-    public Stage getStage(){return this.stage; }
-    public void disposeStage() {
-        this.stage.dispose();
-    }
+
 
     //functions for getting positions and proportions of the map images
     public float getRectangleX(){return this.RectangleX;}
