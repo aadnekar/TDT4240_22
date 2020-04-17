@@ -286,8 +286,6 @@ public class MainGame implements Screen {
             animal.update(dt);
         }
 
-        System.out.println(timer.getDisplayString());
-        System.out.println(currentTurn);
 
         if (DestroyWeapon) {
             destroyWeapon();
