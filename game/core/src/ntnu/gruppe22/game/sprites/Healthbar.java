@@ -17,8 +17,8 @@ public class Healthbar extends Sprite {
     public Healthbar() {
         super(new Texture(Gdx.files.internal("animals/rectangle.png")));
         TextureRegion animalStand = new TextureRegion(getTexture(), 0, 0, 100/ GameInfo.PPM, 104/GameInfo.PPM);
-        startWidth = 100/GameInfo.PPM;
-        height = 10/GameInfo.PPM;
+        startWidth = 40/GameInfo.PPM;
+        height = 7/GameInfo.PPM;
         setBounds(0, 0, startWidth, height);
         setRegion(animalStand);
     }

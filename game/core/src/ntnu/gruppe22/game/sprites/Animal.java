@@ -51,7 +51,7 @@ public class Animal extends Sprite {
 
         flipped = false;
         healthbar = new Healthbar();
-        health = 100;
+        health = 40;
 
         endurance= 5000;
 
