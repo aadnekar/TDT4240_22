@@ -46,7 +46,7 @@ public class Animal extends Sprite {
 
 
     public Animal(MainGame screen, int animalKey) {
-        super(new Texture(Gdx.files.internal(GameRules.getAnimalTexture(animalKey))), 40, 42);
+        super(new Texture(Gdx.files.internal(GameRules.getAnimalTexture(animalKey))));
 
         flipped = false;
         health = 30;
@@ -61,7 +61,7 @@ public class Animal extends Sprite {
 
         //Animal texture region
         animalStand = new TextureRegion(getTexture(), 0, 0, 100/ GameInfo.PPM, 102/GameInfo.PPM);
-        setBounds(0, 0, 40/ GameInfo.PPM, 42/GameInfo.PPM);
+        setBounds(0, 0, getWidth()/1.5f/ GameInfo.PPM, getHeight()/1.5f/GameInfo.PPM);
         setRegion(animalStand);
     }
 
@@ -81,7 +81,7 @@ public class Animal extends Sprite {
         // Since animals move we need it to be dynamic, the opposite would be ground which would be static.
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
-        bodyDef.position.set(rand.nextInt(1800) /GameInfo.PPM, 335 / GameInfo.PPM);
+        bodyDef.position.set(rand.nextInt(1800) /GameInfo.PPM, rand.nextInt(600) / GameInfo.PPM);
 
         // Create the body in the world defined in MainGame.
         this.body = world.createBody(bodyDef);
@@ -94,7 +94,7 @@ public class Animal extends Sprite {
         fixtureDef.friction = 0.1f;     // Friction against other objects
         //fixtureDef.restitution = 0.4f;  // Bounciness
 
-        bodyEditorLoader.attachFixture(body, shapeManager.getName(), fixtureDef, 23/ GameInfo.PPM);
+        bodyEditorLoader.attachFixture(body, shapeManager.getName(), fixtureDef, 33.5f/ GameInfo.PPM);
 
     }
 
