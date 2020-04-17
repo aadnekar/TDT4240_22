@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import ntnu.gruppe22.game.helpers.GameInfo;
+import ntnu.gruppe22.game.helpers.GameRules;
 
 /**
  * @author aadne on 16.04.2020 11:06
@@ -17,17 +18,7 @@ public class RabbitButton extends AnimalButton {
     public RabbitButton() {
         super(new SpriteDrawable(new Sprite(new Texture("animals/rabbit.png"))));
 
-        this.setId(5);
+        this.ID = GameRules.animalInstanceToId.get(GameRules.Animal.RABBIT);
         this.setButtonPosition(RABBIT_POSITION_X, Y_POSITION_DEFAULT);
-    }
-
-    @Override
-    public void setButtonPosition(float x, float y) {
-        this.setPosition(x, y);
-    }
-
-
-    public int getId() {
-        return this.ID;
     }
 }

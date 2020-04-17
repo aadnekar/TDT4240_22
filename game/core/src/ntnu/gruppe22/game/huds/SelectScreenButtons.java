@@ -75,12 +75,12 @@ public class SelectScreenButtons extends Buttons {
         animalButtonList.add(chicken);
         monkey = new MonkeyButton();
         animalButtonList.add(monkey);
-        walrus = new WalrusButton();
-        animalButtonList.add(walrus);
         moose = new MooseButton();
         animalButtonList.add(moose);
         rabbit = new RabbitButton();
         animalButtonList.add(rabbit);
+        walrus = new WalrusButton();
+        animalButtonList.add(walrus);
 
         ready.setPosition(GameInfo.WIDTH / 2 - 95, GameInfo.HEIGHT / 2 + 135);
         back.setPosition(5, GameInfo.HEIGHT - 70);
@@ -104,6 +104,7 @@ public class SelectScreenButtons extends Buttons {
                             }
                             else {
                                 game.setScreen(new MainGame(game, animalChoices));
+                                stage.dispose();
                             }
                         }
 
@@ -141,6 +142,7 @@ public class SelectScreenButtons extends Buttons {
         chicken.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("Chicken ID: " + chicken.getId());
                 selectAnimal(chicken.select(), chicken.getId());
             }
         });
@@ -148,6 +150,7 @@ public class SelectScreenButtons extends Buttons {
         monkey.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("Monkey ID: " + monkey.getId());
                 selectAnimal(monkey.select(), monkey.getId());
             }
         });
@@ -155,6 +158,7 @@ public class SelectScreenButtons extends Buttons {
         walrus.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("Walrus ID: " + walrus.getId());
                 selectAnimal(walrus.select(), walrus.getId());
             }
         });
@@ -162,6 +166,7 @@ public class SelectScreenButtons extends Buttons {
         moose.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("Moose ID: " + moose.getId());
                 selectAnimal(moose.select(), moose.getId());
             }
         });
@@ -169,11 +174,11 @@ public class SelectScreenButtons extends Buttons {
         rabbit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("Rabbit ID: " + rabbit.getId());
                 selectAnimal(rabbit.select(), rabbit.getId());
             }
         });
     }
-
 
     public void selectAnimal(boolean add, int id) {
         checkLengthAndRemoveAnimal();
@@ -220,7 +225,6 @@ public class SelectScreenButtons extends Buttons {
         playerNumber++;
         animalChoices.put(playerNumber, new ArrayList<Integer>());
     }
-
 
     private boolean hasFullRoster(){
         return animalChoices.get(playerNumber).size() == GameRules.NUMBER_OF_CHARS;

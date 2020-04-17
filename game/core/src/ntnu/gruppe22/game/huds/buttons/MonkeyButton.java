@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import ntnu.gruppe22.game.helpers.GameInfo;
+import ntnu.gruppe22.game.helpers.GameRules;
 
 /**
  * @author aadne on 16.04.2020 11:15
@@ -17,18 +18,7 @@ public class MonkeyButton extends AnimalButton {
     public MonkeyButton() {
         super(new SpriteDrawable(new Sprite(new Texture("animals/monkey.png"))));
 
-        this.setId(2);
+        this.ID = GameRules.animalInstanceToId.get(GameRules.Animal.MONKEY);
         this.setButtonPosition(MONKEY_POSITION_X, Y_POSITION_DEFAULT);
-    }
-
-    @Override
-    public void setButtonPosition(float x, float y) {
-        this.setPosition(x, y);
-    }
-
-
-
-    public int getId() {
-        return this.ID;
     }
 }
