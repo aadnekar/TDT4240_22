@@ -46,7 +46,7 @@ public class Animal extends Sprite {
 
 
     public Animal(MainGame screen, int animalKey) {
-        super(new Texture(Gdx.files.internal(GameRules.getAnimalTexture(animalKey))));
+        super(new Texture(Gdx.files.internal(GameRules.getAnimalTexture(animalKey))), 40, 42);
 
         flipped = false;
         health = 30;
@@ -60,8 +60,8 @@ public class Animal extends Sprite {
         defineAnimal(animalKey);
 
         //Animal texture region
-        animalStand = new TextureRegion(getTexture(), 0, 0, 100/ GameInfo.PPM, 104/GameInfo.PPM);
-        setBounds(0, 0, 100/ GameInfo.PPM, 104/GameInfo.PPM);
+        animalStand = new TextureRegion(getTexture(), 0, 0, 100/ GameInfo.PPM, 102/GameInfo.PPM);
+        setBounds(0, 0, 40/ GameInfo.PPM, 42/GameInfo.PPM);
         setRegion(animalStand);
     }
 
@@ -94,7 +94,7 @@ public class Animal extends Sprite {
         fixtureDef.friction = 0.1f;     // Friction against other objects
         //fixtureDef.restitution = 0.4f;  // Bounciness
 
-        bodyEditorLoader.attachFixture(body, shapeManager.getName(), fixtureDef, getWidth()/ GameInfo.PPM);
+        bodyEditorLoader.attachFixture(body, shapeManager.getName(), fixtureDef, 23/ GameInfo.PPM);
 
     }
 
@@ -114,12 +114,12 @@ public class Animal extends Sprite {
 
     private void moveRight() {
         flipAnimal(true);
-        this.body.applyLinearImpulse(0.1f, 0, getPositionX(), getPositionY(), true);
+        this.body.applyLinearImpulse(0.05f, 0, getPositionX(), getPositionY(), true);
     }
 
     private void moveLeft() {
         flipAnimal(false);
-        this.body.applyLinearImpulse(-0.1f, 0, getPositionX(), getPositionY(), true);
+        this.body.applyLinearImpulse(-0.05f, 0, getPositionX(), getPositionY(), true);
     }
 
     private boolean hasMaxVelocity() {
@@ -156,7 +156,8 @@ public class Animal extends Sprite {
     }
 
     public void jump() {
-        this.body.applyLinearImpulse(0f, 4.0f, getPositionX(), getPositionY(), true);
+        this.body.applyLinearImpulse(0f, 0.5f, getPositionX(), getPositionY(), true);
+
     }
 
     public void throwRight(AnimalWar game, float dt) {
