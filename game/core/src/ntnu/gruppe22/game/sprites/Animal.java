@@ -62,8 +62,8 @@ public class Animal extends Sprite {
         defineAnimal(animalKey);
 
         //Animal texture region
-        animalStand = new TextureRegion(getTexture(), 0, 0, 100/ GameInfo.PPM, 104/GameInfo.PPM);
-        setBounds(0, 0, 100/ GameInfo.PPM, 104/GameInfo.PPM);
+        animalStand = new TextureRegion(getTexture(), 0, 0, 100/ GameInfo.PPM, 102/GameInfo.PPM);
+        setBounds(0, 0, getWidth()/1.5f/ GameInfo.PPM, getHeight()/1.5f/GameInfo.PPM);
         setRegion(animalStand);
     }
 
@@ -83,7 +83,7 @@ public class Animal extends Sprite {
         // Since animals move we need it to be dynamic, the opposite would be ground which would be static.
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
-        bodyDef.position.set(rand.nextInt(1800) /GameInfo.PPM, 335 / GameInfo.PPM);
+        bodyDef.position.set(rand.nextInt(1800) /GameInfo.PPM, rand.nextInt(600) / GameInfo.PPM);
 
         // Create the body in the world defined in MainGame.
         this.body = world.createBody(bodyDef);
@@ -96,7 +96,7 @@ public class Animal extends Sprite {
         fixtureDef.friction = 0.1f;     // Friction against other objects
         //fixtureDef.restitution = 0.4f;  // Bounciness
 
-        bodyEditorLoader.attachFixture(body, shapeManager.getName(), fixtureDef, getWidth()/ GameInfo.PPM);
+        bodyEditorLoader.attachFixture(body, shapeManager.getName(), fixtureDef, 33.5f/ GameInfo.PPM);
 
     }
 
@@ -118,12 +118,12 @@ public class Animal extends Sprite {
 
     private void moveRight() {
         flipAnimal(true);
-        this.body.applyLinearImpulse(0.1f, 0, getPositionX(), getPositionY(), true);
+        this.body.applyLinearImpulse(0.05f, 0, getPositionX(), getPositionY(), true);
     }
 
     private void moveLeft() {
         flipAnimal(false);
-        this.body.applyLinearImpulse(-0.1f, 0, getPositionX(), getPositionY(), true);
+        this.body.applyLinearImpulse(-0.05f, 0, getPositionX(), getPositionY(), true);
     }
 
     private boolean hasMaxVelocity() {
@@ -160,7 +160,8 @@ public class Animal extends Sprite {
     }
 
     public void jump() {
-        this.body.applyLinearImpulse(0f, 4.0f, getPositionX(), getPositionY(), true);
+        this.body.applyLinearImpulse(0f, 0.5f, getPositionX(), getPositionY(), true);
+
     }
 
     public void throwRight(AnimalWar game, float dt) {
