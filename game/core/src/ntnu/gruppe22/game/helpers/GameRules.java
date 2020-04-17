@@ -26,9 +26,9 @@ public class GameRules {
     public static final Map<Animal, Integer> animalInstanceToId = new EnumMap<Animal, Integer>(Animal.class) {{
        put(Animal.CHICKEN, 1);
        put(Animal.MONKEY, 2);
-       put(Animal.MOOSE, 3);
-       put(Animal.RABBIT, 4);
-       put(Animal.WALRUS, 5);
+       put(Animal.WALRUS, 3);
+       put(Animal.MOOSE, 4);
+       put(Animal.RABBIT, 5);
     }};
 
     private static final Map<Integer,String> animalIdToTexture = new HashMap<Integer, String>() {{
