@@ -52,7 +52,7 @@ public class HighscoreButtons {
         ));
 
 
-        quit.setPosition(GameInfo.WIDTH/2 - quit.getWidth()/2, GameInfo.HEIGHT/2-50);
+        quit.setPosition(GameInfo.WIDTH/2 - quit.getWidth()/2, GameInfo.HEIGHT/2-180);
         }
 
 

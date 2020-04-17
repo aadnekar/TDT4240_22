@@ -10,7 +10,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import ntnu.gruppe22.game.huds.GameOverButtons;
@@ -26,17 +29,19 @@ public class FirebaseHighscore {
     private Map<String, String> list = new HashMap<>();
     private String valueString;
 
+
+
     public FirebaseHighscore() {
 
 
         basicReadWrite();
-        //readAll();
         DatabaseReference newHighscoreReference = reference.push();
 
         //Add new data manually
         //writeNewHighscore(newHighscoreReference, "Test2", 10);
 
         //writeNewHighscore(newHighscoreReference, getWinnerName(), getWinnerScore());
+
 
     }
 
@@ -70,10 +75,10 @@ public class FirebaseHighscore {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Map<String, Object> value = (Map<String, Object>) dataSnapshot.getValue();
+
                 //Send Objektet herifra til Highscore klassen.
                 Log.d("LOGGING MAH ACTIVITAH", "value is: " + value);
                 //System.out.println("Value is" + value);
-                //list.putAll(value);
                 getValuesFromMap(value);
             }
 
@@ -88,83 +93,49 @@ public class FirebaseHighscore {
 
     public void getValuesFromMap(Map<String,Object> map) {
         for (Map.Entry<String, Object> entry : map.entrySet()) {
-            //String key = entry.getKey();
             Object value = entry.getValue();
 
             valueString = value.toString();
 
             String newString = valueString.substring(1,valueString.length() - 1);
-            //System.out.println(newString);
 
 
             String[] parts = newString.split("=");
             System.out.println("Names and scores: " + parts[0] + "\n" +  parts[1]);
 
-            list.put(parts[0], parts[1]);
-
-
-            //Her settes highscores alle navn og scores.
-            Highscore.highscores += valueString;
-            //String[] parts = valueString.split("=");
+            list.put(parts[1], parts[0]);
 
         }
+
         System.out.println("This is the list: " + list);
-        Highscore.highscoreList = list;
+        getTopThree(list);
 
 
     }
 
+    public void getTopThree(Map<String,String> map) {
+        List<String> sortedList = new ArrayList<>(map.keySet());
+        Collections.sort(sortedList);
 
-    /*
+        int size = sortedList.size() -1;
 
-    public void readAll() {
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Map<String, Object> value = (Map<String, Object>) dataSnapshot.getValue();
-                //value.putAll(value2);
-                Log.d("LOGGING MAH ACTIVITAH", "value is: " + value);
-                System.out.println("Value is" + value);
-                list = value;
-                //Map<String, Object> value = (Map<String, Object>) dataSnapshot.getValue();
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                //Log.i("Info","Data changed"+Long.toString( dataSnapshot.getChildrenCount()));
-                for (DataSnapshot dis : dataSnapshot.getChildren()) {
-                    for (DataSnapshot vers : dis.getChildren()) {
-                        //String value = vers.getValue(String.class);
-                        Map<String, Object> value = (Map<String, Object>) dataSnapshot.getValue();
-                        //value.putAll(value2);
-                        Log.d("LOGGING MAH ACTIVITAH", "value is: " + value);
-                        System.out.println("Value is" + value);
-                        list = value;
-                    }
-                }
-            }
+        String winnerScore = sortedList.get(size);
+        String secondScore = sortedList.get(size -1);
+        String thirdscore = sortedList.get(size -2);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Failed to read value
-                Log.w("LOGGING MAH ACTIVITAH", "Failed to read value from DB", databaseError.toException());
-            }
-        });
+        String winner = map.get(winnerScore);
+        String second = map.get(secondScore);
+        String third = map.get(thirdscore);
+
+        Map<String, String> topThree = new HashMap<>();
+        topThree.put(winner, winnerScore);
+        topThree.put(second, secondScore);
+        topThree.put(third, thirdscore);
+
+        Highscore.highscoreList = topThree;
+
+
+
     }
-*/
-
-
-    /*
-
-    //Observer-pattern
-
-    public void observe(Observable o) {
-        o.addObserver(this);
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        boolean gameOver = ((GameOverButtons) o).getGameOver();
-        System.out.println("Is the game over?? " + gameOver);
-    }
-    */
 
 }
