@@ -27,8 +27,8 @@ public class MapButtons extends Buttons{
     private ImageButton backButton;
     private float RectangleX;
     private float RectangleY;
-    public float PositionX = 0;
-    private float PositionY = 0;
+    private float PositionX;
+    private float PositionY;
 
     public MapButtons(AnimalWar game) {
         this.initializeButtons(game);
@@ -55,13 +55,15 @@ public class MapButtons extends Buttons{
         ));
 
         //positions the map image buttons and home button
-        platformMap.setPosition(GameInfo.WIDTH/2 - platformMap.getWidth()/2, (platformMap.getHeight()+ 100));
+        platformMap.setPosition(GameInfo.WIDTH/2 - platformMap.getWidth()/2, platformMap.getHeight()+ 100);
         winterMap.setPosition(GameInfo.WIDTH/2 - winterMap.getWidth()/2, 50);
         backButton.setPosition(50, GameInfo.HEIGHT - 90);
 
-        //gets the size of the map images
-        RectangleX = winterMap.getWidth();
-        RectangleY = winterMap.getHeight();
+        //Add rectangle arround chosen map,
+        PositionX = mapIdToImageButton(GameManager.getInstance().gameData.getChosenMap()).getX();
+        PositionY = mapIdToImageButton(GameManager.getInstance().gameData.getChosenMap()).getY();
+        RectangleX = mapIdToImageButton(GameManager.getInstance().gameData.getChosenMap()).getWidth();
+        RectangleY = mapIdToImageButton(GameManager.getInstance().gameData.getChosenMap()).getHeight();
     }
 
     /**
@@ -74,8 +76,7 @@ public class MapButtons extends Buttons{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 setChosenMap(1);
-                PositionX = platformMap.getX();
-                PositionY = platformMap.getY();
+                changeChosenMap(1);
             }
         });
 
@@ -83,8 +84,7 @@ public class MapButtons extends Buttons{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 setChosenMap(2);
-                PositionX = winterMap.getX();
-                PositionY = winterMap.getY();
+                changeChosenMap(2);
             }
         });
 
@@ -112,7 +112,22 @@ public class MapButtons extends Buttons{
     }
 
     //function for handling chosen map
-    private void setChosenMap(int id){ GameManager.getInstance().gameData.setChosenMap(id);}
+    private void setChosenMap(int id){GameManager.getInstance().gameData.setChosenMap(id);}
+
+    //set the position to the yellow rectangle
+    private void changeChosenMap(int id ){
+            PositionX = mapIdToImageButton(id).getX();
+            PositionY = mapIdToImageButton(id).getY();
+    }
+
+    //get the imagebutton to the chosen map
+    private ImageButton mapIdToImageButton(int id){
+        if (id == 1){
+            return platformMap;
+        }
+        else
+            return winterMap;
+    }
 
 
     //functions for getting positions and proportions of the map images

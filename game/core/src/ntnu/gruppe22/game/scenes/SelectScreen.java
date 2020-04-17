@@ -16,7 +16,6 @@ public class SelectScreen extends Menu{
     public SelectScreen(AnimalWar game) {
         this.initializeMenu(game);
         btns = new SelectScreenButtons(game);
-
     }
 
     @Override
