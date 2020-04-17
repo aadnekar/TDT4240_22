@@ -49,7 +49,7 @@ public abstract class Animal extends Sprite {
 
 
     public Animal(MainGame screen, int animalKey) {
-        super(new Texture(Gdx.files.internal(GameRules.getAnimalTexture(animalKey))));
+        super(new Texture(Gdx.files.internal(GameRules.getAnimalTexture(animalKey))), 40, 42);
 
 
         flipped = false;
@@ -100,7 +100,6 @@ public abstract class Animal extends Sprite {
         //fixtureDef.restitution = 0.4f;  // Bounciness
 
         bodyEditorLoader.attachFixture(body, shapeManager.getName(), fixtureDef, 33.5f/ GameInfo.PPM);
-
     }
 
 
