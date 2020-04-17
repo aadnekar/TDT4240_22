@@ -1,4 +1,4 @@
-package ntnu.gruppe22.game.sprites;
+package ntnu.gruppe22.game.sprites.animals;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -18,12 +18,15 @@ import java.util.Random;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
+import ntnu.gruppe22.game.huds.buttons.RabbitButton;
 import ntnu.gruppe22.game.scenes.MainGame;
 import ntnu.gruppe22.game.helpers.GameRules;
+import ntnu.gruppe22.game.sprites.Healthbar;
+import ntnu.gruppe22.game.sprites.ShapeManager;
 import ntnu.gruppe22.game.utils.BodyEditorLoader;
 
 
-public class Animal extends Sprite {
+public abstract class Animal extends Sprite {
     private static float MAX_VELOCITY = 1f;
 
     private int health;
@@ -206,6 +209,30 @@ public class Animal extends Sprite {
 
     }
 
+    public void setDeadAnimal(){
+        if(this instanceof Chicken){
+            System.out.println("dead chicken");
+            this.setTexture(new Texture("animals/chicken_dead.png"));
+        }
+        if(this instanceof Monkey){
+            System.out.println("dead monkey");
+            this.setTexture(new Texture("animals/monkey_dead.png"));
+        }
+        if(this instanceof Moose){
+            System.out.println("dead moose");
+            this.setTexture(new Texture("animals/moose_dead.png"));
+        }
+        if(this instanceof Rabbit){
+            System.out.println("dead rabbit");
+            this.setTexture(new Texture("animals/rabbit_dead.png"));
+        }
+        if(this instanceof Walrus){
+            System.out.println("dead walrus");
+            this.setTexture(new Texture("animals/walrus_dead.png"));
+        }
+
+    }
+
     public boolean isFlipped(){
         return flipped;
     }
@@ -219,8 +246,7 @@ public class Animal extends Sprite {
         }
     }
 
-    private void die() {
-        this.flip(false, true);
+    private void die(){
         screen.removeAnimal(this);
 
 
