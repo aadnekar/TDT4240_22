@@ -34,7 +34,7 @@ public class Stone extends Sprite {
         this.screen = screen;
         this.world = screen.getWorld();
 
-        damage = 1;
+        damage = 10;
 
         stone = new TextureRegion(getTexture(), 0, 0, 100/ GameInfo.PPM, 100/GameInfo.PPM);
         setBounds(0, 0, 40/ GameInfo.PPM, 40/GameInfo.PPM);

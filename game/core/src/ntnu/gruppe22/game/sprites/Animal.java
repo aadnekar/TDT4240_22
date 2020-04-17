@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -32,7 +31,8 @@ public class Animal extends Sprite {
     private float speed = 5f;
 
     private TextureRegion animalStand;
-    private NinePatch healthbar;
+    public Healthbar healthbar;
+
 
     //creating fixture for Box2D collision detection
     private MainGame screen;
@@ -48,10 +48,12 @@ public class Animal extends Sprite {
     public Animal(MainGame screen, int animalKey) {
         super(new Texture(Gdx.files.internal(GameRules.getAnimalTexture(animalKey))));
 
+
         flipped = false;
-        health = 30;
+        healthbar = new Healthbar();
+        health = 100;
+
         endurance= 5000;
-        healthbar = new NinePatch(new Texture(Gdx.files.internal("animals/rectangle.png")), 0, 0, 0, 0);
 
         //box2D
         this.screen = screen;
@@ -102,6 +104,8 @@ public class Animal extends Sprite {
     public void update(float dt){
         setX(getPositionX() - getWidth()/2);
         setY(getPositionY() - getHeight()/2);
+        healthbar.setX(getPositionX() - getWidth()/2);
+        healthbar.setY(getPositionY() + getHeight()/2 + getHeight()/6);
     }
 
     private float getPositionX() {
@@ -209,6 +213,7 @@ public class Animal extends Sprite {
     //when hit by weapon that deals x damage
     public void setHealth(int damage) {
         this.health -= damage;
+        healthbar.setWidth(getHealth());
         if (this.health <= 0) {
             die();
         }
@@ -231,7 +236,5 @@ public class Animal extends Sprite {
 
    public void draw(Batch batch) {
         super.draw(batch);
-        //batch.draw(this.getTexture(), getPositionX(), getPositionY());
-        //batch.draw(healthbar.getTexture(), this.getX() + 5, this.getY() + 110);
     }
 }

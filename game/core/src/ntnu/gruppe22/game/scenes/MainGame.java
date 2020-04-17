@@ -21,6 +21,7 @@ import ntnu.gruppe22.game.maps.Map;
 import ntnu.gruppe22.game.helpers.GameInfo;
 
 import ntnu.gruppe22.game.sprites.Animal;
+import ntnu.gruppe22.game.sprites.Healthbar;
 import ntnu.gruppe22.game.states.weapons.ListenerClass;
 import ntnu.gruppe22.game.states.weapons.Stone;
 
@@ -228,11 +229,12 @@ public class MainGame implements Screen {
 
     //programmet stopper i ca 1 sek før steinen forsvinner
     private void destroyWeapon() {
+        /*
         try {
-            Thread.sleep(800); //bedre måte å løse dette på? Tror ikke dette er helt optimalt
+            Thread.sleep(800);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
         world.destroyBody(stone.b2body);
         stone = null;
         DestroyWeapon = false;
@@ -265,10 +267,13 @@ public class MainGame implements Screen {
 
         for (Animal animal : charactersPlayer1) {
             animal.draw(game.getSb());
+            animal.healthbar.draw(game.getSb());
             animal.update(dt);
+
         }
         for (Animal animal : charactersPlayer2) {
             animal.draw(game.getSb());
+            animal.healthbar.draw(game.getSb());
             animal.update(dt);
         }
 
