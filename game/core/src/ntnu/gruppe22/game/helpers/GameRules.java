@@ -34,9 +34,9 @@ public class GameRules {
     private static final Map<Integer,String> animalIdToTexture = new HashMap<Integer, String>() {{
         put(1,  "animals/chicken.png");
         put(2,  "animals/monkey.png");
-        put(3,  "animals/walrus.png");
-        put(4,  "animals/moose.png");
-        put(5,  "animals/rabbit.png");
+        put(3,  "animals/moose.png");
+        put(4,  "animals/rabbit.png");
+        put(5,  "animals/walrus.png");
     }};
 
     public static String getAnimalTexture(int animalKey) {
