@@ -18,8 +18,10 @@ import java.util.List;
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.huds.MainGameButtons;
 import ntnu.gruppe22.game.maps.Map;
+
 import ntnu.gruppe22.game.helpers.GameInfo;
 
+import ntnu.gruppe22.game.maps.Map;
 import ntnu.gruppe22.game.sprites.Animal;
 import ntnu.gruppe22.game.sprites.Healthbar;
 import ntnu.gruppe22.game.states.weapons.ListenerClass;
@@ -215,7 +217,7 @@ public class MainGame implements Screen {
 
     public void gameOver() {
         this.dispose();
-        game.setScreen(new MainMenu(game));
+        game.setScreen(new GameOver(game));
     }
 
 
