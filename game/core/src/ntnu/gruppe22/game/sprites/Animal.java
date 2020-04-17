@@ -136,13 +136,8 @@ public class Animal extends Sprite {
      * the screen.
      * Need to scale the input location to the Pixel Per Meter (PPM).
      */
-    public void move(OrthographicCamera camera) {
-        /*
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && onGround()) {
-            jump();
-        }
+    public void move(OrthographicCamera camera){
 
-         */
 
         if (Gdx.input.isTouched()) {
             Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
