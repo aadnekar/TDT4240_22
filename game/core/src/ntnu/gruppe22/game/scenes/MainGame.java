@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import ntnu.gruppe22.game.AnimalWar;
+import ntnu.gruppe22.game.huds.MainGameButtons;
 import ntnu.gruppe22.game.maps.Map;
 import ntnu.gruppe22.game.helpers.GameInfo;
 
@@ -55,6 +56,7 @@ public class MainGame implements Screen {
     public boolean DestroyWeapon = false;
     private OrthographicCamera camera;
     private Viewport gameViewport;
+    private MainGameButtons btns;
 
     private List<Animal> charactersPlayer1;
     private List<Animal> charactersPlayer2;
@@ -80,9 +82,11 @@ public class MainGame implements Screen {
 
         listenerClass = new ListenerClass(this, world);
         world.setContactListener(listenerClass);
+        btns = new MainGameButtons(game);
+
 
         this.camera = new OrthographicCamera();
-        this.camera.setToOrtho(false, GameInfo.WIDTH /GameInfo.PPM, GameInfo.HEIGHT /GameInfo.PPM);
+        this.camera.setToOrtho(false, GameInfo.WIDTH / GameInfo.PPM, GameInfo.HEIGHT / GameInfo.PPM);
         this.camera.update();
 
         //this.camera.position.set(GameInfo.WIDTH / 2f /GameInfo.PPM, GameInfo.HEIGHT / 2f /GameInfo.PPM, 0);
@@ -116,8 +120,7 @@ public class MainGame implements Screen {
             if (charactersPlayer1.size() == 0) {
                 gameOver();
             }
-        }
-        else {
+        } else {
             charactersPlayer2.remove(animal);
             if (charactersPlayer2.size() == 0) {
                 gameOver();
@@ -127,28 +130,30 @@ public class MainGame implements Screen {
 
     public List<Animal> generateAnimals(ArrayList rosterList) {
         List<Animal> animals = new ArrayList<>();
-        for (Object i : rosterList ){
+        for (Object i : rosterList) {
             animals.add(new Animal(this, (Integer) i));
         }
         return animals;
 
     }
 
-    public void handleInput(float dt){
+    public void handleInput(float dt) {
         if (!bufferTime) {
             getCurrentAnimal().move(this.camera);
         }
     }
 
-    public void throwStone(float dt) {
-        stone = new Stone(this);
-        stone.b2body.applyLinearImpulse(new Vector2(2f, 2f), stone.b2body.getWorldCenter(), true);
-        stone.draw((game.getSb()));
-        stone.update(dt);
-    }
     //forandring fra navn i innlevering
-    public Animal getCurrentAnimal(){
+    public Animal getCurrentAnimal() {
         return currentAnimal;
+    }
+
+    public Stone getStone() {
+        return this.stone;
+    }
+
+    public void setStone(int pos) {
+        this.stone = new Stone(this, pos);
     }
 
     /**
@@ -161,8 +166,8 @@ public class MainGame implements Screen {
     //vil lagre hver Animal med en index hos hver spiller
     //får neste Animal i rekken
     //antar at vi må sette en ny currencharacter i denne metoden
-    public void changeCharacter(){
-        if(currentTurn == 0){
+    public void changeCharacter() {
+        if (currentTurn == 0) {
             setCurrentCharacter(nextAnimal(iteratePlayer1, charactersPlayer1));
         } else {
             setCurrentCharacter(nextAnimal(iteratePlayer2, charactersPlayer2));
@@ -177,9 +182,9 @@ public class MainGame implements Screen {
             return iter.next();
         } else {
             iter = players.iterator();
-            if(currentTurn == 0){
+            if (currentTurn == 0) {
                 iteratePlayer1 = iter;
-            } else{
+            } else {
                 iteratePlayer2 = iter;
             }
             return nextAnimal(iter, players);
@@ -188,36 +193,34 @@ public class MainGame implements Screen {
 
     //skal vi ha runder med i spillet i det hele tatt?
     //dt?
-    public void setCurrentTurn(){
-        if(currentTurn == 1){
+    public void setCurrentTurn() {
+        if (currentTurn == 1) {
             this.currentTurn = 0;
-        } else if(currentTurn == 0){
+        } else if (currentTurn == 0) {
             this.currentTurn = 1;
-        } else{
+        } else {
             System.out.println("Wrong turn-number?!");
         }
     }
 
-    public void setCurrentCharacter(Animal animal){
+    public void setCurrentCharacter(Animal animal) {
         currentAnimal = animal;
     }
 
-    public void timesUp(){
+    public void timesUp() {
         setCurrentTurn();
         changeCharacter();
     }
 
-    public void gameOver(){
+    public void gameOver() {
         this.dispose();
         game.setScreen(new MainMenu(game));
     }
 
 
-
-
     public float cameraBounds(float animalPosition, float mapEnd, float mapStart) {
-        if(animalPosition > mapStart) {
-            if(animalPosition < mapEnd) {
+        if (animalPosition > mapStart) {
+            if (animalPosition < mapEnd) {
                 return animalPosition;
             } else return mapEnd;
         } else return mapStart;
@@ -246,8 +249,8 @@ public class MainGame implements Screen {
 
         //set camera to follow current player within bounds
         //mapEnd: 1920 is the total length of the map, 640 is the total height.
-        camera.position.x = cameraBounds(currentAnimal.getX(), (1920-(GameInfo.WIDTH/2))/100, camera.viewportWidth/2);
-        camera.position.y = cameraBounds(currentAnimal.getY(), (640-(GameInfo.HEIGHT/2))/100, camera.viewportHeight/2);
+        camera.position.x = cameraBounds(currentAnimal.getX(), (1920 - (GameInfo.WIDTH / 2)) / 100, camera.viewportWidth / 2);
+        camera.position.y = cameraBounds(currentAnimal.getY(), (640 - (GameInfo.HEIGHT / 2)) / 100, camera.viewportHeight / 2);
 
         map.update(camera); //Needs to be created before animal texture
 
@@ -255,75 +258,81 @@ public class MainGame implements Screen {
 
         game.getSb().setProjectionMatrix(camera.combined);
 
+
         game.getSb().begin();
         font.draw(game.getSb(), timer.getDisplayString(), 50, 50);
-        for(Animal animal : charactersPlayer1){
+        btns.replaceEventListener(currentAnimal, dt);
+
+        for (Animal animal : charactersPlayer1) {
             animal.draw(game.getSb());
             animal.update(dt);
         }
-        for(Animal animal : charactersPlayer2){
+        for (Animal animal : charactersPlayer2) {
             animal.draw(game.getSb());
             animal.update(dt);
         }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER) && (stone == null)){
-            throwStone(dt);
-        }
 
-        if(DestroyWeapon) {
+        if (DestroyWeapon) {
             destroyWeapon();
             timer.cancel();
             timer.setNewTurn();
         }
 
-        if(stone !=null && (stone.b2body.getPosition().x <= 1 || stone.b2body.getPosition().x > (1920/GameInfo.PPM))) {
+        if (stone != null && (stone.b2body.getPosition().x <= 1 || stone.b2body.getPosition().x > (1920 / GameInfo.PPM))) {
             destroyWeapon();
             timer.cancel();
             timer.setNewTurn();
         }
 
-        if(stone != null) {
-            stone.draw(game.getSb());
-            stone.setPosition(stone.b2body.getPosition().x - stone.getWidth() / 2, stone.b2body.getPosition().y - stone.getHeight() / 2);
+
+            if (stone != null) {
+                stone.draw(game.getSb());
+                stone.setPosition(stone.b2body.getPosition().x - stone.getWidth() / 2, stone.b2body.getPosition().y - stone.getHeight() / 2);
+            }
+
+
+            game.getSb().end();
+
+            btns.getStage().draw();
+            btns.getStage().act();
+
+            world.step(dt, 6, 2);
         }
 
-        game.getSb().end();
+        public World getWorld () {
+            return world;
+        }
+        @Override
+        public void show () {
 
-        world.step(dt, 6, 2);
-    }
+        }
 
-    public World getWorld(){
-        return world;
-    }
-    @Override
-    public void show() {
+        @Override
+        public void resize ( int width, int height){
 
-    }
+        }
 
-    @Override
-    public void resize(int width, int height) {
+        @Override
+        public void pause () {
+        }
 
-    }
+        @Override
+        public void resume () {
+        }
 
-    @Override
-    public void pause() {
-    }
+        @Override
+        public void hide () {
 
-    @Override
-    public void resume() {
-    }
+        }
 
-    @Override
-    public void hide() {
+        @Override
+        public void dispose () {
+            font.dispose();
+            timer.cancel();
+            btns.disposeStage();
+        }
 
-    }
-
-    @Override
-    public void dispose() {
-        font.dispose();
-        timer.cancel();
-
-    }
 
 
 }
