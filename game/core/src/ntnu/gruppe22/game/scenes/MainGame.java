@@ -240,6 +240,15 @@ public class MainGame implements Screen {
         DestroyWeapon = false;
     }
 
+    //Cancles current timer and starts new
+    private void startNewTimer(){
+        timer.cancel();
+        timer = null;
+        timesUp();
+        timer = new MainGameTimer(this);
+        timer.startNewRoundCountDown();
+    }
+
 
     @Override
     public void render(float dt) {
@@ -280,30 +289,28 @@ public class MainGame implements Screen {
 
         if (DestroyWeapon) {
             destroyWeapon();
-            timer.cancel();
-            timer.setNewTurn();
+            startNewTimer();
         }
 
-        if (stone != null && (stone.b2body.getPosition().x <= 1 || stone.b2body.getPosition().x > (1920 / GameInfo.PPM))) {
+        if (stone != null && (stone.b2body.getPosition().x <= 0.2 || stone.b2body.getPosition().x > (1920 / GameInfo.PPM))) {
             destroyWeapon();
-            timer.cancel();
-            timer.setNewTurn();
+            startNewTimer();
         }
 
 
-            if (stone != null) {
-                stone.draw(game.getSb());
-                stone.setPosition(stone.b2body.getPosition().x - stone.getWidth() / 2, stone.b2body.getPosition().y - stone.getHeight() / 2);
-            }
-
-
-            game.getSb().end();
-
-            btns.getStage().draw();
-            btns.getStage().act();
-
-            world.step(dt, 6, 2);
+        if (stone != null) {
+            stone.draw(game.getSb());
+            stone.setPosition(stone.b2body.getPosition().x - stone.getWidth() / 2, stone.b2body.getPosition().y - stone.getHeight() / 2);
         }
+
+        game.getSb().end();
+
+        btns.getStage().draw();
+        btns.getStage().act();
+
+        world.step(dt, 6, 2);
+
+    }
 
         public World getWorld () {
             return world;
