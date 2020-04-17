@@ -49,7 +49,7 @@ public abstract class Animal extends Sprite {
 
 
     public Animal(MainGame screen, int animalKey) {
-        super(new Texture(Gdx.files.internal(GameRules.getAnimalTexture(animalKey))), 40, 42);
+        super(new Texture(Gdx.files.internal(GameRules.getAnimalTexture(animalKey))));
 
 
         flipped = false;
