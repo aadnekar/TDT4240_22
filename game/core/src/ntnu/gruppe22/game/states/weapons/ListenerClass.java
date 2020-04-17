@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 
 import ntnu.gruppe22.game.scenes.MainGame;
-import ntnu.gruppe22.game.sprites.Animal;
+import ntnu.gruppe22.game.sprites.animals.Animal;
 
 
 public class ListenerClass implements ContactListener {
