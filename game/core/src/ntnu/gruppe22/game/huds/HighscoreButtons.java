@@ -48,7 +48,7 @@ public class HighscoreButtons {
     private void createAndPositionButtons() {
 
         quit = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/settings-btn.png"))
+                new Sprite(new Texture("buttons/back-to-menu.png"))
         ));
 
 
@@ -64,7 +64,7 @@ public class HighscoreButtons {
                 run.setRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        game.setScreen(new MainMenu(new AnimalWar()/*, gameMusic*/));
+                        game.setScreen(new MainMenu(game));
                         System.out.println("GOING TO THE MAIN MENU!!");
                     }
                 });
