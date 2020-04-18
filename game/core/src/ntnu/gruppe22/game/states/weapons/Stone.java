@@ -19,7 +19,6 @@ import ntnu.gruppe22.game.scenes.MainGame;
 public class Stone extends Sprite {
 
     private TextureRegion stone;
-    public Texture stoneTexture;
     private MainGame screen;
     private World world;
     public Body b2body;
@@ -39,7 +38,6 @@ public class Stone extends Sprite {
         setBounds(0, 0, 15/ GameInfo.PPM, 15/GameInfo.PPM);
         setRegion(stone);
         defineStone(pos);
-
     }
 
     public void defineStone(int pos) {
