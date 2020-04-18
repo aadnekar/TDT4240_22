@@ -1,7 +1,6 @@
 package ntnu.gruppe22.game.scenes;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -21,9 +20,14 @@ import ntnu.gruppe22.game.maps.Map;
 
 import ntnu.gruppe22.game.helpers.GameInfo;
 
-import ntnu.gruppe22.game.maps.Map;
-import ntnu.gruppe22.game.sprites.Animal;
-import ntnu.gruppe22.game.sprites.Healthbar;
+
+import ntnu.gruppe22.game.sprites.animals.Animal;
+import ntnu.gruppe22.game.sprites.animals.Chicken;
+import ntnu.gruppe22.game.sprites.animals.Monkey;
+import ntnu.gruppe22.game.sprites.animals.Moose;
+import ntnu.gruppe22.game.sprites.animals.Rabbit;
+import ntnu.gruppe22.game.sprites.animals.Walrus;
+
 import ntnu.gruppe22.game.states.weapons.ListenerClass;
 import ntnu.gruppe22.game.states.weapons.Stone;
 
@@ -117,16 +121,32 @@ public class MainGame implements Screen {
     }
 
 
+    //TODO: make animal.setDeadAnimal() på hvert dyr som blir fjernet, ikke bare det siste som dør
     public void removeAnimal(Animal animal) {
         if (charactersPlayer1.contains(animal)) {
             charactersPlayer1.remove(animal);
             if (charactersPlayer1.size() == 0) {
+                currentAnimal.setDeadAnimal();
                 gameOver();
             }
         } else {
             charactersPlayer2.remove(animal);
             if (charactersPlayer2.size() == 0) {
                 gameOver();
+                currentAnimal.setDeadAnimal();
+            }
+        }
+    }
+
+    private void checkSoonDeadAnimal(){
+        for(Animal i : charactersPlayer1){
+            if(i.getHealth() < 10){
+                i.setDeadAnimal();
+            }
+        }
+        for(Animal i : charactersPlayer2){
+            if(i.getHealth() < 10){
+                i.setDeadAnimal();
             }
         }
     }
@@ -134,7 +154,22 @@ public class MainGame implements Screen {
     public List<Animal> generateAnimals(ArrayList rosterList) {
         List<Animal> animals = new ArrayList<>();
         for (Object i : rosterList) {
-            animals.add(new Animal(this, (Integer) i));
+            if((Integer) i == 1){
+                animals.add(new Chicken(this, (Integer) i));
+            }
+            if((Integer) i == 2){
+                animals.add(new Monkey(this, (Integer) i));
+            }
+            if((Integer) i == 3){
+                animals.add(new Walrus(this, (Integer) i));
+            }
+            if((Integer) i == 4){
+                animals.add(new Moose(this, (Integer) i));
+            }
+            if((Integer) i == 5){
+                animals.add(new Rabbit(this, (Integer) i));
+            }
+
         }
         return animals;
 
@@ -259,6 +294,7 @@ public class MainGame implements Screen {
 
         handleInput(dt);
 
+        checkSoonDeadAnimal();
 
         //set camera to follow current player within bounds
         //mapEnd: 1920 is the total length of the map, 640 is the total height.

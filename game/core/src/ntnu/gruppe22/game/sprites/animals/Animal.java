@@ -1,4 +1,4 @@
-package ntnu.gruppe22.game.sprites;
+package ntnu.gruppe22.game.sprites.animals;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -18,12 +18,15 @@ import java.util.Random;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
+import ntnu.gruppe22.game.huds.buttons.RabbitButton;
 import ntnu.gruppe22.game.scenes.MainGame;
 import ntnu.gruppe22.game.helpers.GameRules;
+import ntnu.gruppe22.game.sprites.Healthbar;
+import ntnu.gruppe22.game.sprites.ShapeManager;
 import ntnu.gruppe22.game.utils.BodyEditorLoader;
 
 
-public class Animal extends Sprite {
+public abstract class Animal extends Sprite {
     private static float MAX_VELOCITY = 1f;
 
     private int health;
@@ -210,6 +213,25 @@ public class Animal extends Sprite {
 
     }
 
+    public void setDeadAnimal(){
+        if(this instanceof Chicken){
+            this.setTexture(new Texture("animals/chicken_dead.png"));
+        }
+        if(this instanceof Monkey){
+            this.setTexture(new Texture("animals/monkey_dead.png"));
+        }
+        if(this instanceof Moose){
+            this.setTexture(new Texture("animals/moose_dead.png"));
+        }
+        if(this instanceof Rabbit){
+            this.setTexture(new Texture("animals/rabbit_dead.png"));
+        }
+        if(this instanceof Walrus){
+            this.setTexture(new Texture("animals/walrus_dead.png"));
+        }
+
+    }
+
     public boolean isFlipped(){
         return flipped;
     }
@@ -223,8 +245,7 @@ public class Animal extends Sprite {
         }
     }
 
-    private void die() {
-        this.flip(false, true);
+    private void die(){
         screen.removeAnimal(this);
 
 
