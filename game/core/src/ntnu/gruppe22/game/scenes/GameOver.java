@@ -48,6 +48,7 @@ public class GameOver extends Menu {
     @Override
     public void render(float delta) {
         super.render(delta);
+
         game.getSb().begin();
         game.getSb().draw(logo, GameInfo.WIDTH/2 - logo.getWidth()/2, GameInfo.HEIGHT - 100);
         font.draw(game.getSb(),"The winner is : " + getLastWinner(), GameInfo.WIDTH/2, 50);

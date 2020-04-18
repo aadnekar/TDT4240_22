@@ -27,21 +27,16 @@ public class HighscoreButtons extends Buttons {
     public HighscoreButtons(AnimalWar game) {
         this.initializeButtons(game);
 
-
         stage.addActor(quit);
-
     }
 
     protected void createAndPositionButtons() {
-
         quit = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/back-to-menu.png"))
         ));
 
-
         quit.setPosition(GameInfo.WIDTH/2 - quit.getWidth()/2, GameInfo.HEIGHT/2-180);
         }
-
 
     protected void addButtonListeners() {
         quit.addListener(new ChangeListener() {
@@ -62,5 +57,4 @@ public class HighscoreButtons extends Buttons {
             }
         });
     }
-
 }
