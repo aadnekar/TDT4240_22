@@ -155,23 +155,18 @@ public class MainGame implements Screen {
         List<Animal> animals = new ArrayList<>();
         for (Object i : rosterList) {
             if((Integer) i == 1){
-                System.out.println("chicken added");
                 animals.add(new Chicken(this, (Integer) i));
             }
             if((Integer) i == 2){
-                System.out.println("monkey added");
                 animals.add(new Monkey(this, (Integer) i));
             }
             if((Integer) i == 3){
-                System.out.println("walrus added");
                 animals.add(new Walrus(this, (Integer) i));
             }
             if((Integer) i == 4){
-                System.out.println("moose added");
                 animals.add(new Moose(this, (Integer) i));
             }
             if((Integer) i == 5){
-                System.out.println("rabbit added");
                 animals.add(new Rabbit(this, (Integer) i));
             }
 

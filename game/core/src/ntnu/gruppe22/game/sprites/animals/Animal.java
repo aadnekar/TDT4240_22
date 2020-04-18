@@ -215,24 +215,19 @@ public abstract class Animal extends Sprite {
 
     public void setDeadAnimal(){
         if(this instanceof Chicken){
-            System.out.println("dead chicken");
             this.getTexture().dispose();
             this.setTexture(new Texture("animals/chicken_dead.png"));
         }
         if(this instanceof Monkey){
-            System.out.println("dead monkey");
             this.setTexture(new Texture("animals/monkey_dead.png"));
         }
         if(this instanceof Moose){
-            System.out.println("dead moose");
             this.setTexture(new Texture("animals/moose_dead.png"));
         }
         if(this instanceof Rabbit){
-            System.out.println("dead rabbit");
             this.setTexture(new Texture("animals/rabbit_dead.png"));
         }
         if(this instanceof Walrus){
-            System.out.println("dead walrus");
             this.setTexture(new Texture("animals/walrus_dead.png"));
         }
 
