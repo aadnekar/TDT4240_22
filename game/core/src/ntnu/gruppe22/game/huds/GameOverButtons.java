@@ -151,12 +151,6 @@ public class GameOverButtons extends Observable {
         return isGameOver;
     }
 
-
-
-
-
-
-
     private void checkMusic() {
         if(GameManager.getInstance().gameData.isMusicOn()) {
             GameManager.getInstance().playMusic();
