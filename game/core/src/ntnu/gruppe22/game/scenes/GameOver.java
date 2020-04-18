@@ -50,6 +50,7 @@ public class GameOver extends Menu {
         super.render(delta);
 
         game.getSb().begin();
+        game.getSb().draw(bg, 0, 0);
         game.getSb().draw(logo, GameInfo.WIDTH/2 - logo.getWidth()/2, GameInfo.HEIGHT - 100);
         font.draw(game.getSb(),"The winner is : " + getLastWinner(), GameInfo.WIDTH/2, 50);
         game.getSb().end();

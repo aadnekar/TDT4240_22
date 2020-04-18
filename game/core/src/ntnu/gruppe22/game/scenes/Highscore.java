@@ -35,7 +35,7 @@ public class Highscore extends Menu {
         super.render(delta);
 
         game.getSb().begin();
-
+        game.getSb().draw(bg, 0, 0);
         game.getSb().draw(logo, GameInfo.WIDTH/2 - logo.getWidth()/2, GameInfo.HEIGHT - 100);
         List<String> names = new ArrayList<>(highscoreList.keySet());
         List<String> scores = new ArrayList<>(highscoreList.values());

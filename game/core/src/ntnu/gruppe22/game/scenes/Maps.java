@@ -31,6 +31,7 @@ public class Maps extends Menu {
 
        // Draw menu background and title
         game.getSb().begin();
+        game.getSb().draw(bg, 0, 0);
         game.getSb().draw(title,190 , GameInfo.HEIGHT - 80, 334, 43);
         game.getSb().end();
 

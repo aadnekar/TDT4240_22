@@ -22,6 +22,10 @@ public class SelectScreen extends Menu{
     public void render ( float delta){
         super.render(delta);
 
+        game.getSb().begin();
+        game.getSb().draw(bg, 0, 0);
+        game.getSb().end();
+
         game.getSb().setProjectionMatrix(btns.getStage().getCamera().combined);
         btns.getStage().draw();
         btns.getStage().act();
