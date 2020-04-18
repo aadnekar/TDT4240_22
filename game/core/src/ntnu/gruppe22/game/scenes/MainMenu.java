@@ -1,7 +1,5 @@
 package ntnu.gruppe22.game.scenes;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 
 import ntnu.gruppe22.game.AnimalWar;
