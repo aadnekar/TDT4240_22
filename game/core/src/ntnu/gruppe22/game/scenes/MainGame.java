@@ -123,12 +123,14 @@ public class MainGame implements Screen {
         if (charactersPlayer1.contains(animal)) {
             charactersPlayer1.remove(animal);
             if (charactersPlayer1.size() == 0) {
+                currentAnimal.setDeadAnimal();
                 gameOver();
             }
         } else {
             charactersPlayer2.remove(animal);
             if (charactersPlayer2.size() == 0) {
                 gameOver();
+                currentAnimal.setDeadAnimal();
             }
         }
     }
