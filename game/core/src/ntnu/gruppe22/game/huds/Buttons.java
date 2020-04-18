@@ -6,6 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.Observable;
+
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
@@ -14,7 +16,7 @@ import ntnu.gruppe22.game.helpers.GameManager;
  * @author aadne on 15.04.2020 13:21
  */
 
-public abstract class Buttons {
+public abstract class Buttons extends Observable {
     protected AnimalWar game;
     protected Stage stage;
     protected Viewport gameViewport;
