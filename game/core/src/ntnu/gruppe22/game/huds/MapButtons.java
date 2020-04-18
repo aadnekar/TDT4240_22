@@ -1,48 +1,32 @@
 package ntnu.gruppe22.game.huds;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.helpers.GameManager;
 import ntnu.gruppe22.game.scenes.MainMenu;
 
-public class MapButtons {
-    private AnimalWar game;
-    private Stage stage;
-    private Viewport gameViewport;
+public class MapButtons extends Buttons{
 
     private ImageButton platformMap;
     private ImageButton winterMap;
     private ImageButton backButton;
     private float RectangleX;
     private float RectangleY;
-    private float PositionX = 0;
-    private float PositionY = 0;
+    private float PositionX;
+    private float PositionY;
 
     public MapButtons(AnimalWar game) {
-
-        this.game = game;
-        gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
-        stage = new Stage(gameViewport, game.getSb());
-
-        Gdx.input.setInputProcessor(stage);
-
-        createAndPositionMaps();
-        addListeners();
+        this.initializeButtons(game);
 
         stage.addActor(platformMap);
         stage.addActor(winterMap);
@@ -53,7 +37,7 @@ public class MapButtons {
      * Initializes the image buttons of the maps and sets their position
      * also gets the proportions of the map-images into the varables RectangleX and RectangleY
      */
-    public void createAndPositionMaps(){
+    protected void createAndPositionButtons(){
         //creates the image buttons
         platformMap = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("map/platform2Map.png"))
@@ -66,13 +50,15 @@ public class MapButtons {
         ));
 
         //positions the map image buttons and home button
-        platformMap.setPosition(GameInfo.WIDTH/2 - platformMap.getWidth()/2, (platformMap.getHeight()+ 100));
+        platformMap.setPosition(GameInfo.WIDTH/2 - platformMap.getWidth()/2, platformMap.getHeight()+ 100);
         winterMap.setPosition(GameInfo.WIDTH/2 - winterMap.getWidth()/2, 50);
         backButton.setPosition(50, GameInfo.HEIGHT - 90);
 
-        //gets the size of the map images
-        RectangleX = winterMap.getWidth();
-        RectangleY = winterMap.getHeight();
+        //Add rectangle arround chosen map,
+        PositionX = mapIdToImageButton(GameManager.getInstance().gameData.getChosenMap()).getX();
+        PositionY = mapIdToImageButton(GameManager.getInstance().gameData.getChosenMap()).getY();
+        RectangleX = mapIdToImageButton(GameManager.getInstance().gameData.getChosenMap()).getWidth();
+        RectangleY = mapIdToImageButton(GameManager.getInstance().gameData.getChosenMap()).getHeight();
     }
 
     /**
@@ -80,13 +66,12 @@ public class MapButtons {
      * When the maps is touched, the chosenMap-variable is changed to the id of the touched map,
      * also the position of the rectangle that is beeing drawed around the chosen map.
      */
-    private void addListeners(){
+    protected void addButtonListeners(){
         platformMap.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 setChosenMap(1);
-                PositionX = platformMap.getX();
-                PositionY = platformMap.getY();
+                changeChosenMap(1);
             }
         });
 
@@ -94,8 +79,7 @@ public class MapButtons {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 setChosenMap(2);
-                PositionX = winterMap.getX();
-                PositionY = winterMap.getY();
+                changeChosenMap(2);
             }
         });
 
@@ -122,12 +106,24 @@ public class MapButtons {
 
     }
 
-    //functions for handling stage and chosen map
-    private void setChosenMap(int id){ GameManager.getInstance().gameData.setChosenMap(id);}
-    public Stage getStage(){return this.stage; }
-    public void disposeStage() {
-        this.stage.dispose();
+    //function for handling chosen map
+    private void setChosenMap(int id){GameManager.getInstance().gameData.setChosenMap(id);}
+
+    //set the position to the yellow rectangle
+    private void changeChosenMap(int id ){
+            PositionX = mapIdToImageButton(id).getX();
+            PositionY = mapIdToImageButton(id).getY();
     }
+
+    //get the imagebutton to the chosen map
+    private ImageButton mapIdToImageButton(int id){
+        if (id == 1){
+            return platformMap;
+        }
+        else
+            return winterMap;
+    }
+
 
     //functions for getting positions and proportions of the map images
     public float getRectangleX(){return this.RectangleX;}

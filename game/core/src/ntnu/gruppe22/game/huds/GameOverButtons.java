@@ -1,34 +1,22 @@
 package ntnu.gruppe22.game.huds;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-
-import java.util.Observable;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
-import ntnu.gruppe22.game.helpers.GameManager;
 import ntnu.gruppe22.game.scenes.Highscore;
 import ntnu.gruppe22.game.scenes.MainMenu;
 import ntnu.gruppe22.game.scenes.SelectScreen;
 
-public class GameOverButtons extends Observable {
-
-    private AnimalWar game;
-    private Stage stage;
-    private Viewport gameViewport;
+public class GameOverButtons extends Buttons {
 
     public static ImageButton highscoreList;
     private ImageButton newGame;
@@ -36,31 +24,17 @@ public class GameOverButtons extends Observable {
 
     public static boolean isGameOver;
 
-
-    private String nick1, nick2;
-
     public GameOverButtons(AnimalWar game) {
-        this.game = game;
-        isGameOver = false;
-
-        gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
-        stage = new Stage(gameViewport, game.getSb());
-        Gdx.input.setInputProcessor(stage);
-
-        createAndPositionButtons();
-        addAllListeners();
+        this.initializeButtons(game);
 
         stage.addActor(highscoreList);
         stage.addActor(newGame);
         stage.addActor(quit);
 
-        checkMusic();
-
         setGameOver(false);
-
     }
 
-    private void createAndPositionButtons() {
+    protected void createAndPositionButtons() {
         newGame = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/new-game.png"))
         ));
@@ -76,8 +50,7 @@ public class GameOverButtons extends Observable {
         highscoreList.setPosition(GameInfo.WIDTH / 2 - highscoreList.getWidth()/2, GameInfo.HEIGHT / 2 - 150);
     }
 
-
-    private void addAllListeners() {
+    protected void addButtonListeners() {
         newGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -135,10 +108,7 @@ public class GameOverButtons extends Observable {
         });
     }
 
-
-
     //Observer-pattern
-
     public void setGameOver(boolean isGameOver) {
         synchronized (this) {
             this.isGameOver = isGameOver;
@@ -151,23 +121,4 @@ public class GameOverButtons extends Observable {
         return isGameOver;
     }
 
-
-
-
-
-
-
-    private void checkMusic() {
-        if(GameManager.getInstance().gameData.isMusicOn()) {
-            GameManager.getInstance().playMusic();
-        }
-    }
-
-    public Stage getStage() {
-        return this.stage;
-    }
-
-    public void disposeStage() {
-        this.stage.dispose();
-    }
 }

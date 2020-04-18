@@ -1,7 +1,6 @@
 package ntnu.gruppe22.game.scenes;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 
 import ntnu.gruppe22.game.AnimalWar;
@@ -24,9 +23,9 @@ public class Settings extends Menu {
         headline = new Texture("settings/settings.png");
     }
 
+    @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        super.render(delta);
 
         game.getSb().begin();
         game.getSb().draw(bg, 0, 0);
@@ -40,12 +39,4 @@ public class Settings extends Menu {
         btns.getStage().act();
     }
 
-    public void resize(int width, int height) {
-        gameViewport.update(width, height);
-    }
-
-    public void dispose() {
-        btns.disposeStage();
-        bg.dispose();
-    }
 }

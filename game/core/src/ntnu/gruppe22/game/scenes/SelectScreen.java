@@ -1,8 +1,5 @@
 package ntnu.gruppe22.game.scenes;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.huds.SelectScreenButtons;
 
@@ -16,12 +13,11 @@ public class SelectScreen extends Menu{
     public SelectScreen(AnimalWar game) {
         this.initializeMenu(game);
         btns = new SelectScreenButtons(game);
-
     }
 
+    @Override
     public void render ( float delta){
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        super.render(delta);
 
         game.getSb().begin();
         game.getSb().draw(bg, 0, 0);
@@ -32,14 +28,5 @@ public class SelectScreen extends Menu{
         btns.getStage().act();
     }
 
-    public void resize ( int width, int height){
-        gameViewport.update(width, height);
-    }
-
-    public void dispose () {
-        Gdx.input.setInputProcessor(null);
-        bg.dispose();
-        btns.disposeStage();
-    }
 }
 

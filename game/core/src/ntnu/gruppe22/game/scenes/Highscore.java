@@ -1,8 +1,5 @@
 package ntnu.gruppe22.game.scenes;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
@@ -15,40 +12,31 @@ import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.huds.HighscoreButtons;
 
-public class Highscore implements Screen {
-    AnimalWar game;
+public class Highscore extends Menu {
     BitmapFont font;
-
-    private Texture bg;
     private Texture logo;
-    private HighscoreButtons btns;
-
-
 
     public static Map<String,String> highscoreList = new HashMap<>();
 
 
     public Highscore(AnimalWar game) {
-        this.game = game;
-        this.game = game;
+        this.initializeMenu(game);
+
         font = new BitmapFont();
         font.getData().setScale(2, 2);
-        bg = new Texture("backgrounds/menu-bg.png");
         logo = new Texture("animal-war.png");
-        btns = new HighscoreButtons(game);
 
+        btns = new HighscoreButtons(game);
     }
 
 
     @Override
-    public void render(float dt) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    public void render(float delta) {
+        super.render(delta);
 
         game.getSb().begin();
         game.getSb().draw(bg, 0, 0);
         game.getSb().draw(logo, GameInfo.WIDTH/2 - logo.getWidth()/2, GameInfo.HEIGHT - 100);
-
         List<String> names = new ArrayList<>(highscoreList.keySet());
         List<String> scores = new ArrayList<>(highscoreList.values());
 
@@ -59,6 +47,7 @@ public class Highscore implements Screen {
 
 
         game.getSb().end();
+
         game.getSb().setProjectionMatrix(btns.getStage().getCamera().combined);
         btns.getStage().draw();
         btns.getStage().act();
@@ -77,37 +66,5 @@ public class Highscore implements Screen {
 
     }*/
 
-
-
-
-    @Override
-    public void show() {
-
-    }
-
-    @Override
-    public void resize(int width, int height) {
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-        bg.dispose();
-        btns.disposeStage();
-    }
 
 }
