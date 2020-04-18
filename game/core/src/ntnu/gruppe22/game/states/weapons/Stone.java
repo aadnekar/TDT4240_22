@@ -29,7 +29,6 @@ public class Stone extends Sprite {
 
     public Stone(MainGame screen, int pos) {
         super(new Texture(Gdx.files.internal("weapons/rock.png")));
-        stoneTexture = new Texture(Gdx.files.internal("weapons/rock.png"));
 
         this.screen = screen;
         this.world = screen.getWorld();
