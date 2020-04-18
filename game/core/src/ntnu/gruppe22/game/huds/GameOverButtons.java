@@ -62,13 +62,13 @@ public class GameOverButtons extends Observable {
 
     private void createAndPositionButtons() {
         newGame = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/settings-btn.png"))
+                new Sprite(new Texture("buttons/new-game.png"))
         ));
         quit = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/settings-btn.png"))
+                new Sprite(new Texture("buttons/back-to-menu.png"))
         ));
         highscoreList = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/play-btn.png"))
+                new Sprite(new Texture("buttons/highscore.png"))
         ));
 
         newGame.setPosition(GameInfo.WIDTH / 2 - highscoreList.getWidth()/2, GameInfo.HEIGHT / 2 + 50);
@@ -85,11 +85,11 @@ public class GameOverButtons extends Observable {
                 run.setRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        game.setScreen(new SelectScreen(game/*, gameMusic*/));
+                        game.setScreen(new SelectScreen(game));
 
                         //variable for firebase som sier at runden er over.
                         setGameOver(true);
-                        System.out.println("GOING TO THE MAIN MENU!!");
+                        System.out.println("NEW GAME STARTING");
                     }
                 });
                 SequenceAction sa = new SequenceAction();
@@ -105,7 +105,7 @@ public class GameOverButtons extends Observable {
                 run.setRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        game.setScreen(new MainMenu(new AnimalWar()/*, gameMusic*/));
+                        game.setScreen(new MainMenu(game));
                         System.out.println("GOING TO THE MAIN MENU!!");
                     }
                 });
@@ -123,7 +123,7 @@ public class GameOverButtons extends Observable {
                     @Override
                     public void run() {
                         game.setScreen(new Highscore(game/*, gameMusic*/));
-                        System.out.println("GOING TO THE MAIN MENU!!");
+                        System.out.println("GOING TO HIGHSCORE");
 
                     }
                 });
