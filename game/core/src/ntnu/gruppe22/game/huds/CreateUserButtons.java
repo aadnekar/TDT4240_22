@@ -39,10 +39,10 @@ public class CreateUserButtons extends Buttons {
 
     protected void createAndPositionButtons() {
         addNickname1 = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/settings-btn.png"))
+                new Sprite(new Texture("buttons/player-1.png"))
         ));
         addNickname2 = new ImageButton(new SpriteDrawable(
-                new Sprite(new Texture("buttons/settings-btn.png"))
+                new Sprite(new Texture("buttons/player-2.png"))
         ));
         continueToGame = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/play-btn.png"))
