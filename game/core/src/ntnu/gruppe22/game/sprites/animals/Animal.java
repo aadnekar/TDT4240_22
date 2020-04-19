@@ -100,7 +100,6 @@ public abstract class Animal extends Sprite {
         //fixtureDef.restitution = 0.4f;  // Bounciness
 
         bodyEditorLoader.attachFixture(body, shapeManager.getName(), fixtureDef, 33.5f/ GameInfo.PPM);
-
     }
 
 

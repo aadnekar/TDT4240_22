@@ -37,7 +37,7 @@ public class Stone extends Sprite {
         damage = 4;
 
         stone = new TextureRegion(getTexture(), 0, 0, 100/ GameInfo.PPM, 100/GameInfo.PPM);
-        setBounds(0, 0, 40/ GameInfo.PPM, 40/GameInfo.PPM);
+        setBounds(0, 0, 15/ GameInfo.PPM, 15/GameInfo.PPM);
         setRegion(stone);
         defineStone(pos);
 
@@ -54,11 +54,10 @@ public class Stone extends Sprite {
 
         fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(22 /GameInfo.PPM, 2/GameInfo.PPM);
+        shape.setAsBox(7/GameInfo.PPM, 7/GameInfo.PPM);
         fdef.shape = shape;
         b2body.createFixture(fdef);
         fixture = b2body.createFixture(fdef);
-
     }
 
     public void update(float dt){
