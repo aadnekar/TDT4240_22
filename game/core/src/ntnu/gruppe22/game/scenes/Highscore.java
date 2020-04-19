@@ -23,7 +23,7 @@ public class Highscore extends Menu {
         this.initializeMenu(game);
 
         font = new BitmapFont();
-        font.getData().setScale(2, 2);
+        font.getData().setScale(1, 1);
         logo = new Texture("animal-war.png");
 
         btns = new HighscoreButtons(game);
@@ -41,9 +41,9 @@ public class Highscore extends Menu {
         List<String> scores = new ArrayList<>(highscoreList.values());
 
 
-        /*font.draw(game.getSb(), "First place: " + names.get(0) + " " + scores.get(0), GameInfo.WIDTH/2-160, GameInfo.HEIGHT/2 + 100);
-        font.draw(game.getSb(), "Second place: " + names.get(1) + " " + scores.get(1), GameInfo.WIDTH/2-160, GameInfo.HEIGHT/2 + 50);
-        font.draw(game.getSb(), "Third place: " + names.get(2) + " " + scores.get(2), GameInfo.WIDTH/2-160, GameInfo.HEIGHT/2);*/
+        font.draw(game.getSb(), "First place: " + names.get(0) + " " + scores.get(0), GameInfo.WIDTH/2-90, GameInfo.HEIGHT/2 + 100);
+        font.draw(game.getSb(), "Second place: " + names.get(1) + " " + scores.get(1), GameInfo.WIDTH/2-90, GameInfo.HEIGHT/2 + 50);
+        font.draw(game.getSb(), "Third place: " + names.get(2) + " " + scores.get(2), GameInfo.WIDTH/2-90, GameInfo.HEIGHT/2);
 
 
         game.getSb().end();
