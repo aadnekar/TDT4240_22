@@ -5,12 +5,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
+import ntnu.gruppe22.game.huds.CreateUserButtons;
 import ntnu.gruppe22.game.huds.GameOverButtons;
 
 public class GameOver extends Menu {
     private Texture logo;
     private GameOverButtons btns;
-
+    private static String printWinner;
+    private static int finalScore;
     BitmapFont font;
 
 
@@ -23,21 +25,38 @@ public class GameOver extends Menu {
         font = new BitmapFont();
     }
 
-    public static String getLastWinner() {
-        //Returns the nickname of the winner of the game. Dette skal printes på skjermen.
-        //return userBtn.getNick1();
-        return "getWinnerTest";
+    public static void setWinner(String winner) {
+        if(winner.equals("Player 2")) {
+            if(CreateUserButtons.getNick2().equals("default")) {
+                printWinner = "Player 2";
+            }
+            else {
+                printWinner = CreateUserButtons.getNick2();
+            }
+        }
+        else if (winner.equals("Player 1")) {
+            if(CreateUserButtons.getNick1().equals("default")) {
+                printWinner = "Player 1";
+            }
+            else {
+                printWinner = CreateUserButtons.getNick1();
+            }
+        }
     }
 
-    public static int getLastScore() {
-        //Returns the score of the winner.
-        return 99;
+    public static String getWinner() {
+        return printWinner;
     }
 
-    /*public static void addWinnerToHighscore() {
-        Highscore.highscoreList.put(getLastWinner(),getLastScore());
 
-    }*/
+
+    public static int getWinnerScore() {
+        return finalScore;
+    }
+
+    public static void setWinnerScore(int score) {
+        finalScore = score;
+    }
 
     @Override
     public void render(float delta) {
@@ -46,7 +65,7 @@ public class GameOver extends Menu {
         game.getSb().begin();
         game.getSb().draw(bg, 0, 0);
         game.getSb().draw(logo, GameInfo.WIDTH/2 - logo.getWidth()/2, GameInfo.HEIGHT - 100);
-        font.draw(game.getSb(),"The winner is : " + getLastWinner(), GameInfo.WIDTH/2, 50);
+        font.draw(game.getSb(),"The winner is : " + getWinner(), GameInfo.WIDTH/2, 50);
         game.getSb().end();
 
         game.getSb().setProjectionMatrix(btns.getStage().getCamera().combined);

@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
-import ntnu.gruppe22.game.scenes.MainMenu;
+import ntnu.gruppe22.game.scenes.CreateUser;
 
 public class HighscoreButtons extends Buttons {
 
@@ -40,7 +40,7 @@ public class HighscoreButtons extends Buttons {
                 run.setRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        game.setScreen(new MainMenu(game));
+                        game.setScreen(new CreateUser(game));
                         System.out.println("GOING TO THE MAIN MENU!!");
                     }
                 });

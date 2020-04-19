@@ -21,8 +21,8 @@ public class CreateUserButtons extends Buttons {
     private ImageButton addNickname1;
     private ImageButton addNickname2;
 
-    private CreateUserInput listener;
-    private CreateUserInput listener2;
+    private static CreateUserInput listener;
+    private static CreateUserInput listener2;
 
     private String nick1, nick2;
 
@@ -89,11 +89,11 @@ public class CreateUserButtons extends Buttons {
         });
     }
 
-    public String getNick1() {
+    public static String getNick1() {
         return listener.text;
     }
 
-    public String getNick2() {
+    public static String getNick2() {
         return listener2.text;
     }
 }

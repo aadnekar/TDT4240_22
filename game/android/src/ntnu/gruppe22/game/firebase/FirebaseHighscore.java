@@ -38,7 +38,7 @@ public class FirebaseHighscore {
         DatabaseReference newHighscoreReference = reference.push();
 
         //Add new data manually
-        //writeNewHighscore(newHighscoreReference, "Test2", 10);
+        //writeNewHighscore(newHighscoreReference, "Duplicate", 99);
 
         //writeNewHighscore(newHighscoreReference, getWinnerName(), getWinnerScore());
 
@@ -46,11 +46,11 @@ public class FirebaseHighscore {
     }
 
     public String getWinnerName() {
-        return GameOver.getLastWinner();
+        return GameOver.getWinner();
     }
 
     public int getWinnerScore() {
-        return GameOver.getLastScore();
+        return GameOver.getWinnerScore();
     }
 
     public boolean isGameOver() {
