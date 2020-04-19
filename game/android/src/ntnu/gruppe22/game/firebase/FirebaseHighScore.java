@@ -25,7 +25,7 @@ public class FirebaseHighScore implements Subscriber {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference reference = database.getReference().child("Highscore");
 
-    private Map<String, String> list = new HashMap<>();
+    private Map<Integer, String> list = new HashMap<>();
     private String valueString;
 
 
@@ -73,31 +73,33 @@ public class FirebaseHighScore implements Subscriber {
             valueString = value.toString();
             String newString = valueString.substring(1,valueString.length() - 1);
             String[] parts = newString.split("=");
-            list.put(parts[1], parts[0]);
+
+            int score = Integer.parseInt(parts[1]);
+            list.put(score, parts[0]);
 
         }
         getTopThree(list);
     }
 
 
-    public void getTopThree(Map<String, String> map) {
-        List<String> sortedList = new ArrayList<>(map.keySet());
+    public void getTopThree(Map<Integer, String> map) {
+        List<Integer> sortedList = new ArrayList<>(map.keySet());
         Collections.sort(sortedList);
 
         int size = sortedList.size() -1;
 
-        String winnerScore = sortedList.get(size);
-        String secondScore = sortedList.get(size -1);
-        String thirdscore = sortedList.get(size -2);
+        int winnerScore = sortedList.get(size);
+        int secondScore = sortedList.get(size -1);
+        int thirdscore = sortedList.get(size -2);
 
         String winner = map.get(winnerScore);
         String second = map.get(secondScore);
         String third = map.get(thirdscore);
 
         Map<String, String> topThree = new LinkedHashMap<>();
-        topThree.put(winner, winnerScore);
-        topThree.put(second, secondScore);
-        topThree.put(third, thirdscore);
+        topThree.put(winner, Integer.toString(winnerScore));
+        topThree.put(second, Integer.toString(secondScore));
+        topThree.put(third, Integer.toString(thirdscore));
 
         Highscore.highscoreList = topThree;
     }
