@@ -74,7 +74,9 @@ public abstract class Animal extends Sprite {
      * Create animal fixture in box2d-world
      */
     public void defineAnimal(int animalKey){
-        Random rand = new Random();
+        double posX = (Math.random() * ((1800 - 2) + 1)) + 100;
+        double posY = (Math.random() * ((600 - 50) + 1)) + 100;
+
 
         ShapeManager shapeManager = new ShapeManager(animalKey);
         BodyEditorLoader bodyEditorLoader = new BodyEditorLoader(Gdx.files.internal(shapeManager.getFilePath()));
@@ -86,7 +88,7 @@ public abstract class Animal extends Sprite {
         // Since animals move we need it to be dynamic, the opposite would be ground which would be static.
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
-        bodyDef.position.set(rand.nextInt(1800) /GameInfo.PPM, rand.nextInt(600) / GameInfo.PPM);
+        bodyDef.position.set((float) posX/GameInfo.PPM, (float) (posY/ GameInfo.PPM));
 
         // Create the body in the world defined in MainGame.
         this.body = world.createBody(bodyDef);
@@ -96,7 +98,7 @@ public abstract class Animal extends Sprite {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.density = 1f;      // Absolute unit, innit?
-        fixtureDef.friction = 0.1f;     // Friction against other objects
+        fixtureDef.friction = 0.7f;     // Friction against other objects
         //fixtureDef.restitution = 0.4f;  // Bounciness
 
         bodyEditorLoader.attachFixture(body, shapeManager.getName(), fixtureDef, 33.5f/ GameInfo.PPM);
@@ -104,13 +106,14 @@ public abstract class Animal extends Sprite {
 
 
     public void update(float dt){
-        setX(getPositionX() - getWidth()/2);
-        setY(getPositionY() - getHeight()/2);
-        healthbar.setX(getPositionX() - getWidth()/2);
-        healthbar.setY(getPositionY() + getHeight()/2 + getHeight()/6);
+        setX(getPositionX() - getWidth() / 2);
+        setY(getPositionY() - getHeight() / 2);
+        healthbar.setX(getPositionX() - getWidth() / 2);
+        healthbar.setY(getPositionY() + getHeight() / 2 + getHeight() / 6);
+
     }
 
-    private float getPositionX() {
+    public float getPositionX() {
         return this.body.getPosition().x;
     }
 
@@ -149,11 +152,12 @@ public abstract class Animal extends Sprite {
             Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPos);
             if (touchPos.x > getPositionX() && !hasMaxVelocity()) {
-                if(getPositionX() < (1920/GameInfo.PPM)-getWidth()){
+                if(getPositionX() < 1850/GameInfo.PPM){
                     moveRight();
+
                 }
             } else if (touchPos.x <= getPositionX() && !hasMaxVelocity()) {
-                if(getPositionX() > 1){
+                if(getPositionX() > 0.6){
                     moveLeft();
                 }
 
