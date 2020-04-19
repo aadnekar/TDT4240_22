@@ -110,7 +110,7 @@ public class MainGame implements Screen {
         currentTurn = 0;
 
         font = new BitmapFont();
-        font.getData().setScale(3, 3);
+        font.getData().setScale(1.5f, 1.5f);
         timer = new MainGameTimer(this);
         timer.startNewRoundCountDown();
         listenerClass = new ListenerClass(this, world);
@@ -363,12 +363,13 @@ public class MainGame implements Screen {
 
 
         game.getSb().setProjectionMatrix(new Matrix4().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
-        font.draw(game.getSb(), timer.getDisplayString(), 50, 50);
+        font.setColor(0f, 0f, 0f, 1f);
+        font.draw(game.getSb(), timer.getDisplayString(), 20, Gdx.graphics.getHeight()-20);
         if (currentTurn == 0) {
-            font.draw(game.getSb(),"Player 1's turn (" + CreateUserButtons.getNick1() + ")", Gdx.graphics.getWidth()/3, 50);
+            font.draw(game.getSb(),"Player 1's turn (" + CreateUserButtons.getNick1() + ")", Gdx.graphics.getWidth() - 250, Gdx.graphics.getHeight()-20);
         }
         else {
-            font.draw(game.getSb(),"Player 2's turn (" + CreateUserButtons.getNick2() + ")", Gdx.graphics.getWidth()/3, 50);
+            font.draw(game.getSb(),"Player 2's turn (" + CreateUserButtons.getNick2() + ")", Gdx.graphics.getWidth() - 250, Gdx.graphics.getHeight()-20);
         }
 
         game.getSb().end();
