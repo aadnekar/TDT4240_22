@@ -5,14 +5,25 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import ntnu.gruppe22.game.helpers.GameManager;
 import ntnu.gruppe22.game.scenes.CreateUser;
+import ntnu.gruppe22.game.utils.Publisher;
+import ntnu.gruppe22.game.utils.Subscriber;
 
 public class AnimalWar extends Game {
 
 	public static String APP_TITLE = "Animal War";
-	//public static final int HEIGHT = 480;
-	//public static final int WIDTH = 800;
 
 	private SpriteBatch sb;
+	private Publisher publisher;
+
+	public AnimalWar() {
+
+	}
+
+	public AnimalWar(Subscriber s) {
+		publisher = new Publisher();
+		publisher.subscribe(s);
+		System.out.println("Subscriber added to subscribers list");
+	}
 	
 	@Override
 	public void create () {
@@ -28,5 +39,9 @@ public class AnimalWar extends Game {
 
 	public SpriteBatch getSb() {
 		return this.sb;
+	}
+
+	public Publisher getPublisher() {
+		return this.publisher;
 	}
 }

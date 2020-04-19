@@ -17,72 +17,50 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import ntnu.gruppe22.game.huds.GameOverButtons;
-import ntnu.gruppe22.game.scenes.GameOver;
 import ntnu.gruppe22.game.scenes.Highscore;
+import ntnu.gruppe22.game.utils.Subscriber;
 
-public class FirebaseHighscore {
+public class FirebaseHighScore implements Subscriber {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference reference = database.getReference().child("Highscore");
-
 
     private Map<String, String> list = new HashMap<>();
     private String valueString;
 
 
-
-    public FirebaseHighscore() {
-
-
-        basicReadWrite();
-        DatabaseReference newHighscoreReference = reference.push();
-
-        //writeNewHighscore(newHighscoreReference, getWinnerName(), getWinnerScore());
-
-
+    public FirebaseHighScore() {
+        basicRead();
     }
 
-    public String getWinnerName() {
-        return GameOver.getWinner();
+    @Override
+    public void update(String username, int score) {
+        DatabaseReference newHighScoreReference = reference.push();
+        writeNewHighScore(newHighScoreReference, username, score);
     }
+    
 
-    public int getWinnerScore() {
-        return GameOver.getWinnerScore();
-    }
-
-    public boolean isGameOver() {
-        if(GameOverButtons.isGameOver) {
-            return true;
-        }
-        return false;
-    }
-
-    public void writeNewHighscore(DatabaseReference ref, String username, int score) {
-        //if (isGameOver()) {
+    public void writeNewHighScore(DatabaseReference ref, String username, int score) {
         HashMap<String, Object> map = new HashMap<>();
         map.put(username, score);
         ref.setValue(map);
-      //  }
     }
 
 
-    public void basicReadWrite() {
+    public void basicRead() {
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Map<String, Object> value = (Map<String, Object>) dataSnapshot.getValue();
-
-                //Send Objektet herifra til Highscore klassen.
-                Log.d("Logging activity", "value is: " + value);
+                Log.d("Read from DB", "value is: " + value);
                 getValuesFromMap(value);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Failed to read value
-                Log.w("LOGGING MAH ACTIVITAH", "Failed to read value from DB", databaseError.toException());
+                Log.w("Read from DB", "Failed to read value from DB", databaseError.toException());
             }
         });
     }
@@ -99,11 +77,10 @@ public class FirebaseHighscore {
 
         }
         getTopThree(list);
-
-
     }
 
-    public void getTopThree(Map<String,String> map) {
+
+    public void getTopThree(Map<String, String> map) {
         List<String> sortedList = new ArrayList<>(map.keySet());
         Collections.sort(sortedList);
 
@@ -123,9 +100,5 @@ public class FirebaseHighscore {
         topThree.put(third, thirdscore);
 
         Highscore.highscoreList = topThree;
-
-
-
     }
-
 }
