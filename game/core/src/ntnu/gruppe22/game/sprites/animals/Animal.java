@@ -43,6 +43,8 @@ public abstract class Animal extends Sprite {
     public World world;
     public Body body;
     public MassData data;
+    private int animalKey;
+
 
     /**
      * when flipped is true animal points to the left
@@ -78,6 +80,7 @@ public abstract class Animal extends Sprite {
     public void defineAnimal(int animalKey){
         double posX = (Math.random() * ((1800 - 2) + 1)) + 100;
         double posY = (Math.random() * ((600 - 50) + 1)) + 100;
+        this.animalKey = animalKey;
 
 
         ShapeManager shapeManager = new ShapeManager(animalKey);
@@ -89,9 +92,7 @@ public abstract class Animal extends Sprite {
 
         // Since animals move we need it to be dynamic, the opposite would be ground which would be static.
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-
-
-        bodyDef.position.set((float) posX/GameInfo.PPM, (float) (posY/ GameInfo.PPM));
+        bodyDef.position.set((float) posX / GameInfo.PPM, (float) (posY / GameInfo.PPM));
 
         // Create the body in the world defined in MainGame.
         this.body = world.createBody(bodyDef);
@@ -117,9 +118,15 @@ public abstract class Animal extends Sprite {
 
     public void update(float dt){
         setX(getPositionX() - getWidth() / 2);
-        setY(getPositionY() - getHeight() / 2);
         healthbar.setX(getPositionX() - getWidth() / 2);
-        healthbar.setY(getPositionY() + getHeight() / 2 + getHeight() / 6);
+        if (animalKey == 2 || animalKey == 4) {
+            setY(getPositionY() - getHeight() / 2 + 10/GameInfo.PPM);
+            healthbar.setY(getPositionY() + getHeight() / 2 + getHeight() / 6 + 10/GameInfo.PPM);
+        }
+        else {
+            setY(getPositionY() - getHeight() / 2);
+            healthbar.setY(getPositionY() + getHeight() / 2 + getHeight() / 6);
+        }
     }
 
     private float getPositionX() {
@@ -183,7 +190,7 @@ public abstract class Animal extends Sprite {
         if(!screen.bufferTime && screen.getStone() == null) {
             screen.setStone(60);
             flipAnimal(true);
-            screen.getStone().b2body.applyLinearImpulse(new Vector2(3f, 3.5f), screen.getStone().b2body.getWorldCenter(), true);
+            screen.getStone().b2body.applyLinearImpulse(new Vector2(4f, 2.5f), screen.getStone().b2body.getWorldCenter(), true);
             drawStone(game);
             screen.getStone().update(dt);
         }
@@ -193,7 +200,7 @@ public abstract class Animal extends Sprite {
         if(!screen.bufferTime && screen.getStone() == null) {
             screen.setStone(-5);
             flipAnimal(false);
-            screen.getStone().b2body.applyLinearImpulse(new Vector2(-3f, 3.5f), screen.getStone().b2body.getWorldCenter(), true);
+            screen.getStone().b2body.applyLinearImpulse(new Vector2(-4f, 2.5f), screen.getStone().b2body.getWorldCenter(), true);
             drawStone(game);
             screen.getStone().update(dt);
         }
