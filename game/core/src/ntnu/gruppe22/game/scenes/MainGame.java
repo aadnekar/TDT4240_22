@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
+import ntnu.gruppe22.game.huds.CreateUserButtons;
 import ntnu.gruppe22.game.huds.MainGameButtons;
 import ntnu.gruppe22.game.maps.Map;
 import ntnu.gruppe22.game.sprites.animals.Animal;
@@ -108,6 +110,7 @@ public class MainGame implements Screen {
         currentTurn = 0;
 
         font = new BitmapFont();
+        font.getData().setScale(3, 3);
         timer = new MainGameTimer(this);
         timer.startNewRoundCountDown();
         listenerClass = new ListenerClass(this, world);
@@ -326,7 +329,9 @@ public class MainGame implements Screen {
 
 
         game.getSb().begin();
-        font.draw(game.getSb(), timer.getDisplayString(), 50, 50);
+
+
+
         btns.replaceEventListener(currentAnimal, dt);
 
         for (Animal animal : charactersPlayer1) {
@@ -356,6 +361,17 @@ public class MainGame implements Screen {
         if (stone != null) {
             stone.draw(game.getSb());
             stone.setPosition(stone.b2body.getPosition().x - stone.getWidth() / 2, stone.b2body.getPosition().y - stone.getHeight() / 2);
+        }
+
+
+
+        game.getSb().setProjectionMatrix(new Matrix4().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+        font.draw(game.getSb(), timer.getDisplayString(), 50, 50);
+        if (currentTurn == 0) {
+            font.draw(game.getSb(),"Player 1's turn (" + CreateUserButtons.getNick1() + ")", Gdx.graphics.getWidth()/3, 50);
+        }
+        else {
+            font.draw(game.getSb(),"Player 2's turn (" + CreateUserButtons.getNick2() + ")", Gdx.graphics.getWidth()/3, 50);
         }
 
         game.getSb().end();
