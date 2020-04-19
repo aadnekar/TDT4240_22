@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.Random;
@@ -41,6 +42,7 @@ public abstract class Animal extends Sprite {
     private MainGame screen;
     public World world;
     public Body body;
+    public MassData data;
 
     /**
      * when flipped is true animal points to the left
@@ -88,20 +90,28 @@ public abstract class Animal extends Sprite {
         // Since animals move we need it to be dynamic, the opposite would be ground which would be static.
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
+
         bodyDef.position.set((float) posX/GameInfo.PPM, (float) (posY/ GameInfo.PPM));
 
         // Create the body in the world defined in MainGame.
         this.body = world.createBody(bodyDef);
         this.body.setUserData(this);
+
         // Restrict rotation to make sure the animal does not tilt.
         this.body.setFixedRotation(true);
 
+        //FixtureDef defines shape and physical properties of the body
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.density = 1f;      // Absolute unit, innit?
         fixtureDef.friction = 0.7f;     // Friction against other objects
         //fixtureDef.restitution = 0.4f;  // Bounciness
 
         bodyEditorLoader.attachFixture(body, shapeManager.getName(), fixtureDef, 33.5f/ GameInfo.PPM);
+
+        //overriding mass of fixtures to make all animals have the same mass
+        data = new MassData();
+        data.mass = 0.1f;
+        body.setMassData(data);
     }
 
 
