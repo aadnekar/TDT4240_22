@@ -18,9 +18,14 @@ import ntnu.gruppe22.game.scenes.MainGame;
 
 public class Stone extends Weapon {
 
+    private MainGame screen;
+    private int damage;
+    private World world;
+
+    private TextureRegion stone;
 
     public Stone(MainGame screen, int pos) {
-        super(new Texture(Gdx.files.internal("weapons/rock.png")));
+        super(screen, pos, "weapons/rock.png");
 
         this.screen = screen;
         this.world = screen.getWorld();
