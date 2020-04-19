@@ -110,10 +110,9 @@ public abstract class Animal extends Sprite {
         setY(getPositionY() - getHeight() / 2);
         healthbar.setX(getPositionX() - getWidth() / 2);
         healthbar.setY(getPositionY() + getHeight() / 2 + getHeight() / 6);
-
     }
 
-    public float getPositionX() {
+    private float getPositionX() {
         return this.body.getPosition().x;
     }
 
