@@ -119,26 +119,22 @@ public class MainGame implements Screen {
     }
 
 
-    //TODO: make animal.setDeadAnimal() på hvert dyr som blir fjernet, ikke bare det siste som dør
     public void removeAnimal(Animal animal) {
         if (charactersPlayer1.contains(animal)) {
             charactersPlayer1.remove(animal);
+            currentAnimal.setDeadAnimal();
             if (charactersPlayer1.size() == 0) {
-                currentAnimal.setDeadAnimal();
-                GameOver.setWinner("Player 2");
-                gameOver();
-                GameOver.setWinnerScore(getPlayer2Health());
+                gameOver(CreateUserButtons.getNick2(), getPlayer2Health());
             }
         } else {
             charactersPlayer2.remove(animal);
+            currentAnimal.setDeadAnimal();
             if (charactersPlayer2.size() == 0) {
-                GameOver.setWinner("Player 1");
-                GameOver.setWinnerScore(getPlayer1Health());
-                gameOver();
-                currentAnimal.setDeadAnimal();
+                gameOver(CreateUserButtons.getNick1(), getPlayer1Health());
             }
         }
     }
+
 
     private void checkSoonDeadAnimal(){
         for(Animal i : charactersPlayer1){
@@ -152,6 +148,7 @@ public class MainGame implements Screen {
             }
         }
     }
+
 
     public int getPlayer1Health() {
         int totalHealth = 0;
@@ -270,9 +267,9 @@ public class MainGame implements Screen {
         changeCharacter();
     }
 
-    public void gameOver() {
+    public void gameOver(String winner, int score) {
         this.dispose();
-        game.setScreen(new GameOver(game));
+        game.setScreen(new GameOver(game, winner, score));
     }
 
 

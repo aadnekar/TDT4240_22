@@ -5,58 +5,46 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
-import ntnu.gruppe22.game.huds.CreateUserButtons;
 import ntnu.gruppe22.game.huds.GameOverButtons;
 
 public class GameOver extends Menu {
     private Texture logo;
     private GameOverButtons btns;
-    private static String printWinner;
-    private static int finalScore;
+
     BitmapFont font;
 
+    private String winner;
+    private int score;
 
-    public GameOver(AnimalWar game) {
+
+    public GameOver(AnimalWar game, String winner, int score) {
         this.initializeMenu(game);
+
+        this.winner = winner;
+        this.score = score;
 
         logo = new Texture("animal-war.png");
         btns = new GameOverButtons(game);
 
         font = new BitmapFont();
-    }
 
-    public static void setWinner(String winner) {
-        if(winner.equals("Player 2")) {
-            if(CreateUserButtons.getNick2().equals("default")) {
-                printWinner = "Player 2";
-            }
-            else {
-                printWinner = CreateUserButtons.getNick2();
-            }
-        }
-        else if (winner.equals("Player 1")) {
-            if(CreateUserButtons.getNick1().equals("default")) {
-                printWinner = "Player 1";
-            }
-            else {
-                printWinner = CreateUserButtons.getNick1();
-            }
-        }
-    }
-
-    public static String getWinner() {
-        return printWinner;
+        publishWinner();
     }
 
 
-
-    public static int getWinnerScore() {
-        return finalScore;
+    public String getWinner() {
+        return this.winner;
     }
 
-    public static void setWinnerScore(int score) {
-        finalScore = score;
+    public int getScore() {
+        return this.score;
     }
+
+
+    private void publishWinner() {
+        game.getPublisher().notifyGameover(winner, score);
+    }
+
 
     @Override
     public void render(float delta) {
