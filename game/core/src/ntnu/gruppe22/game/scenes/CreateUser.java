@@ -17,7 +17,7 @@ public class CreateUser extends Menu {
     public CreateUser(AnimalWar game){
         this.initializeMenu(game);
 
-        logo = new Texture("animal-war.png");
+        logo = new Texture("backgrounds/choose-player-names.png");
         btns = new CreateUserButtons(game);
 
         font = new BitmapFont();
