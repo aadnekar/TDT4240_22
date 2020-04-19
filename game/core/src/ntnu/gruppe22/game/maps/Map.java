@@ -27,7 +27,6 @@ public class Map{
 
     //Box2d variables
     private World world;
-    private Box2DDebugRenderer b2dr;
     private B2WorldCreator creator;
 
     //map paths
@@ -37,7 +36,6 @@ public class Map{
 
     public Map(World world) {
         this.world = world; // !!NB Do not move. The world needs to be created first
-        b2dr = new Box2DDebugRenderer();
         setChosenMap();
 
         //render tile maps
@@ -52,7 +50,6 @@ public class Map{
     public void update(OrthographicCamera camera){
         renderer.render();
         renderer.setView(camera);
-        b2dr.render(world, camera.combined); //Box2DDebugLines
     }
 
     private void setChosenMap(){
