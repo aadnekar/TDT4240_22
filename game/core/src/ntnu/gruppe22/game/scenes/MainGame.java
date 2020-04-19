@@ -328,6 +328,7 @@ public class MainGame implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
         handleInput(dt);
 
         checkSoonDeadAnimal();
@@ -344,6 +345,7 @@ public class MainGame implements Screen {
 
 
         game.getSb().setProjectionMatrix(camera.combined);
+
 
 
         game.getSb().begin();
@@ -394,19 +396,24 @@ public class MainGame implements Screen {
 
         game.getSb().end();
 
+
+        world.step(dt, 6, 2);
+
+
         // Draw rectangle around chosen weapon
         sr.setProjectionMatrix(camera.combined);
         sr.begin(ShapeRenderer.ShapeType.Line);
-        sr.setColor(new Color(255,255,0,0));
+        sr.setColor(new Color(255,255,255,0));
         if(btns.getPositionY() > 0){
-            sr.rect(btns.getPositionX() - 3, btns.getPositionY() - 3, btns.getRectangleX() + 30, btns.getRectangleY() + 30);
+            sr.circle(0, 0, 100);
+            sr.rect(btns.getPositionX() - 3, btns.getPositionY() - 3, btns.getRectangleX() + 6, btns.getRectangleY() + 6);
         }
         sr.end();
 
+        //draw weapon buttons
+        game.getSb().setProjectionMatrix(btns.getStage().getCamera().combined);
         btns.getStage().draw();
         btns.getStage().act();
-
-        world.step(dt, 6, 2);
 
     }
 

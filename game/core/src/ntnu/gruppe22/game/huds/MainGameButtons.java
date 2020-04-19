@@ -80,7 +80,7 @@ public class MainGameButtons extends Buttons {
         useSpineyBall.setPosition(GameInfo.WIDTH - 70, GameInfo.HEIGHT - 70);
 
         rectangleX = useStone.getWidth();
-        rectangleY = useSpineyBall.getWidth();
+        rectangleY = useStone.getHeight();
 
 
     }
@@ -115,6 +115,7 @@ public class MainGameButtons extends Buttons {
                 //adding rectangle on chosen weapon
                 positionX = useStone.getX();
                 positionY = useStone.getY();
+                System.out.println("stone chosen button class");
 
                 //setting chosen weapon. 1 = Stone
                 setChosenWeapon(1);
@@ -129,7 +130,7 @@ public class MainGameButtons extends Buttons {
                 //adding rectangle on chosen weapon
                 positionX = useSpineyBall.getX();
                 positionY = useSpineyBall.getY();
-
+                System.out.println("spiney chosen button class");
                 //setting chosen weapon. 2 = SpineyBall
                 setChosenWeapon(2);
             }

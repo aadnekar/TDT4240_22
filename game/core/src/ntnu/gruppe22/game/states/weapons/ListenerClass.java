@@ -33,7 +33,7 @@ public class ListenerClass implements ContactListener {
     public void beginContact(Contact contact) {
         fa = contact.getFixtureA();
         fb = contact.getFixtureB();
-        if (fb.getBody().getUserData() instanceof Stone){
+        if (fb.getBody().getUserData() instanceof Weapon){
             game.DestroyWeapon = true;
             stoneFixture = fb;
             if (fa.getBody().getUserData() instanceof Animal) {
