@@ -13,6 +13,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,9 +59,11 @@ public class FirebaseHighscore {
     }
 
     public void writeNewHighscore(DatabaseReference ref, String username, int score) {
+        //if (isGameOver()) {
         HashMap<String, Object> map = new HashMap<>();
         map.put(username, score);
         ref.setValue(map);
+      //  }
     }
 
 
@@ -79,7 +82,7 @@ public class FirebaseHighscore {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Failed to read value
-                Log.w("Logging activity", "Failed to read value from DB", databaseError.toException());
+                Log.w("LOGGING MAH ACTIVITAH", "Failed to read value from DB", databaseError.toException());
             }
         });
     }
@@ -88,12 +91,20 @@ public class FirebaseHighscore {
     public void getValuesFromMap(Map<String,Object> map) {
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             Object value = entry.getValue();
+
             valueString = value.toString();
+
             String newString = valueString.substring(1,valueString.length() - 1);
+
+
             String[] parts = newString.split("=");
+            System.out.println("Names and scores: " + parts[0] + "\n" +  parts[1]);
+
             list.put(parts[1], parts[0]);
+
         }
 
+        System.out.println("This is the list: " + list);
         getTopThree(list);
 
 
@@ -103,9 +114,11 @@ public class FirebaseHighscore {
         List<String> sortedList = new ArrayList<>(map.keySet());
         Collections.sort(sortedList);
 
+        System.out.println("Sorted list " + sortedList);
         int size = sortedList.size() -1;
 
         String winnerScore = sortedList.get(size);
+        System.out.println(winnerScore);
         String secondScore = sortedList.get(size -1);
         String thirdscore = sortedList.get(size -2);
 
@@ -113,12 +126,13 @@ public class FirebaseHighscore {
         String second = map.get(secondScore);
         String third = map.get(thirdscore);
 
-        Map<String, String> topThree = new HashMap<>();
+        Map<String, String> topThree = new LinkedHashMap<>();
         topThree.put(winner, winnerScore);
         topThree.put(second, secondScore);
         topThree.put(third, thirdscore);
 
         Highscore.highscoreList = topThree;
+        System.out.println(topThree);
 
 
 
