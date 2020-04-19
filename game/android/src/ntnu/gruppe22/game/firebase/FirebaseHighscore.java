@@ -114,7 +114,6 @@ public class FirebaseHighscore {
         List<String> sortedList = new ArrayList<>(map.keySet());
         Collections.sort(sortedList);
 
-        System.out.println("Sorted list " + sortedList);
         int size = sortedList.size() -1;
 
         String winnerScore = sortedList.get(size);
@@ -132,7 +131,6 @@ public class FirebaseHighscore {
         topThree.put(third, thirdscore);
 
         Highscore.highscoreList = topThree;
-        System.out.println(topThree);
 
 
 
