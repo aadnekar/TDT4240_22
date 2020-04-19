@@ -37,9 +37,6 @@ public class FirebaseHighscore {
         basicReadWrite();
         DatabaseReference newHighscoreReference = reference.push();
 
-        //Add new data manually
-        //writeNewHighscore(newHighscoreReference, "Duplicate", 99);
-
         //writeNewHighscore(newHighscoreReference, getWinnerName(), getWinnerScore());
 
 
@@ -61,11 +58,9 @@ public class FirebaseHighscore {
     }
 
     public void writeNewHighscore(DatabaseReference ref, String username, int score) {
-        //if (isGameOver()) {
         HashMap<String, Object> map = new HashMap<>();
         map.put(username, score);
         ref.setValue(map);
-      //  }
     }
 
 
@@ -77,15 +72,14 @@ public class FirebaseHighscore {
                 Map<String, Object> value = (Map<String, Object>) dataSnapshot.getValue();
 
                 //Send Objektet herifra til Highscore klassen.
-                Log.d("LOGGING MAH ACTIVITAH", "value is: " + value);
-                //System.out.println("Value is" + value);
+                Log.d("Logging activity", "value is: " + value);
                 getValuesFromMap(value);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Failed to read value
-                Log.w("LOGGING MAH ACTIVITAH", "Failed to read value from DB", databaseError.toException());
+                Log.w("Logging activity", "Failed to read value from DB", databaseError.toException());
             }
         });
     }
@@ -94,20 +88,12 @@ public class FirebaseHighscore {
     public void getValuesFromMap(Map<String,Object> map) {
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             Object value = entry.getValue();
-
             valueString = value.toString();
-
             String newString = valueString.substring(1,valueString.length() - 1);
-
-
             String[] parts = newString.split("=");
-            System.out.println("Names and scores: " + parts[0] + "\n" +  parts[1]);
-
             list.put(parts[1], parts[0]);
-
         }
 
-        System.out.println("This is the list: " + list);
         getTopThree(list);
 
 

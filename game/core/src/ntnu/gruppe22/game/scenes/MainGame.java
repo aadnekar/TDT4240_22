@@ -247,8 +247,7 @@ public class MainGame implements Screen {
         }
     }
 
-    //skal vi ha runder med i spillet i det hele tatt?
-    //dt?
+
     public void setCurrentTurn() {
         if (currentTurn == 1) {
             this.currentTurn = 0;

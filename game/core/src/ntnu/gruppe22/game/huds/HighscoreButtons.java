@@ -41,7 +41,6 @@ public class HighscoreButtons extends Buttons {
                     @Override
                     public void run() {
                         game.setScreen(new CreateUser(game));
-                        System.out.println("GOING TO THE MAIN MENU!!");
                     }
                 });
                 SequenceAction sa = new SequenceAction();
