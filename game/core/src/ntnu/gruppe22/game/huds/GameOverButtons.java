@@ -12,8 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
+import ntnu.gruppe22.game.scenes.CreateUser;
 import ntnu.gruppe22.game.scenes.Highscore;
-import ntnu.gruppe22.game.scenes.MainMenu;
 import ntnu.gruppe22.game.scenes.SelectScreen;
 
 public class GameOverButtons extends Buttons {
@@ -78,7 +78,7 @@ public class GameOverButtons extends Buttons {
                 run.setRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        game.setScreen(new MainMenu(game));
+                        game.setScreen(new CreateUser(game));
                         System.out.println("GOING TO THE MAIN MENU!!");
                     }
                 });
@@ -115,10 +115,6 @@ public class GameOverButtons extends Buttons {
         }
         setChanged();
         notifyObservers();
-    }
-
-    public synchronized boolean getGameOver() {
-        return isGameOver;
     }
 
 }

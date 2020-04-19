@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 
 public class CreateUserInput extends ApplicationAdapter implements Input.TextInputListener {
 
-    String text = "null";
+    String text = "default";
 
 
     public CreateUserInput() {

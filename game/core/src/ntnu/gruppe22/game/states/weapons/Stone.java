@@ -46,7 +46,7 @@ public class Stone extends Sprite {
     public void defineStone(int pos) {
         Random rand = new Random();
         BodyDef bdef = new BodyDef();
-        bdef.position.set(screen.getCurrentAnimal().getX()+(pos/GameInfo.PPM), screen.getCurrentAnimal().getY()+(130/GameInfo.PPM));
+        bdef.position.set(screen.getCurrentAnimal().getX()+(pos/GameInfo.PPM), screen.getCurrentAnimal().getY()+(90/GameInfo.PPM));
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.bullet = true;
         b2body = world.createBody(bdef);
