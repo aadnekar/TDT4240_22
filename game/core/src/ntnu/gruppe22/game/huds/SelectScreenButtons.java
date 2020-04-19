@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,11 +34,14 @@ public class SelectScreenButtons extends Buttons {
 
     private ImageButton back;
     private ImageButton ready;
+    private ImageButton ready2;
     private AnimalButton chicken;
     private AnimalButton monkey;
     private AnimalButton walrus;
     private AnimalButton moose;
     private AnimalButton rabbit;
+    private ImageButton choosePlayer1;
+    private ImageButton choosePlayer2;
     private int playerNumber;
 
     private HashMap<Integer, ArrayList<Integer>> animalChoices;
@@ -53,23 +58,36 @@ public class SelectScreenButtons extends Buttons {
         this.initializeButtons(game);
 
         stage.addActor(ready);
+        stage.addActor(ready2);
+        stage.addActor(choosePlayer1);
+        stage.addActor(choosePlayer2);
         stage.addActor(back);
         stage.addActor(chicken);
         stage.addActor(monkey);
         stage.addActor(walrus);
         stage.addActor(moose);
         stage.addActor(rabbit);
+
     }
 
 
     protected void createAndPositionButtons() {
-
         ready = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/play-btn.png"))
+        ));
+        ready2 = new ImageButton(new SpriteDrawable(
+                new Sprite(new Texture("buttons/continue.png"))
         ));
         back = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("settings/home.png"))
         ));
+        choosePlayer1 = new ImageButton(new SpriteDrawable(
+                new Sprite(new Texture("buttons/choose-player1.png"))
+        ));
+        choosePlayer2 = new ImageButton(new SpriteDrawable(
+                new Sprite(new Texture("buttons/choose-player2.png"))
+        ));
+
 
         chicken = new ChickenButton();
         animalButtonList.add(chicken);
@@ -82,10 +100,18 @@ public class SelectScreenButtons extends Buttons {
         walrus = new WalrusButton();
         animalButtonList.add(walrus);
 
-        ready.setPosition(GameInfo.WIDTH / 2 - 95, GameInfo.HEIGHT / 2 + 135);
+        choosePlayer1.setPosition(GameInfo.WIDTH / 2 - choosePlayer1.getWidth() / 2, GameInfo.HEIGHT / 2 + 140);
+        choosePlayer2.setPosition(GameInfo.WIDTH / 2 - choosePlayer2.getWidth() / 2, GameInfo.HEIGHT / 2 + 140);
+        choosePlayer2.setVisible(false);
+
+        ready.setPosition(GameInfo.WIDTH / 2 - ready.getWidth() / 2, GameInfo.HEIGHT / 2 + 40);
+        ready2.setPosition(GameInfo.WIDTH / 2 - ready2.getWidth() / 2, GameInfo.HEIGHT / 2 + 40);
+        ready.setVisible(false);
+
         back.setPosition(5, GameInfo.HEIGHT - 70);
 
     }
+
 
     protected void addButtonListeners() {
 
@@ -101,6 +127,39 @@ public class SelectScreenButtons extends Buttons {
                         if (hasFullRoster()){
                             if (playerNumber == 0){
                                 nextPlayer();
+                            }
+                            else {
+                                game.setScreen(new MainGame(game, animalChoices));
+                                stage.dispose();
+                            }
+                        }
+
+                    }
+                });
+
+                SequenceAction sa = new SequenceAction();
+                sa.addAction(run);
+
+                stage.addAction(sa);
+            }
+        });
+
+        ready2.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                GameManager.getInstance().gameStartedFromMainMenu = true;
+
+                RunnableAction run = new RunnableAction();
+                run.setRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (hasFullRoster()){
+                            if (playerNumber == 0){
+                                nextPlayer();
+                                choosePlayer1.setVisible(false);
+                                choosePlayer2.setVisible(true);
+                                ready2.setVisible(false);
+                                ready.setVisible(true);
                             }
                             else {
                                 game.setScreen(new MainGame(game, animalChoices));
