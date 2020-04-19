@@ -93,18 +93,11 @@ public class FirebaseHighscore {
             Object value = entry.getValue();
 
             valueString = value.toString();
-
             String newString = valueString.substring(1,valueString.length() - 1);
-
-
             String[] parts = newString.split("=");
-            System.out.println("Names and scores: " + parts[0] + "\n" +  parts[1]);
-
             list.put(parts[1], parts[0]);
 
         }
-
-        System.out.println("This is the list: " + list);
         getTopThree(list);
 
 
@@ -117,7 +110,6 @@ public class FirebaseHighscore {
         int size = sortedList.size() -1;
 
         String winnerScore = sortedList.get(size);
-        System.out.println(winnerScore);
         String secondScore = sortedList.get(size -1);
         String thirdscore = sortedList.get(size -2);
 
