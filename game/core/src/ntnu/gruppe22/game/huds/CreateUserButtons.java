@@ -21,8 +21,8 @@ public class CreateUserButtons extends Buttons {
     private ImageButton addNickname1;
     private ImageButton addNickname2;
 
-    private CreateUserInput listener;
-    private CreateUserInput listener2;
+    private static CreateUserInput listener;
+    private static CreateUserInput listener2;
 
     private String nick1, nick2;
 
@@ -58,7 +58,7 @@ public class CreateUserButtons extends Buttons {
         addNickname1.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Gdx.input.getTextInput(listener, "Enter information", "Player1:", "");
+                Gdx.input.getTextInput(listener, "Enter information", "", "");
                 nick1 = listener.text;
 
             }
@@ -66,7 +66,7 @@ public class CreateUserButtons extends Buttons {
         addNickname2.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Gdx.input.getTextInput(listener2, "Enter information", "Player2:", "");
+                Gdx.input.getTextInput(listener2, "Enter information", "", "");
                 nick2 = listener2.text;
             }
         });
@@ -89,11 +89,11 @@ public class CreateUserButtons extends Buttons {
         });
     }
 
-    public String getNick1() {
+    public static String getNick1() {
         return listener.text;
     }
 
-    public String getNick2() {
+    public static String getNick2() {
         return listener2.text;
     }
 }

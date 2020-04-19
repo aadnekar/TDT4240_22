@@ -15,22 +15,17 @@ import java.util.Iterator;
 import java.util.List;
 
 import ntnu.gruppe22.game.AnimalWar;
+import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.huds.MainGameButtons;
 import ntnu.gruppe22.game.maps.Map;
-
-import ntnu.gruppe22.game.helpers.GameInfo;
-
-
 import ntnu.gruppe22.game.sprites.animals.Animal;
 import ntnu.gruppe22.game.sprites.animals.Chicken;
 import ntnu.gruppe22.game.sprites.animals.Monkey;
 import ntnu.gruppe22.game.sprites.animals.Moose;
 import ntnu.gruppe22.game.sprites.animals.Rabbit;
 import ntnu.gruppe22.game.sprites.animals.Walrus;
-
 import ntnu.gruppe22.game.states.weapons.ListenerClass;
 import ntnu.gruppe22.game.states.weapons.Stone;
-
 import ntnu.gruppe22.game.utils.MainGameTimer;
 
 
@@ -127,11 +122,15 @@ public class MainGame implements Screen {
             charactersPlayer1.remove(animal);
             if (charactersPlayer1.size() == 0) {
                 currentAnimal.setDeadAnimal();
+                GameOver.setWinner("Player 2");
                 gameOver();
+                GameOver.setWinnerScore(getPlayer2Health());
             }
         } else {
             charactersPlayer2.remove(animal);
             if (charactersPlayer2.size() == 0) {
+                GameOver.setWinner("Player 1");
+                GameOver.setWinnerScore(getPlayer1Health());
                 gameOver();
                 currentAnimal.setDeadAnimal();
             }
@@ -150,6 +149,25 @@ public class MainGame implements Screen {
             }
         }
     }
+
+    public int getPlayer1Health() {
+        int totalHealth = 0;
+        for (Animal animal: charactersPlayer1) {
+            int remainingHealth = animal.getHealth();
+            totalHealth += remainingHealth;
+        }
+        return totalHealth;
+    }
+
+    public int getPlayer2Health() {
+        int totalHealth = 0;
+        for (Animal animal: charactersPlayer2) {
+            int remainingHealth = animal.getHealth();
+            totalHealth += remainingHealth;
+        }
+        return totalHealth;
+    }
+
 
     public List<Animal> generateAnimals(ArrayList rosterList) {
         List<Animal> animals = new ArrayList<>();
@@ -229,8 +247,7 @@ public class MainGame implements Screen {
         }
     }
 
-    //skal vi ha runder med i spillet i det hele tatt?
-    //dt?
+
     public void setCurrentTurn() {
         if (currentTurn == 1) {
             this.currentTurn = 0;

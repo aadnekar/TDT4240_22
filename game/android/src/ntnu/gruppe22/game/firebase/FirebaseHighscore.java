@@ -13,6 +13,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,20 +38,17 @@ public class FirebaseHighscore {
         basicReadWrite();
         DatabaseReference newHighscoreReference = reference.push();
 
-        //Add new data manually
-        //writeNewHighscore(newHighscoreReference, "Test2", 10);
-
         //writeNewHighscore(newHighscoreReference, getWinnerName(), getWinnerScore());
 
 
     }
 
     public String getWinnerName() {
-        return GameOver.getLastWinner();
+        return GameOver.getWinner();
     }
 
     public int getWinnerScore() {
-        return GameOver.getLastScore();
+        return GameOver.getWinnerScore();
     }
 
     public boolean isGameOver() {
@@ -77,8 +75,7 @@ public class FirebaseHighscore {
                 Map<String, Object> value = (Map<String, Object>) dataSnapshot.getValue();
 
                 //Send Objektet herifra til Highscore klassen.
-                Log.d("LOGGING MAH ACTIVITAH", "value is: " + value);
-                //System.out.println("Value is" + value);
+                Log.d("Logging activity", "value is: " + value);
                 getValuesFromMap(value);
             }
 
@@ -96,18 +93,11 @@ public class FirebaseHighscore {
             Object value = entry.getValue();
 
             valueString = value.toString();
-
             String newString = valueString.substring(1,valueString.length() - 1);
-
-
             String[] parts = newString.split("=");
-            System.out.println("Names and scores: " + parts[0] + "\n" +  parts[1]);
-
             list.put(parts[1], parts[0]);
 
         }
-
-        System.out.println("This is the list: " + list);
         getTopThree(list);
 
 
@@ -127,7 +117,7 @@ public class FirebaseHighscore {
         String second = map.get(secondScore);
         String third = map.get(thirdscore);
 
-        Map<String, String> topThree = new HashMap<>();
+        Map<String, String> topThree = new LinkedHashMap<>();
         topThree.put(winner, winnerScore);
         topThree.put(second, secondScore);
         topThree.put(third, thirdscore);
