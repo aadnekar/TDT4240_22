@@ -2,10 +2,14 @@ package ntnu.gruppe22.game.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
 import com.badlogic.gdx.math.Matrix4;
+
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -27,6 +31,7 @@ import ntnu.gruppe22.game.sprites.animals.Moose;
 import ntnu.gruppe22.game.sprites.animals.Rabbit;
 import ntnu.gruppe22.game.sprites.animals.Walrus;
 import ntnu.gruppe22.game.states.weapons.ListenerClass;
+import ntnu.gruppe22.game.states.weapons.SpineyBall;
 import ntnu.gruppe22.game.states.weapons.Stone;
 import ntnu.gruppe22.game.utils.MainGameTimer;
 
@@ -61,6 +66,8 @@ public class MainGame implements Screen {
     private OrthographicCamera camera;
     private Viewport gameViewport;
     private MainGameButtons btns;
+    private ShapeRenderer sr;
+
 
     private List<Animal> charactersPlayer1;
     private List<Animal> charactersPlayer2;
@@ -68,6 +75,7 @@ public class MainGame implements Screen {
     private Animal currentAnimal;
     private int currentTurn;
     private Stone stone;
+    private SpineyBall spineyBall;
 
     BitmapFont font;
     ListenerClass listenerClass;
@@ -83,6 +91,7 @@ public class MainGame implements Screen {
         //create our Box2D world, setting no gravity in X, -10 gravity in Y, and allow bodies to sleep
         this.world = new World(new Vector2(0, -10), true);
         map = new Map(world);
+        sr = new ShapeRenderer();
 
         listenerClass = new ListenerClass(this, world);
         world.setContactListener(listenerClass);
@@ -212,6 +221,16 @@ public class MainGame implements Screen {
         this.stone = new Stone(this, pos);
     }
 
+    public SpineyBall getSpineyBall(){
+        return this.spineyBall;
+    }
+
+    public void setSpineyBall(int pos){
+        this.spineyBall = new SpineyBall(this, pos);
+    }
+
+
+
     /**
      * "Randomly" position the animal objects on the screen.
      */
@@ -322,6 +341,8 @@ public class MainGame implements Screen {
 
         camera.update();
 
+
+
         game.getSb().setProjectionMatrix(camera.combined);
 
 
@@ -372,6 +393,15 @@ public class MainGame implements Screen {
         }
 
         game.getSb().end();
+
+        // Draw rectangle around chosen weapon
+        sr.setProjectionMatrix(camera.combined);
+        sr.begin(ShapeRenderer.ShapeType.Line);
+        sr.setColor(new Color(255,255,0,0));
+        if(btns.getPositionY() > 0){
+            sr.rect(btns.getPositionX() - 3, btns.getPositionY() - 3, btns.getRectangleX() + 30, btns.getRectangleY() + 30);
+        }
+        sr.end();
 
         btns.getStage().draw();
         btns.getStage().act();

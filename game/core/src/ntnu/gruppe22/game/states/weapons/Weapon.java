@@ -16,30 +16,38 @@ import java.util.Random;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.scenes.MainGame;
 
-public class Stone extends Weapon {
+public abstract class Weapon extends Sprite {
 
+    private TextureRegion stone;
+    private MainGame screen;
+    private World world;
+    public Body b2body;
+    private int damage;
+    public FixtureDef fdef;
+    public Fixture fixture;
 
-    public Stone(MainGame screen, int pos) {
-        super(new Texture(Gdx.files.internal("weapons/rock.png")));
+    public Weapon(MainGame screen, int pos, String weapon) {
+
+        super(new Texture(Gdx.files.internal(weapon)));
 
         this.screen = screen;
         this.world = screen.getWorld();
 
-        damage = 4;
-
         stone = new TextureRegion(getTexture(), 0, 0, 100/ GameInfo.PPM, 100/GameInfo.PPM);
-        setBounds(0, 0, 15/ GameInfo.PPM, 15/GameInfo.PPM);
+        setBounds(0, 0, 40/ GameInfo.PPM, 40/GameInfo.PPM);
         setRegion(stone);
         defineStone(pos);
 
+    }
 
-        setDamage(4);
+    public void setDamage(int damage){
+        this.damage = damage;
     }
 
     public void defineStone(int pos) {
         Random rand = new Random();
         BodyDef bdef = new BodyDef();
-        bdef.position.set(screen.getCurrentAnimal().getX()+(pos/GameInfo.PPM), screen.getCurrentAnimal().getY()+(90/GameInfo.PPM));
+        bdef.position.set(screen.getCurrentAnimal().getX()+(pos/GameInfo.PPM), screen.getCurrentAnimal().getY()+(130/GameInfo.PPM));
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.bullet = true;
         b2body = world.createBody(bdef);
@@ -47,10 +55,11 @@ public class Stone extends Weapon {
 
         fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(7/GameInfo.PPM, 7/GameInfo.PPM);
+        shape.setAsBox(22 /GameInfo.PPM, 2/GameInfo.PPM);
         fdef.shape = shape;
         b2body.createFixture(fdef);
         fixture = b2body.createFixture(fdef);
+
     }
 
     public void update(float dt){
@@ -60,6 +69,4 @@ public class Stone extends Weapon {
     public int getDamage() {
         return damage;
     }
-
-
 }
