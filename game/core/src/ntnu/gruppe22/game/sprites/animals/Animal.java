@@ -1,7 +1,6 @@
 package ntnu.gruppe22.game.sprites.animals;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -15,13 +14,11 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.World;
 
-import java.util.Random;
-
 import ntnu.gruppe22.game.AnimalWar;
+import ntnu.gruppe22.game.helpers.GameData;
 import ntnu.gruppe22.game.helpers.GameInfo;
-import ntnu.gruppe22.game.huds.buttons.RabbitButton;
-import ntnu.gruppe22.game.scenes.MainGame;
 import ntnu.gruppe22.game.helpers.GameRules;
+import ntnu.gruppe22.game.scenes.MainGame;
 import ntnu.gruppe22.game.sprites.Healthbar;
 import ntnu.gruppe22.game.sprites.ShapeManager;
 import ntnu.gruppe22.game.utils.BodyEditorLoader;
@@ -43,6 +40,7 @@ public abstract class Animal extends Sprite {
     public World world;
     public Body body;
     public MassData data;
+
 
     /**
      * when flipped is true animal points to the left
@@ -131,14 +129,16 @@ public abstract class Animal extends Sprite {
     }
 
     private void moveRight() {
-        flipAnimal(true);
-        this.body.applyLinearImpulse(0.05f, 0, getPositionX(), getPositionY(), true);
-    }
+            flipAnimal(true);
+            this.body.applyLinearImpulse(0.05f, 0, getPositionX(), getPositionY(), true);
+        }
+
 
     private void moveLeft() {
-        flipAnimal(false);
-        this.body.applyLinearImpulse(-0.05f, 0, getPositionX(), getPositionY(), true);
-    }
+            flipAnimal(false);
+            this.body.applyLinearImpulse(-0.05f, 0, getPositionX(), getPositionY(), true);
+
+        }
 
     private boolean hasMaxVelocity() {
         return Math.abs(this.body.getLinearVelocity().x) >= MAX_VELOCITY;
@@ -156,26 +156,31 @@ public abstract class Animal extends Sprite {
      */
     public void move(OrthographicCamera camera){
 
-
-        if (Gdx.input.isTouched()) {
-            Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.unproject(touchPos);
-            if (touchPos.x > getPositionX() && !hasMaxVelocity()) {
-                if(getPositionX() < 1850/GameInfo.PPM){
-                    moveRight();
-
+            if (Gdx.input.isTouched()) {
+                Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                if (touchPos.y < Gdx.graphics.getHeight()-65)  {
+                    camera.unproject(touchPos);
+                    if (touchPos.x > getPositionX() && !hasMaxVelocity()) {
+                        if (getPositionX() < 1850 / GameInfo.PPM) {
+                            moveRight();
+                        }
+                    } else if (touchPos.x <= getPositionX() && !hasMaxVelocity()) {
+                        if (getPositionX() > 0.6) {
+                            moveLeft();
+                        }
+                    }
                 }
-            } else if (touchPos.x <= getPositionX() && !hasMaxVelocity()) {
-                if(getPositionX() > 0.6){
-                    moveLeft();
-                }
-
             }
-        }
     }
 
     public void jump() {
-        this.body.applyLinearImpulse(0f, 0.5f, getPositionX(), getPositionY(), true);
+        if (flipped){
+            this.body.applyLinearImpulse(-0.1f, 0.5f, getPositionX(), getPositionY(), true);
+        } else {
+            this.body.applyLinearImpulse(0.1f, 0.5f, getPositionX(), getPositionY(), true);
+        }
+
+
 
     }
 
