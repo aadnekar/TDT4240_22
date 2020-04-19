@@ -17,7 +17,7 @@ public class ControlsScreen extends Menu {
         this.initializeMenu(game);
         backBtn = new ControlsScreenButtons(game);
         bg = new Texture("backgrounds/menu-bg.png");
-        controlImg = new Texture("controls/controls.jpg");
+        controlImg = new Texture("controls/screen.jpg");
     }
 
     @Override
