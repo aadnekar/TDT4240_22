@@ -29,7 +29,6 @@ public class Highscore extends Menu {
         btns = new HighscoreButtons(game);
     }
 
-
     @Override
     public void render(float delta) {
         super.render(delta);
@@ -52,19 +51,6 @@ public class Highscore extends Menu {
         btns.getStage().draw();
         btns.getStage().act();
     }
-
-    public boolean isGameOver() {
-        return true;
-    }
-
-
-    /*public void getScores(Map<String, String> map) {
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            System.out.println("This is the entry: " + entry.getValue());
-
-        }
-
-    }*/
 
 
 }

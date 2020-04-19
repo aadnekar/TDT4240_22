@@ -117,8 +117,4 @@ public class GameOverButtons extends Buttons {
         notifyObservers();
     }
 
-    public synchronized boolean getGameOver() {
-        return isGameOver;
-    }
-
 }
