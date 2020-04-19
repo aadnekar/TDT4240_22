@@ -170,7 +170,7 @@ public abstract class Animal extends Sprite {
     }
 
     public void throwRight(AnimalWar game, float dt) {
-        if(!screen.bufferTime) {
+        if(!screen.bufferTime && screen.getStone() == null) {
             screen.setStone(110);
             flipAnimal(true);
             screen.getStone().b2body.applyLinearImpulse(new Vector2(2f, 2f), screen.getStone().b2body.getWorldCenter(), true);
@@ -180,7 +180,7 @@ public abstract class Animal extends Sprite {
     }
 
     public void throwLeft(AnimalWar game, float dt) {
-        if(!screen.bufferTime) {
+        if(!screen.bufferTime && screen.getStone() == null) {
             screen.setStone(-5);
             flipAnimal(false);
             screen.getStone().b2body.applyLinearImpulse(new Vector2(-2f, 2f), screen.getStone().b2body.getWorldCenter(), true);
