@@ -10,8 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -70,7 +68,6 @@ public class SelectScreenButtons extends Buttons {
 
     }
 
-
     protected void createAndPositionButtons() {
         ready = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/play-btn.png"))
@@ -88,17 +85,16 @@ public class SelectScreenButtons extends Buttons {
                 new Sprite(new Texture("buttons/choose-player2.png"))
         ));
 
-
         chicken = new ChickenButton();
         animalButtonList.add(chicken);
         monkey = new MonkeyButton();
         animalButtonList.add(monkey);
+        walrus = new WalrusButton();
+        animalButtonList.add(walrus);
         moose = new MooseButton();
         animalButtonList.add(moose);
         rabbit = new RabbitButton();
         animalButtonList.add(rabbit);
-        walrus = new WalrusButton();
-        animalButtonList.add(walrus);
 
         choosePlayer1.setPosition(GameInfo.WIDTH / 2 - choosePlayer1.getWidth() / 2, GameInfo.HEIGHT / 2 + 140);
         choosePlayer2.setPosition(GameInfo.WIDTH / 2 - choosePlayer2.getWidth() / 2, GameInfo.HEIGHT / 2 + 140);
@@ -109,9 +105,7 @@ public class SelectScreenButtons extends Buttons {
         ready.setVisible(false);
 
         back.setPosition(5, GameInfo.HEIGHT - 70);
-
     }
-
 
     protected void addButtonListeners() {
 
@@ -133,7 +127,6 @@ public class SelectScreenButtons extends Buttons {
                                 stage.dispose();
                             }
                         }
-
                     }
                 });
 
@@ -166,7 +159,6 @@ public class SelectScreenButtons extends Buttons {
                                 stage.dispose();
                             }
                         }
-
                     }
                 });
 
