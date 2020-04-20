@@ -26,16 +26,13 @@ public class SelectScreen extends Menu{
 
         game.getSb().begin();
         game.getSb().draw(bg, 0, 0);
-
         font.draw(game.getSb(),"Player 1: " + CreateUserButtons.getNick1(), 50, 50);
         font.draw(game.getSb(),"Player 2: " + CreateUserButtons.getNick2(), 200, 50);
         game.getSb().end();
 
         game.getSb().setProjectionMatrix(btns.getStage().getCamera().combined);
-
         btns.getStage().draw();
         btns.getStage().act();
     }
-
 }
 
