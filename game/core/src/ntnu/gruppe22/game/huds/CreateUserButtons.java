@@ -78,7 +78,6 @@ public class CreateUserButtons extends Buttons {
                     @Override
                     public void run() {
                         game.setScreen(new MainMenu(game));
-                        System.out.println("GOING TO THE MAIN MENU!!");
                     }
                 });
                 SequenceAction sa = new SequenceAction();

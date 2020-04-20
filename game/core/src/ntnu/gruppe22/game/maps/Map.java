@@ -43,8 +43,8 @@ public class Map{
 
     //render map
     public void update(OrthographicCamera camera){
-        renderer.render();
         renderer.setView(camera);
+        renderer.render();
     }
 
     private void setChosenMap(){

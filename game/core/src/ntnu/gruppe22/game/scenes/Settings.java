@@ -28,7 +28,7 @@ public class Settings extends Menu {
         super.render(delta);
 
         game.getSb().begin();
-        game.getSb().draw(bg, 0, 0);
+        game.getSb().draw(bg, 0, 0, gameViewport.getWorldWidth(), gameViewport.getWorldHeight());
         game.getSb().draw(musicOnOrOff, GameInfo.WIDTH/2 - musicOnOrOff.getWidth()/2, GameInfo.HEIGHT/2);
         game.getSb().draw(changeVolume,GameInfo.WIDTH/2 - changeVolume.getWidth()/2 , GameInfo.HEIGHT/2 - 80);
         game.getSb().draw(headline,GameInfo.WIDTH/2 - headline.getWidth()/2 , GameInfo.HEIGHT - 150);

@@ -30,7 +30,7 @@ public class MainMenu extends Menu {
         super.render(delta);
 
         game.getSb().begin();
-        game.getSb().draw(bg, 0, 0);
+        game.getSb().draw(bg, 0, 0, gameViewport.getWorldWidth(), gameViewport.getWorldHeight());
         game.getSb().draw(logo, GameInfo.WIDTH/2 - logo.getWidth()/2, GameInfo.HEIGHT - 100);
 
 

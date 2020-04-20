@@ -3,7 +3,6 @@ package ntnu.gruppe22.game.scenes;
 import com.badlogic.gdx.graphics.Texture;
 
 import ntnu.gruppe22.game.AnimalWar;
-import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.huds.ControlsScreenButtons;
 
 public class ControlsScreen extends Menu {
@@ -21,8 +20,8 @@ public class ControlsScreen extends Menu {
 
         // Draw menu background and title
         game.getSb().begin();
-        game.getSb().draw(bg, 0, 0);
-        game.getSb().draw(controlImg,(GameInfo.WIDTH/2)-(controlImg.getWidth()/2/1.45f), GameInfo.HEIGHT/2-controlImg.getHeight()/2/1.45f, controlImg.getWidth()/1.45f, controlImg.getHeight()/1.45f);
+        game.getSb().draw(bg, 0, 0, gameViewport.getWorldWidth(), gameViewport.getWorldHeight());
+        game.getSb().draw(controlImg,gameViewport.getWorldWidth()/2 - (gameViewport.getWorldWidth() / 2)/2, gameViewport.getWorldHeight()/2 - (gameViewport.getWorldHeight()/2)/2, gameViewport.getWorldWidth() / 2, gameViewport.getWorldHeight() / 2);
         game.getSb().end();
 
         game.getSb().setProjectionMatrix(btns.getStage().getCamera().combined);
