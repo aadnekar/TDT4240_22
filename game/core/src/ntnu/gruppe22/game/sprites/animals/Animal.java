@@ -129,16 +129,16 @@ public abstract class Animal extends Sprite {
     }
 
     private void moveRight() {
-            flipAnimal(true);
-            this.body.applyLinearImpulse(0.05f, 0, getPositionX(), getPositionY(), true);
-        }
+        flipAnimal(true);
+        this.body.applyLinearImpulse(0.05f, 0, getPositionX(), getPositionY(), true);
+    }
 
 
     private void moveLeft() {
-            flipAnimal(false);
-            this.body.applyLinearImpulse(-0.05f, 0, getPositionX(), getPositionY(), true);
+        flipAnimal(false);
+        this.body.applyLinearImpulse(-0.05f, 0, getPositionX(), getPositionY(), true);
 
-        }
+    }
 
     private boolean hasMaxVelocity() {
         return Math.abs(this.body.getLinearVelocity().x) >= MAX_VELOCITY;

@@ -67,7 +67,7 @@ public class SelectScreenButtons extends Buttons {
         stage.addActor(rabbit);
 
     }
-    
+
     protected void createAndPositionButtons() {
         ready = new ImageButton(new SpriteDrawable(
                 new Sprite(new Texture("buttons/play-btn.png"))
