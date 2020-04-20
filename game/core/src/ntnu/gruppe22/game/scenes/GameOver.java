@@ -28,7 +28,9 @@ public class GameOver extends Menu {
 
         font = new BitmapFont();
 
-        publishWinner();
+        if (game.toPublish()) {
+            publishWinner();
+        }
     }
 
 

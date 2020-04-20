@@ -14,15 +14,16 @@ public class AnimalWar extends Game {
 
 	private SpriteBatch sb;
 	private Publisher publisher;
+	private boolean toPublish;
 
 	public AnimalWar() {
-
+		this.toPublish = false;
 	}
 
 	public AnimalWar(Subscriber s) {
 		publisher = new Publisher();
 		publisher.subscribe(s);
-		System.out.println("Subscriber added to subscribers list");
+		this.toPublish = true;
 	}
 	
 	@Override
@@ -43,5 +44,9 @@ public class AnimalWar extends Game {
 
 	public Publisher getPublisher() {
 		return this.publisher;
+	}
+
+	public boolean toPublish() {
+		return this.toPublish;
 	}
 }
