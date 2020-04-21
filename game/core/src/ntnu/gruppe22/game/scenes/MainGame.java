@@ -26,8 +26,8 @@ import ntnu.gruppe22.game.sprites.animals.Monkey;
 import ntnu.gruppe22.game.sprites.animals.Moose;
 import ntnu.gruppe22.game.sprites.animals.Rabbit;
 import ntnu.gruppe22.game.sprites.animals.Walrus;
-import ntnu.gruppe22.game.states.weapons.ListenerClass;
-import ntnu.gruppe22.game.states.weapons.Stone;
+import ntnu.gruppe22.game.sprites.weapons.ListenerClass;
+import ntnu.gruppe22.game.sprites.weapons.Stone;
 import ntnu.gruppe22.game.utils.MainGameTimer;
 
 

@@ -1,4 +1,4 @@
-package ntnu.gruppe22.game.states.weapons;
+package ntnu.gruppe22.game.sprites.weapons;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
