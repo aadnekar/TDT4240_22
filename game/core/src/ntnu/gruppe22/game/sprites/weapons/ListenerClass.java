@@ -41,7 +41,6 @@ public class ListenerClass implements ContactListener {
                 Animal animal = (Animal) fa.getBody().getUserData();
                 animal.setHealth(stone.getDamage());
 
-                //TODO: Draw on screen how much damage left - maybe in a function in animal?
 
             }
         }
