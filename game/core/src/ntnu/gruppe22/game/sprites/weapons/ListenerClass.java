@@ -1,4 +1,4 @@
-package ntnu.gruppe22.game.states.weapons;
+package ntnu.gruppe22.game.sprites.weapons;
 
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -40,6 +40,8 @@ public class ListenerClass implements ContactListener {
                 Stone stone = (Stone) fb.getBody().getUserData();
                 Animal animal = (Animal) fa.getBody().getUserData();
                 animal.setHealth(stone.getDamage());
+
+
             }
         }
     }

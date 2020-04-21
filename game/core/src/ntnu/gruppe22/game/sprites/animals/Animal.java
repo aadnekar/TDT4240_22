@@ -217,7 +217,6 @@ public abstract class Animal extends Sprite {
         game.getSb().end();
     }
 
-
     private void flipAnimal(boolean right){
         if(flipped){
             if(right){
