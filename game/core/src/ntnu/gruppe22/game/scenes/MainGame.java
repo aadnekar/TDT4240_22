@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,27 +29,6 @@ import ntnu.gruppe22.game.sprites.weapons.ListenerClass;
 import ntnu.gruppe22.game.sprites.weapons.Stone;
 import ntnu.gruppe22.game.utils.MainGameTimer;
 
-
-/**
- * Hva skal skje i MainGame? (antagelser)
- * 1. Du har i utgangspunktet en liste med karakterer som alle har sine våpen, og spillerne har valgt en bakgrunn.
- * alt dette kommer ifra selectScreen.
- *
- * 2. når det er din tur til å spille vil du få en tid på deg til å flytte neste karakter i listen.
- * Du må også skyte innen denne tiden.
- *
- * 3. når tiden har rent ut, eller du har skutt på motstanderen, er det neste spiller sin tur.
- *
- * I denne klassen må vi også håndtere skudd. Hvis en spiller blir truffet mister den en del av live-baren.
- * Vi må håndtere kollisjon mellom våpen og figur i denne klassen.
- *
- * For å håndtere kast som kommer rett før tiden har rent ut vil vi legge inn 5sek delay av en eller annen form
- * slik at deteksjon av våpen mot figur blir gjennomført før det er motstanderen sin tur.
- *
- * Imens motstanderen din spiller, og du venter, må vi ha en form for pause-state.
- *
- */
-
 public class MainGame implements Screen {
 
     private AnimalWar game;
@@ -59,7 +37,6 @@ public class MainGame implements Screen {
 
     public boolean DestroyWeapon = false;
     private OrthographicCamera camera;
-    private Viewport gameViewport;
     private MainGameButtons btns;
 
     private List<Animal> charactersPlayer1;
@@ -80,7 +57,6 @@ public class MainGame implements Screen {
 
     public MainGame(AnimalWar game, HashMap<Integer, ArrayList<Integer>> roster) {
         this.game = game;
-        //create our Box2D world, setting no gravity in X, -10 gravity in Y, and allow bodies to sleep
         this.world = new World(new Vector2(0, -10), true);
         map = new Map(world);
 
@@ -88,16 +64,12 @@ public class MainGame implements Screen {
         world.setContactListener(listenerClass);
         btns = new MainGameButtons(game);
 
-
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, GameInfo.WIDTH / GameInfo.PPM, GameInfo.HEIGHT / GameInfo.PPM);
         this.camera.update();
 
-        //this.camera.position.set(GameInfo.WIDTH / 2f /GameInfo.PPM, GameInfo.HEIGHT / 2f /GameInfo.PPM, 0);
         charactersPlayer1 = new ArrayList<>();
         charactersPlayer2 = new ArrayList<>();
-
-        //gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, camera);
 
         charactersPlayer1 = generateAnimals(roster.get(0));
         charactersPlayer2 = generateAnimals(roster.get(1));
@@ -115,7 +87,6 @@ public class MainGame implements Screen {
         timer.startNewRoundCountDown();
         listenerClass = new ListenerClass(this, world);
         world.setContactListener(listenerClass);
-
     }
 
 
@@ -212,16 +183,7 @@ public class MainGame implements Screen {
         this.stone = new Stone(this, pos);
     }
 
-    /**
-     * "Randomly" position the animal objects on the screen.
-     */
-    public void positionAnimals() {
 
-    }
-
-    //vil lagre hver Animal med en index hos hver spiller
-    //får neste Animal i rekken
-    //antar at vi må sette en ny currencharacter i denne metoden
     public void changeCharacter() {
         if (currentTurn == 0) {
             setCurrentCharacter(nextAnimal(iteratePlayer1, charactersPlayer1));
@@ -230,8 +192,6 @@ public class MainGame implements Screen {
         }
     }
 
-
-    // TODO: Handle when players.size() = 0 - we have a winner!
     public Animal nextAnimal(Iterator<Animal> iter, List<Animal> players) {
 
         if (iter.hasNext()) {
@@ -283,12 +243,6 @@ public class MainGame implements Screen {
 
     //programmet stopper i ca 1 sek før steinen forsvinner
     private void destroyWeapon() {
-        /*
-        try {
-            Thread.sleep(800);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
         world.destroyBody(stone.b2body);
         stone = null;
         DestroyWeapon = false;

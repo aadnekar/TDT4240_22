@@ -38,10 +38,6 @@ public class GameOver extends Menu {
         return this.winner;
     }
 
-    public int getScore() {
-        return this.score;
-    }
-
 
     private void publishWinner() {
         game.getPublisher().notifyGameover(winner, score);

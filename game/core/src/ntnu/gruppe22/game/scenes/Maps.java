@@ -12,9 +12,6 @@ public class Maps extends Menu {
     private ShapeRenderer sr;
     private Texture title;
 
-    // Skulle helst sett at MapButtons kan fjernes, men da får
-    // ikke btns tak i getPositionX,Y og get RecangleX og Y i render metoden.
-    // den skal egentlig få tak i den gjennom btns som kommer ved initializeMenu(game)
     private MapButtons btns;
 
     public Maps(AnimalWar game) {

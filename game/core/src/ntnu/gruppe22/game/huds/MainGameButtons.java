@@ -3,7 +3,6 @@ package ntnu.gruppe22.game.huds;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
@@ -11,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import ntnu.gruppe22.game.AnimalWar;
 import ntnu.gruppe22.game.helpers.GameInfo;
 import ntnu.gruppe22.game.sprites.animals.Animal;
-import ntnu.gruppe22.game.helpers.GameManager;
 
 /**
  * @author aase

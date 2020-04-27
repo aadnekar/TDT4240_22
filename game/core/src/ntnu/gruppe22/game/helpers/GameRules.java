@@ -10,10 +10,9 @@ public class GameRules {
      * @author hildegun 30.03.20
      */
 
-    public static final int BUFFER_TIME = 2;
-    public static final int ROUND_TIME = 10;
+    public static final int BUFFER_TIME = 5;
+    public static final int ROUND_TIME = 30;
     public static final int NUMBER_OF_CHARS = 1;
-    public static final int MAX_NUMBER_OF_ROUNDS = 20;
 
     public enum Animal {
         CHICKEN,
