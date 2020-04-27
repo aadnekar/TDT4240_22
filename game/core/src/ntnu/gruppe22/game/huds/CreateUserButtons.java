@@ -24,8 +24,6 @@ public class CreateUserButtons extends Buttons {
     private static CreateUserInput listener;
     private static CreateUserInput listener2;
 
-    private String nick1, nick2;
-
     public CreateUserButtons(AnimalWar game) {
         this.initializeButtons(game);
 
@@ -59,7 +57,6 @@ public class CreateUserButtons extends Buttons {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.input.getTextInput(listener, "Enter information", "", "");
-                nick1 = listener.text;
 
             }
         });
@@ -67,7 +64,6 @@ public class CreateUserButtons extends Buttons {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.input.getTextInput(listener2, "Enter information", "", "");
-                nick2 = listener2.text;
             }
         });
         continueToGame.addListener(new ChangeListener() {

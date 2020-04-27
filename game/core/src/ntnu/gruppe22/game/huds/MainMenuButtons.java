@@ -74,9 +74,7 @@ public class MainMenuButtons extends Buttons {
                 run.setRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        // TODO: Uncomment when MainGame is implemented
                         game.setScreen(new SelectScreen(game));
-                        System.out.println("welcome to Selectscreen");
                     }
                 });
 
@@ -115,8 +113,7 @@ public class MainMenuButtons extends Buttons {
                 run.setRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        game.setScreen(new Settings(game/*, gameMusic*/));
-                        System.out.println("GOING TO THE SETTINGS SCREEN!!");
+                        game.setScreen(new Settings(game));
                     }
                 });
 
