@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "899028198702",
+    "firebase_url": "https://animalwar-93981.firebaseio.com",
+    "project_id": "animalwar-93981",
+    "storage_bucket": "animalwar-93981.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899028198702:android:8acddec7835c703ad8c6bf",
+        "android_client_info": {
+          "package_name": "ntnu.gruppe22.game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "899028198702-cto1bd7v9qoil8nu63aliiff7af51q1d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ntnu.gruppe22.game",
+            "certificate_hash": "544af015138618127269768cb068910b6e6c2f92"
+          }
+        },
+        {
+          "client_id": "899028198702-e4u4enakq8ps7g2mi7ddact0gl6d4g60.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ntnu.gruppe22.game",
+            "certificate_hash": "07872ee35ea61e36ed524eda175095bad1e8ba0a"
+          }
+        },
+        {
+          "client_id": "899028198702-nd5h5jg6mtpjrb7r4k6cpepst1umlh1k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCi_l47DfNDlA1_OU3VovP53z2KLoHBOs4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "899028198702-nd5h5jg6mtpjrb7r4k6cpepst1umlh1k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

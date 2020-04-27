@@ -1,33 +1,52 @@
 package ntnu.gruppe22.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class AnimalWar extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
+import ntnu.gruppe22.game.helpers.GameManager;
+import ntnu.gruppe22.game.scenes.CreateUser;
+import ntnu.gruppe22.game.utils.Publisher;
+import ntnu.gruppe22.game.utils.Subscriber;
+
+public class AnimalWar extends Game {
+
+	public static String APP_TITLE = "Animal War";
+
+	private SpriteBatch sb;
+	private Publisher publisher;
+	private boolean toPublish;
+
+	public AnimalWar() {
+		this.toPublish = false;
+	}
+
+	public AnimalWar(Subscriber s) {
+		publisher = new Publisher();
+		publisher.subscribe(s);
+		this.toPublish = true;
+	}
 	
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		sb = new SpriteBatch();
+		GameManager.getInstance().initializeGameData();
+		setScreen(new CreateUser(this));
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		super.render();
 	}
-	
-	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
+
+	public SpriteBatch getSb() {
+		return this.sb;
+	}
+
+	public Publisher getPublisher() {
+		return this.publisher;
+	}
+
+	public boolean toPublish() {
+		return this.toPublish;
 	}
 }
